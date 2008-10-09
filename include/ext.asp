@@ -77,7 +77,7 @@ End Sub
 Sub alertRedirect(msgstr,url)
 	die "<script type=""text/javascript"">"&vbCr& _
 			"alert("""&msgstr&""");"&vbCr& _
-			"location.replace="""&url&""";"&vbCr& _
+			"location.replace("""&url&""");"&vbCr& _
 			"</script>"
 End Sub
 
@@ -87,7 +87,7 @@ End Sub
 '作  用：消息框
 '**********
 Sub alertBack(msgstr)
-	Response.Write("<script type=""text/javascript"">alert(""" + msgstr + """);history.back(-1);</script>")
+	die "<script type=""text/javascript"">alert(""" + msgstr + """);history.back(-1);</script>"
 End Sub
 
 '********** 
