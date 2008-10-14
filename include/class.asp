@@ -22,7 +22,7 @@ Class Class_Wrap
 
 	Public Db,[String],Params,[Array],Upload,Page,File,Debug,Cookie,Session,[Date]
 
-	Public SHA1,Md5,Json,ValidCode,Export,Email,InterFace,BEDcode,Xml
+	Public SHA1,Md5,Json,ValidCode,Export,Email,InterFace,BEDcode,DES,Xml
 
 	Private Sub Class_Initialize()
 		On Error Resume Next
@@ -46,6 +46,7 @@ Class Class_Wrap
 		Set Email			= New Class_Email			'Email发送类
 		Set InterFace		= New Class_Interface		'远程获取类
 		Set BEDcode			= New Class_BasicEncode		'简单加密解密
+		Set DES				= Class_DES()				'DSC加密解密类
 		Set Xml				= New Class_XML				'XML操作类
 		Err.Clear
 		On Error Goto 0
@@ -72,6 +73,7 @@ Class Class_Wrap
 		If IsObject(Email) Then			Set Email			= Nothing
 		If IsObject(InterFace) Then		Set InterFace		= Nothing
 		If IsObject(BEDcode) Then		Set BEDcode			= Nothing
+		If IsObject(DES) Then			Set DES				= Nothing
 		If IsObject(Xml) Then			Set Xml				= Nothing
 	End Sub
 
