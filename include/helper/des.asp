@@ -212,23 +212,29 @@ function Class_DES(){
 
 
 		////////////////////////////// TEST //////////////////////////////
-		function stringToHex(s) {
-		  var r = "0x";
+		function stringToHex (s) {
+		  var r = "";
 		  var hexes = new Array ("0","1","2","3","4","5","6","7","8","9","a","b","c","d","e","f");
 		  for (var i=0; i<s.length; i++) {r += hexes [s.charCodeAt(i) >> 4] + hexes [s.charCodeAt(i) & 0xf];}
 		  return r;
 		}
 
-		this.encode = function(key, message, mode){
-			if(mode == undefined) mode = 0; 
-			var ciphertext = des (key, message, 1, mode);
-			return stringToHex(ciphertext);
+		function hexToString (h) {
+		  var r = "";
+		  for (var i= (h.substr(0, 2)=="0x")?2:0; i<h.length; i+=2) {r += String.fromCharCode (parseInt (h.substr (i, 2), 16));}
+		  return r;
 		}
 
-		this.decode = function(key, message, mode){
-			if(mode == undefined) mode = 0; 
-			var ciphertext = des (key, message, 0, mode);
+		//¼ÓÃÜ
+		this.encode = function(key, message, mode){
+			var ciphertext = des (key, message, 1, mode ? mode : 0);
 			return stringToHex(ciphertext);
+		}
+		//½âÃÜ
+		this.decode = function(key, message, mode){
+			if(message != "") message = hexToString(message);
+			var ciphertext = des (key, message, 0, mode ? mode : 0);
+			return ciphertext;
 		}
 	}
 	return new creatClass();

@@ -19,9 +19,12 @@
 '**********
 
 Class Class_Export
-	Private s_table, s_fields, s_fieldnames
+	Private s_table, s_fields, s_fieldnames,oConn
 	Public FileName		'设置生成的文件名
-	Public Conn			'设置数据库链接
+
+	Public Property Let Conn(connObj)
+		Set oConn = connObj
+	End Property
 	
 	Private Sub Class_Initialize()
 		FileName = "data"
@@ -37,7 +40,7 @@ Class Class_Export
 		Response.ContentType = "application/vnd.ms-excel" 
 		Response.AddHeader "content-disposition", "inline; filename = "&FileName&".xls"
 		Response.Write "<table border=""1"">"
-		Set rs = Conn.Execute(sSql)
+		Set rs = oConn.Execute(sSql)
 		Response.Write("<tr>")
 		If sFields = "" Then
 			For i=0 To rs.fields.count-1
@@ -71,7 +74,7 @@ Class Class_Export
 		Response.Buffer = True 
 		Response.ContentType = "application/octet-stream"
 		Response.AddHeader "content-disposition", "attachment; filename = "&FileName&".txt"
-		Set rs = Conn.Execute(sSql)
+		Set rs = oConn.Execute(sSql)
 		If sFields = "" Then
 			For i=0 To rs.fields.count-1
 				Response.Write RS.Fields(i).Name&Chr(9)
