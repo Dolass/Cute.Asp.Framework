@@ -22,7 +22,7 @@ Class Class_Wrap
 
 	Public Db,[String],Params,[Array],Upload,Page,File,Debug,Cookie,Session,[Date]
 
-	Public SHA1,Md5,Json,ValidCode,DbToExcel,Email,InterFace,BEDcode,Xml
+	Public SHA1,Md5,Json,ValidCode,Export,Email,InterFace,BEDcode,Xml
 
 	Private Sub Class_Initialize()
 		On Error Resume Next
@@ -42,7 +42,7 @@ Class Class_Wrap
 		Set Md5				= New Class_Md5				'Md5加密
 		Set Json			= Class_Json()				'Json操作类
 		Set ValidCode		= New Class_ValidCode		'验证码
-		Set DbToExcel		= New Class_DbToExcel		'Db Data To Excel Data
+		Set Export			= New Class_Export			'Export Data
 		Set Email			= New Class_Email			'Email发送类
 		Set InterFace		= New Class_Interface		'远程获取类
 		Set BEDcode			= New Class_BasicEncode		'简单加密解密
@@ -68,7 +68,7 @@ Class Class_Wrap
 		If IsObject(Md5) Then			Set Md5				= Nothing
 		If IsObject(Json) Then			Set Json			= Nothing
 		If IsObject(ValidCode) Then		Set ValidCode		= Nothing
-		If IsObject(DbToExcel) Then		Set DbToExcel		= Nothing
+		If IsObject(Export) Then		Set Export			= Nothing
 		If IsObject(Email) Then			Set Email			= Nothing
 		If IsObject(InterFace) Then		Set InterFace		= Nothing
 		If IsObject(BEDcode) Then		Set BEDcode			= Nothing
