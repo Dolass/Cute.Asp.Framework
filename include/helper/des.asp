@@ -225,15 +225,16 @@ function Class_DES(){
 		  return r;
 		}
 
+		this.Key = "";
 		//º”√‹
-		this.encode = function(key, message, mode){
-			var ciphertext = des (key, message, 1, mode ? mode : 0);
+		this.encode = function(message, mode){
+			var ciphertext = des (this.Key, message, 1, mode ? mode : 0);
 			return stringToHex(ciphertext);
 		}
 		//Ω‚√‹
-		this.decode = function(key, message, mode){
+		this.decode = function(message, mode){
 			if(message != "") message = hexToString(message);
-			var ciphertext = des (key, message, 0, mode ? mode : 0);
+			var ciphertext = des (this.Key, message, 0, mode ? mode : 0);
 			return ciphertext;
 		}
 	}

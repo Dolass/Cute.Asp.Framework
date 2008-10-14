@@ -5,6 +5,7 @@
 Tpub.db.Open
 Tpub.Export.Conn = Tpub.db.Conn
 Call Tpub.export.txt("select top 10 book_name from list_book ","")
-echo Tpub.Des.Encode("ss","admin")&vbCrlf
-echo Tpub.Des.Decode("ss",Tpub.Des.Encode("ss","admin"))
+Tpub.Des.Key = "ss"
+echo Tpub.Des.Encode("admin")&vbCrlf
+echo Tpub.Des.Decode(Tpub.Des.Encode("admin"))
 %>
