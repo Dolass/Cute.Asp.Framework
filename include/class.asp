@@ -53,28 +53,31 @@ Class Class_Wrap
 	End Sub
 
 	Private Sub Class_Terminate()
-		If IsObject(Db) Then			Set Db				= Nothing
-		If IsObject([String]) Then		Set [String]		= Nothing
-		If IsObject(Params) Then		Set Params			= Nothing
-		If IsObject([Array]) Then		Set [Array]			= Nothing
-		If IsObject(Upload) Then		Set Upload			= Nothing
-		If IsObject(Page) Then			Set Page			= Nothing
-		If IsObject(File) Then			Set File			= Nothing
-		If IsObject(Debug) Then			Set Debug			= Nothing
-		If IsObject(Cookie) Then		Set Cookie			= Nothing
-		If IsObject(Session) Then		Set Session			= Nothing
-		If IsObject([Date]) Then		Set [Date]			= Nothing
+		On Error Resume Next
+		Set Db				= Nothing
+		Set [String]		= Nothing
+		Set Params			= Nothing
+		Set [Array]			= Nothing
+		Set Upload			= Nothing
+		Set Page			= Nothing
+		Set File			= Nothing
+		Set Debug			= Nothing
+		Set Cookie			= Nothing
+		Set Session			= Nothing
+		Set [Date]			= Nothing
 
-		If IsObject(SHA1) Then			Set SHA1			= Nothing
-		If IsObject(Md5) Then			Set Md5				= Nothing
-		If IsObject(Json) Then			Set Json			= Nothing
-		If IsObject(ValidCode) Then		Set ValidCode		= Nothing
-		If IsObject(Export) Then		Set Export			= Nothing
-		If IsObject(Email) Then			Set Email			= Nothing
-		If IsObject(InterFace) Then		Set InterFace		= Nothing
-		If IsObject(BEDcode) Then		Set BEDcode			= Nothing
-		If IsObject(DES) Then			Set DES				= Nothing
-		If IsObject(Xml) Then			Set Xml				= Nothing
+		Set SHA1			= Nothing
+		Set Md5				= Nothing
+		Set Json			= Nothing
+		Set ValidCode		= Nothing
+		Set Export			= Nothing
+		Set Email			= Nothing
+		Set InterFace		= Nothing
+		Set BEDcode			= Nothing
+		Set DES				= Nothing
+		Set Xml				= Nothing
+		Err.Clear
+		On Error Goto 0
 	End Sub
 
 	%>

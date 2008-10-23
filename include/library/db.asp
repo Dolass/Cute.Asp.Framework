@@ -56,12 +56,11 @@ Class Class_Db
     End Sub
 	
 	Sub Close()
-        If IsObject(Conn) Then
-            If Conn.State <> 0 Then
-                Conn.Close
-                Set Conn = Nothing
-            End If
-        End If
+        On Error Resume Next
+		Me.Conn.Close
+		Set Me.Conn = Nothing
+		Err.Clear
+		On Error Goto 0
 	End Sub
 	
 	Sub CloseRs(OutRs)
