@@ -59,13 +59,11 @@ Class Class_File
 	'FormatFileSize
 	'作  用：格式化文件的大小
 	'**********
-	Function FormatFileSize(fs,isUnit)
+	Function FormatFileSize(fs)
 		Dim kUnit,mUnit,gUnit
-		If isUnit Then
-			kUnit = "&nbsp;KB"
-			mUnit = "&nbsp;MB"
-			gUnit = "&nbsp;GB"
-		End If
+		kUnit = "&nbsp;KB"
+		mUnit = "&nbsp;MB"
+		gUnit = "&nbsp;GB"
 		If fs>1073741824 Then
 			fs = FormatNumber(fs / 1073741824, 2, true)&gUnit
 		ElseIf fs>1048576 Then
