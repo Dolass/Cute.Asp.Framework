@@ -50,7 +50,7 @@ Class Class_Email
 
 		Dim jMail : Set jMail = Server.CreateObject("jMail.Message")
 		jMail.Silent = False
-		jMail.Charset = Charset							'邮件编码
+		jMail.Charset = Me.Charset							'邮件编码
 		jMail.ContentType = "text/html"					'邮件正文格式
 		jMail.From = FromMail							'发信人Email
 		jMail.FromName = FromName						'发信人姓名
@@ -90,7 +90,7 @@ Class Class_Email
 		jMail.MailServerUserName = UserName			'登录用户名
 		jMail.MailServerPassWord = Password			'登录密码
 
-		jMail.Send MailServer
+		jMail.Send Me.MailServer
 		Send = jMail.ErrorMessage
 		jMail.Close
 		Set jMail = Nothing

@@ -43,15 +43,15 @@ Class Class_Cookie
     ' 作  用: Add a cookie
     '**********
 	Sub [set](Key, Value, Options)
-        Response.Cookies(Mark & Key) = Value
+        Response.Cookies(Me.Mark & Key) = Value
         If Not (IsNull(Options) Or IsEmpty(Options) Or Options = "") Then
             If IsArray(Options) Then
                 Dim l : l = UBound(Options)
-                Response.Cookies(Mark & Key).Expire = Options(0)
-                If l = 1 Then Response.Cookies(Mark & Key).Path = Options(1)
-                If l = 2 Then Response.Cookies(Mark & Key).Domain = Options(2)
+                Response.Cookies(Me.Mark & Key).Expire = Options(0)
+                If l = 1 Then Response.Cookies(Me.Mark & Key).Path = Options(1)
+                If l = 2 Then Response.Cookies(Me.Mark & Key).Domain = Options(2)
             Else
-                Response.Cookies(Mark & Key).Expire = Options
+                Response.Cookies(Me.Mark & Key).Expire = Options
             End If
         End If
     End Sub
@@ -61,7 +61,7 @@ Class Class_Cookie
     ' 作  用: get a cookies
     '**********
 	Function [get](Key)
-        [get] = Request.Cookies(Mark & Key)
+        [get] = Request.Cookies(Me.Mark & Key)
     End Function
 
     '**********
@@ -69,7 +69,7 @@ Class Class_Cookie
     ' 作  用: Remove a cookie
     '**********
 	Sub Remove(Key)
-         Response.Cookies(Mark & Key) = Empty
+         Response.Cookies(Me.Mark & Key) = Empty
     End Sub
 
     '**********

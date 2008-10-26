@@ -59,7 +59,7 @@ Class Class_Upload
         objForm.RemoveAll
         Set objForm = Nothing
         Set binItem = Nothing
-		If Mode = 1 Then Set objFormASP = Nothing
+		If Me.Mode = 1 Then Set objFormASP = Nothing
         If Error<>4 Then binForm.Close()
         Set binForm = Nothing
 	End Sub
@@ -71,23 +71,23 @@ Class Class_Upload
 			Exit Sub
 		End If
 		Dim lngRequestSize, binRequestData, strFormItem, strFileItem
-		If Mode = 1 Then
+		If Me.Mode = 1 Then
 			On Error Resume Next
 			Set objFormASP = Server.CreateObject("Persits.Upload")
 			objFormASP.OverWriteFiles = True		'同名覆盖
 			objFormASP.IgnorenoPost = True			
-			objFormASP.SetMaxSize MaxSize, True	'设置单个文件最大上传
-			objFormASP.CreateDirectory Server.MapPath(SavePath), True	'建立目录
-			If LCase(Charset) = "gb2312" Then
+			objFormASP.SetMaxSize Me.MaxSize, True	'设置单个文件最大上传
+			objFormASP.CreateDirectory Server.MapPath(Me.SavePath), True	'建立目录
+			If LCase(Me.Charset) = "gb2312" Then
 				objFormASP.CodePage = 936
 			Else
 				objFormASP.CodePage = 65001
 			End If
-			upCount = objFormASP.Save()
+			Me.upCount = objFormASP.Save()
 			For Each strFormItem in objFormASP.Form
 				objForm.Add strFormItem.Name, strFormItem.Value
 			Next
-			If upCount > 0 Then
+			If Me.upCount > 0 Then
 				For Each strFileItem in objFormASP.Files
 					With objForm
 						.Add strFileItem.Name, strFileItem.FileName
@@ -101,17 +101,17 @@ Class Class_Upload
 						.Add strFileItem.Name&"_Height", strFileItem.ImageHeight	'image only
 					End With
 					lngRequestSize = lngRequestSize + strFileItem.Size
-					If AutoSave<>2 Then
+					If Me.AutoSave<>2 Then
 						intTemp = GetFerr(objForm(strFileItem.Name&"_Ext"), 2, Len(objForm(strFileItem.Name&"_Ext")))
 						objForm.Add strFileItem.Name&"_Err", intTemp
 						If intTemp = 0 Then
-							If AutoSave = 0 Then
+							If Me.AutoSave = 0 Then
 								strFnam = GetTimeStr()
 								If objForm(strFileItem.Name&"_Ext")<>"" Then strFnam = strFnam&"."&objForm(strFileItem.Name&"_Ext")
 							Else
 								strFnam = objForm(strFileItem.Name&"_Name")
 							End If
-							objFormASP.Files(strFileItem.Name).SaveAS Server.MapPath(SavePath&strFnam)
+							objFormASP.Files(strFileItem.Name).SaveAS Server.MapPath(Me.SavePath&strFnam)
 							objForm(strFileItem.Name&"_Path") = objFormASP.Files(strFileItem.Name).Path
 						End If
 					Else
@@ -119,7 +119,7 @@ Class Class_Upload
 					End If
 				Next
 			End If
-			If lngRequestSize>TotalSize And TotalSize<>0 Then
+			If lngRequestSize>Me.TotalSize And Me.TotalSize<>0 Then
 				Error = 4
 				Exit Sub
 			End If
@@ -127,7 +127,7 @@ Class Class_Upload
 		Else
 			Const strSplit = "'"">"
 			lngRequestSize = Request.TotalBytes
-			If lngRequestSize<1 Or (lngRequestSize>TotalSize And TotalSize<>0) Then
+			If lngRequestSize<1 Or (lngRequestSize>Me.TotalSize And Me.TotalSize<>0) Then
 				Error = 4
 				Exit Sub
 			End If
@@ -153,7 +153,7 @@ Class Class_Upload
 				binForm.CopyTo binItem, p_end - p_start
 				binItem.Position = 0
 				binItem.Type = 2
-				binItem.Charset = Charset
+				binItem.Charset = Me.Charset
 				strItem = binItem.ReadText
 				binItem.Close()
 
@@ -230,14 +230,14 @@ Class Class_Upload
 							objForm.Add strInam&"_Ext", strFext
 							objForm.Add strInam&"_From", p_start
 							intTemp = GetFerr(lngFsiz, strFext)
-							If AutoSave<>2 Then
+							If Me.AutoSave<>2 Then
 								objForm.Add strInam&"_Err", intTemp
 								If intTemp = 0 Then
-									If AutoSave = 0 Then
+									If Me.AutoSave = 0 Then
 										strFnam = GetTimeStr()
 										If strFext<>"" Then strFnam = strFnam&"."&strFext
 									End If
-									binItem.SaveToFile Server.MapPath(SavePath&strFnam), 2
+									binItem.SaveToFile Server.MapPath(Me.SavePath&strFnam), 2
 									objForm.Add strInam, strFnam
 								End If
 							End If
@@ -248,7 +248,7 @@ Class Class_Upload
 				Else
 					binItem.Position = 0
 					binItem.Type = 2
-					binItem.Charset = Charset
+					binItem.Charset = Me.Charset
 					strTemp = binItem.ReadText
 					If objForm.Exists(strInam) Then
 						objForm(strInam) = objForm(strInam)&","&strTemp
@@ -260,8 +260,8 @@ Class Class_Upload
 				binItem.Close()
 				p_start = p_end + intSeparator + 2
 			Loop Until p_start + 3>lngRequestSize
-			FormItem = Split(strFormItem, strSplit)
-			FileItem = Split(strFileItem, strSplit)
+			Me.FormItem = Split(strFormItem, strSplit)
+			Me.FileItem = Split(strFileItem, strSplit)
 		End If
     End Sub
 
@@ -273,11 +273,11 @@ Class Class_Upload
     Private Function GetFerr(lngFsiz, strFext)
         Dim intFerr
         intFerr = 0
-        If lngFsiz>MaxSize And MaxSize>0 Then
+        If lngFsiz>Me.MaxSize And Me.MaxSize>0 Then
             If Error = 0 Or Error = 2 Then Error = Error + 1
             intFerr = intFerr + 1
         End If
-        If InStr(1, LCase("/"&FileType&"/"), LCase("/"&strFext&"/")) = 0 And FileType<>"" Then
+        If InStr(1, LCase("/"&Me.FileType&"/"), LCase("/"&strFext&"/")) = 0 And Me.FileType<>"" Then
             If Error<2 Then Error = Error + 2
             intFerr = intFerr + 2
         End If
@@ -307,15 +307,15 @@ Class Class_Upload
 						strFnam = objForm(Item&"_Name")
 				End Select
 			End If
-			If Mode = 1 Then
-				objFormASP.Files(Item).SaveAS Server.MapPath(SavePath&strFnam)
+			If Me.Mode = 1 Then
+				objFormASP.Files(Item).SaveAS Server.MapPath(Me.SavePath&strFnam)
 				objForm(Item&"_Path") = objFormASP.Files(Item).Path
 			Else
 				binForm.Position = objForm(Item&"_From")
 				binItem.Type = 1
 				binItem.Open
 				binForm.CopyTo binItem, objForm(Item&"_Size")
-				binItem.SaveToFile Server.MapPath(SavePath&strFnam), 2
+				binItem.SaveToFile Server.MapPath(Me.SavePath&strFnam), 2
 				binItem.Close()
 			End If
 			If objForm.Exists(Item) Then
@@ -329,7 +329,7 @@ Class Class_Upload
 
     Function GetData(Item)
         GetData = ""
-        If Mode = 0 And objForm.Exists(Item&"_From") Then
+        If Me.Mode = 0 And objForm.Exists(Item&"_From") Then
             If GetFerr(objForm(Item&"_Size"), objForm(Item&"_Ext"))<>0 Then Exit Function
             binForm.Position = objForm(Item&"_From")
             GetData = binForm.Read(objForm(Item&"_Size"))
@@ -337,9 +337,9 @@ Class Class_Upload
     End Function
 
     Function Form(Item)
-		If Mode = 1 Then
+		If Me.Mode = 1 Then
 			If InStr(LCase(Item), "_err") Then
-				If upCount <= 0 Then
+				If Me.upCount <= 0 Then
 					If Not objForm.Exists(Item) Then
 						objForm.Add Item, -1
 					End If

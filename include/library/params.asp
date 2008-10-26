@@ -24,10 +24,10 @@ Class Class_Params
     '**********
    Public Default Property Get Contents(sItem)
 		On Error Resume Next
-		If Item Is Nothing Then
+		If Me.Item Is Nothing Then
 			Contents = ""
 		Else
-			Contents = Item(sItem)
+			Contents = Me.Item(sItem)
 		End If
 		On Error Goto 0
     End Property
@@ -44,23 +44,23 @@ Class Class_Params
     ' ×÷  ÓÃ: Constructor
     '**********
 	Private Sub Class_Terminate()
-		If IsObject(Item) Then
-			Set Item = Nothing
+		If IsObject(Me.Item) Then
+			Set Me.Item = Nothing
 		End If
     End Sub
 
 	Private Sub Open
-		Set Item = Server.CreateObject("Scripting.Dictionary")
+		Set Me.Item = Server.CreateObject("Scripting.Dictionary")
 	End Sub
 
 	Sub Add(itemName,itemValue)
-		If Not IsObject(Item) Then Open
-		If Item Is Nothing Then Open
-		Item.Add itemName,itemValue
+		If Not IsObject(Me.Item) Then Open
+		If Me.Item Is Nothing Then Open
+		Me.Item.Add itemName,itemValue
 	End Sub
 
 	Sub Close()
-		Set Item = Nothing
+		Set Me.Item = Nothing
 	End Sub
 End Class
 %>

@@ -38,11 +38,11 @@ Class Class_Db
 	
     Sub Open()
 		On Error Resume Next
-		If ConnectionType = "ACCESS" Then
+		If Me.ConnectionType = "ACCESS" Then
 			SqlLocalPath = Replace(Request.ServerVariables("PATH_TRANSLATED"),Replace(Request.ServerVariables("PATH_INFO"),"/","\"),"")
 			ConnStr = "Provider=Microsoft.jet.OLEDB.4.0;Data Source=" & SqlLocalPath & Database
-		ElseIf ConnectionType = "MSSQL" Then
-			ConnStr = "Provider=SQLOLEDB.2;DATA SOURCE=" & ServerIp & ";UID="&Username&";PWD="&Password&";Database="&Database&""
+		ElseIf Me.ConnectionType = "MSSQL" Then
+			ConnStr = "Provider=SQLOLEDB.2;DATA SOURCE=" & Me.ServerIp & ";UID="&Username&";PWD="&Password&";Database="&Database&""
 		End If
 		Set Conn = CreateObject("ADODB.Connection")
 		Conn.Open ConnStr

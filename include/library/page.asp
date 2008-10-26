@@ -100,14 +100,14 @@ Class Class_Page
 	'**********
 	Sub Header_b(OutRs,sTable,sPK,sFields,sWhere,sSort)
 		Dim Cmd, sql,StrOrder, bFlag
-		bFlag = i_conn.Execute("select count(0) from sysobjects where id = object_id(N'["&PageProcedure&"]') and OBJECTPROPERTY(id, N'IsProcedure') = 1")(0)
+		bFlag = i_conn.Execute("select count(0) from sysobjects where id = object_id(N'["&Me.PageProcedure&"]') and OBJECTPROPERTY(id, N'IsProcedure') = 1")(0)
 		Set Cmd = Server.CreateObject("ADODB.Command")
 		On Error Resume Next
 		With Cmd
 			.ActiveConnection = i_conn
 			.CommandType = 4
 			If bFlag > 0 Then
-				.CommandText = PageProcedure
+				.CommandText = Me.PageProcedure
 			Else
 				Dim sqlParams, sqlCmd 
 				sqlParams = "@Tables varchar(1000)," & vbCr & "@PK varchar(100)," & vbCr & "@Sort varchar(200) = NULL," & vbCr & "@PageNumber int = 1," & vbCr & "@PageSize int = 10," & vbCr & "@Fields varchar(1000) = '**********'," & vbCr & "@Filter varchar(1000) = NULL" & vbCr

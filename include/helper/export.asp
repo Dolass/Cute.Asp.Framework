@@ -38,7 +38,7 @@ Class Class_Export
 		Dim rs,aAnother,i
 		Response.Buffer = True 
 		Response.ContentType = "application/vnd.ms-excel" 
-		Response.AddHeader "content-disposition", "inline; filename = "&FileName&".xls"
+		Response.AddHeader "content-disposition", "inline; filename = "&Me.FileName&".xls"
 		Response.Write "<table border=""1"">"
 		Set rs = oConn.Execute(sSql)
 		Response.Write("<tr>")
@@ -73,7 +73,7 @@ Class Class_Export
 		Dim rs,aAnother,i
 		Response.Buffer = True 
 		Response.ContentType = "application/octet-stream"
-		Response.AddHeader "content-disposition", "attachment; filename = "&FileName&".txt"
+		Response.AddHeader "content-disposition", "attachment; filename = "&Me.FileName&".txt"
 		Set rs = oConn.Execute(sSql)
 		If sFields = "" Then
 			For i=0 To rs.fields.count-1

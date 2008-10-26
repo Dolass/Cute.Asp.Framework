@@ -59,13 +59,19 @@ Class Class_File
 	'FormatFileSize
 	'作  用：格式化文件的大小
 	'**********
-	Function FormatFileSize(fs)
+	Function FormatFileSize(fs,isUnit)
+		Dim kUnit,mUnit,gUnit
+		If isUnit Then
+			kUnit = "&nbsp;KB"
+			mUnit = "&nbsp;MB"
+			gUnit = "&nbsp;GB"
+		End If
 		If fs>1073741824 Then
-			fs = FormatNumber(fs / 1073741824, 2, true)&"&nbsp;GB"
+			fs = FormatNumber(fs / 1073741824, 2, true)&gUnit
 		ElseIf fs>1048576 Then
-			fs = FormatNumber(fs / 1048576, 1, true)&"&nbsp;MB"
+			fs = FormatNumber(fs / 1048576, 1, true)&mUnit
 		ElseIf fs>1024 Then
-			fs = FormatNumber(fs / 1024, 1, true)&"&nbsp;KB"
+			fs = FormatNumber(fs / 1024, 1, true)&kUnit
 		Else
 			fs = FormatNumber(fs, 0, true)
 		End If
@@ -76,13 +82,13 @@ Class Class_File
 	'GetFileSize
 	'作  用：获取文件的大小
 	'**********
-	Function GetFileSize(fls)
+	Function GetFileSize(fls,isUnit)
 		Dim fso, fdr, arr_fls, fsize, i, fl
 		arr_fls = split(fls,"||")
 		fsize = 0
 		For Each i In arr_fls
 			fl = Server.MapPath(i)
-			Set fso = Server.CreateObject(FSO)
+			Set fso = Server.CreateObject(Me.FSO)
 			If fso.FileExists(fl) Then
 				Set fdr = fso.GetFile(fl)
 				fsize = fdr.size + fsize
@@ -90,7 +96,7 @@ Class Class_File
 			End If
 			Set fso = Nothing
 		Next
-		GetFileSize = Me.FormatFileSize(fsize)
+		GetFileSize = fsize
 	End Function
 	
 	'**********
@@ -103,7 +109,7 @@ Class Class_File
 		fsize = 0
 		For Each i In arr_fls
 			fl = Server.MapPath(i)
-			Set fso = Server.CreateObject(FSO)
+			Set fso = Server.CreateObject(Me.FSO)
 			If fso.FolderExists(fl) Then
 				Set fdr = fso.GetFolder(fl)
 				fsize = fdr.size + fsize
@@ -111,7 +117,7 @@ Class Class_File
 			End If
 			Set fso = Nothing
 		Next
-		GetFolderSize = Me.FormatFileSize(fsize)
+		GetFolderSize = fsize
 	End Function
 
 	'**********
@@ -122,7 +128,7 @@ Class Class_File
 	Function IsFolderExists(FolderPath)
 		Dim fso
 		FolderPath=Server.MapPath(".")&"\"&FolderPath
-		Set fso = Server.CreateObject(FSO)
+		Set fso = Server.CreateObject(Me.FSO)
 		If fso.FolderExists(FolderPath) then
 			IsFolderExists = True	'存在
 		Else
@@ -139,7 +145,7 @@ Class Class_File
 	Function IsFileExists(FilePath)
 		Dim fso
 		FilePath=Server.MapPath(".")&"\"&FilePath
-		Set fso = Server.CreateObject(FSO)
+		Set fso = Server.CreateObject(Me.FSO)
 		If fso.FileExists(FilePath) then
 			IsFileExists = True	'存在
 		Else
@@ -161,7 +167,7 @@ Class Class_File
 		Dim i,ii,CreateFolderSub,PhCreateFolderSub,BlInfo
 		BlInfo = False
 		CreateFolder = CFolder
-		Set objFSO = Server.CreateObject(FSO)
+		Set objFSO = Server.CreateObject(Me.FSO)
 		If Err Then
 			Err.Clear
 			Exit Function
@@ -199,7 +205,7 @@ Class Class_File
 		DelFile=True
 		Dim fso, sFile, i
 		sFile = split(sFiles,"|")
-		Set fso=Server.CreateObject(FSO) 
+		Set fso=Server.CreateObject(Me.FSO) 
 		For i = 0 to Ubound(sFile)
 			If fso.FileExists(Server.MapPath(sFile(i))) then 
 				fso.DeleteFile(Server.MapPath(sFile(i)))
@@ -221,7 +227,7 @@ Class Class_File
 		On Error Resume Next
 		DelFolder=False
 		Dim fso,tmpfolder,tmpsubfolder,tmpfile,tmpfiles 
-		Set fso=Server.CreateObject(FSO) 
+		Set fso=Server.CreateObject(Me.FSO) 
 		If (fso.FolderExists(Server.MapPath (sPath))) then 
 			Set tmpfolder=fso.GetFolder(Server.MapPath (sPath)) 
 			Set tmpfiles=tmpfolder.files 
@@ -250,7 +256,7 @@ Class Class_File
 		On Error Resume Next
 		Dim objStream
 		Dim RText
-		Set objStream = Server.CreateObject(Stream)
+		Set objStream = Server.CreateObject(Me.Stream)
 		If Err Then 
 			RText = Array(Err.Number,Err.Description)
 			LoadFile="False"
@@ -287,7 +293,7 @@ Class Class_File
 		SaveFile=True
 		Dim FileName
 		Dim S
-		Set S = Server.CreateObject(Stream)
+		Set S = Server.CreateObject(Me.Stream)
 		FileName=Server.MapPath(sFilePath)
 		With S
 			.Open
@@ -311,7 +317,7 @@ Class Class_File
 		On Error Resume Next
 		CopyFile = True
 	    Dim fs
-	    Set fs = Server.CreateObject(FSO)
+	    Set fs = Server.CreateObject(Me.FSO)
 	    fs.CopyFile Server.Mappath(sFilePath), Server.Mappath(dFilePath)
 	    Set fs = Nothing
 	    If Err Then
@@ -329,7 +335,7 @@ Class Class_File
 		On Error Resume Next
 		CopyFolder = True
 	    Dim fs
-	    Set fs = Server.CreateObject(FSO)
+	    Set fs = Server.CreateObject(Me.FSO)
 	    fs.CopyFolder Server.Mappath(sFolderPath), Server.Mappath(dFolderPath)
 	    Set fs = Nothing
 	    If Err Then 
@@ -346,7 +352,7 @@ Class Class_File
 		Dim aryFileList()
 		ReDim aryFileList(0)
 		Dim fso, f, f1, fc, s, i
-		Set fso = Server.CreateObject(FSO)
+		Set fso = Server.CreateObject(Me.FSO)
 		Set f = fso.GetFolder(Server.Mappath(strDir))
 		Set fc = f.Files
 		i=0
@@ -368,7 +374,7 @@ Class Class_File
 		Dim aryFileList()
 		ReDim aryFileList(0)
 		Dim fso, f, f1, fc, s, i
-		Set fso = Server.CreateObject(FSO)
+		Set fso = Server.CreateObject(Me.FSO)
 		Set f = fso.GetFolder(Server.Mappath(strDir))
 		Set fc = f.SubFolders 
 		i=0

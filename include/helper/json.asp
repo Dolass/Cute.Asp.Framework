@@ -9,9 +9,9 @@
 
 Class JSONClass
 	' 定义类属性，默认为Private
-	Dim SqlString ' 用于设置Select
-	Dim JSON ' 返回的JSON对象的名称
-	Dim DBConnection ' 连接到数据库的Connection对象
+	Private SqlString ' 用于设置Select
+	Private JSON ' 返回的JSON对象的名称
+	Private DBConnection ' 连接到数据库的Connection对象
 
 	' 可以外部调用的公共方法
 

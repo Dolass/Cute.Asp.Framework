@@ -36,7 +36,7 @@ Class Class_Date
     End Sub
 
 	Private Function getMistiming(sDate)
-		getMistiming = DateDiff("s","1970-1-1 00:00:00",DateAdd("h",TimeZone,sDate))
+		getMistiming = DateDiff("s","1970-1-1 00:00:00",DateAdd("h",Me.TimeZone,sDate))
 	End Function
 
     '**********
@@ -48,10 +48,10 @@ Class Class_Date
 	  Dim dWeek,dMonth
 	  Dim strZero,strZone
 	  strZero="00"
-	  If TimeZone > 0 Then
-	  	strZone = "+"&Right("0"&TimeZone,2)&"00"
+	  If Me.TimeZone > 0 Then
+	  	strZone = "+"&Right("0"&Me.TimeZone,2)&"00"
 	  Else
-	  	strZone = "-"&Right("0"&TimeZone,2)&"00"
+	  	strZone = "-"&Right("0"&Me.TimeZone,2)&"00"
 	  End If
 	  dWeek=Array("Sun","Mon","Tue","Wes","Thu","Fri","Sat")
 	  dMonth=Array("Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec")

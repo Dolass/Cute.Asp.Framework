@@ -47,7 +47,7 @@ Class Class_Session
     ' 作  用: Add a Session
     '**********
 	Sub [set](Key, Value)
-        Session(Mark & Key) = Value
+        Session(Me.Mark & Key) = Value
     End Sub
 
     '**********
@@ -55,7 +55,7 @@ Class Class_Session
     ' 作  用: get a Session
     '**********
 	Function [get](Key)
-        [get] = Session(Mark & Key)
+        [get] = Session(Me.Mark & Key)
     End Function
 
     '**********
@@ -63,7 +63,7 @@ Class Class_Session
     ' 作  用: Remove a Session
     '**********
 	Sub Remove(Key)
-        Session.Contents.Remove(Mark & Key)
+        Session.Contents.Remove(Me.Mark & Key)
     End Sub
 
     '**********
