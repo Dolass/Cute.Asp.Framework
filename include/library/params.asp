@@ -49,7 +49,7 @@ Class Class_Params
 		End If
     End Sub
 
-	Private Sub Open
+	Sub Open
 		Set Me.Item = Server.CreateObject("Scripting.Dictionary")
 	End Sub
 

@@ -44,7 +44,7 @@ Class Class_Export
 		Response.Write("<tr>")
 		If sFields = "" Then
 			For i=0 To rs.fields.count-1
-				Response.Write "<td>"&RS.Fields(i).Name&"</td>"
+				Response.Write "<td>"&rs.Fields(i).Name&"</td>"
 			Next
 		Else
 			aFields = Split(sFields,"|")
@@ -77,7 +77,7 @@ Class Class_Export
 		Set rs = oConn.Execute(sSql)
 		If sFields = "" Then
 			For i=0 To rs.fields.count-1
-				Response.Write RS.Fields(i).Name&Chr(9)
+				Response.Write rs.Fields(i).Name&Chr(9)
 			Next
 		Else
 			aFields = Split(sFields,"|")
