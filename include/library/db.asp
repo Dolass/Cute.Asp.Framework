@@ -114,6 +114,7 @@ Class Class_Db
     ' 作  用: 将一条记录转为一个字典对象
     '**********
 	Function GetRecordObject(source)
+		Dim Params, i
 		If TypeName(rs) <> "Recordset" Then
 			Tpub.db.Exec rs,source
 		End If
