@@ -1,5 +1,5 @@
 <%
-Option Explicit
+'Option Explicit
 Response.Buffer = True
 Dim StartTime : StartTime = timer()
 %>
