@@ -178,7 +178,6 @@ Class Class_Db
     ' 方法名: Insert
     ' 参  数: Table as Data Table
     ' 参  数: Params as Dictionary
-    ' 参  数: Where as 条件语句
     ' 作  用: 插入记录
     '**********
 	Function Insert(Table,Params)
