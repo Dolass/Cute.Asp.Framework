@@ -24,7 +24,7 @@ Class Class_Array
 	'**********
 	Function max(arr)
 		Dim tmp
-		tmp = rsort(arr)
+		tmp = Me.rsort(arr)
 		max = tmp(0)
 	End Function
 	
@@ -35,7 +35,7 @@ Class Class_Array
 	'**********
 	Function min(arr)
 		Dim tmp
-		tmp = sort(arr)
+		tmp = Me.sort(arr)
 		min = tmp(0)
 	End Function
 	
@@ -46,9 +46,9 @@ Class Class_Array
 	'**********
 	Function unshift(arr, var)
 		Dim i, tmp
-		tmp = toString(arr)
+		tmp = Me.toString(arr)
 		tmp = var & "," & tmp
-		tmp = toArray(tmp)
+		tmp = Me.toArray(tmp)
 		unshift = tmp
 	End Function
 	
@@ -63,7 +63,7 @@ Class Class_Array
 		For i = 0 To UBound(arr)
 			If i<>0 Then tmp = tmp & arr(i) & ","
 		Next
-		tmp = strip(tmp)
+		tmp = Me.strip(tmp)
 		shift = tmp
 	End Function
 	
@@ -74,9 +74,9 @@ Class Class_Array
 	' 作  用: push — 从后压入元素
 	'**********
 	Function push(arr, var)
-		Dim tmp : tmp = toString(arr)
-		tmp = tmp & "," & convComma(var)
-		tmp = toArray(tmp)
+		Dim tmp : tmp = Me.toString(arr)
+		tmp = tmp & "," & Me.convComma(var)
+		tmp = Me.toArray(tmp)
 		push = tmp
 	End Function
 	
@@ -90,7 +90,7 @@ Class Class_Array
 		For i = 0 To UBound(arr)
 			If i<>UBound(arr) Then tmp = tmp & arr(i) & ","
 		Next
-		tmp = strip(tmp)
+		tmp = Me.strip(tmp)
 		pop = tmp
 	End Function
 	
@@ -100,10 +100,10 @@ Class Class_Array
 	' 作  用: Strip "," of string
 	'**********
 	Function strip(Str)
-		If IsArray(Str) Then Str = toString(Str)
+		If IsArray(Str) Then Str = Me.toString(Str)
 		If Left(Str, 1) = "," Then Str = Right(Str, Len(Str) -1)
 		If Right(Str, 1) = "," Then Str = Left(Str, Len(Str) -1)
-		Str = toArray(Str)
+		Str = Me.toArray(Str)
 		strip = Str
 	End Function
 	
@@ -118,12 +118,12 @@ Class Class_Array
 		Dim tmp : tmp = ""
 		For Each e in arr
 			If IsArray(e) Then
-				Execute("tmp=tmp&" & callback & "(""" & toString(e) & """)" & "&"",""")
+				Execute("tmp=tmp&" & callback & "(""" & Me.toString(e) & """)" & "&"",""")
 			Else
 				Execute("tmp=tmp&" & callback & "(""" & e & """)" & "&"",""")
 			End If
 		Next
-		tmp = strip(tmp)
+		tmp = Me.strip(tmp)
 		walk = tmp
 	End Function
 	
@@ -144,7 +144,7 @@ Class Class_Array
 		For i = 0 To UBound(arr)
 			If i < start Or i > final Then tmp = tmp & arr(i) & ","
 		Next
-		tmp = strip(tmp)
+		tmp = Me.strip(tmp)
 		splice = tmp
 	End Function
 	
@@ -164,7 +164,7 @@ Class Class_Array
 				tmp = tmp & Value & "," & arr(i) & ","
 			End If
 		Next
-		tmp = strip(tmp)
+		tmp = Me.strip(tmp)
 		fill = tmp
 	End Function
 	
@@ -180,7 +180,7 @@ Class Class_Array
 				tmp = tmp & e & ","
 			End If
 		Next
-		tmp = strip(tmp)
+		tmp = Me.strip(tmp)
 		unique = tmp
 	End Function
 
@@ -195,7 +195,7 @@ Class Class_Array
 			tmp = tmp & e & ","
 		Next
 		tmp = StrReverse(tmp)
-		tmp = strip(tmp)
+		tmp = Me.strip(tmp)
 		reverse = tmp
 	End Function
 	
@@ -228,7 +228,7 @@ Class Class_Array
 			tmpi = Int((UBound(arr) + 1) * Rnd)
 			tmp = tmp & arr(tmpi) & ","
 		Next
-		tmp = strip(tmp)
+		tmp = Me.strip(tmp)
 		rand = tmp
 	End Function
 	

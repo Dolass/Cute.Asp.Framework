@@ -17,6 +17,7 @@
 '**********
 Class Class_Params
 	Public Item
+	Public Mode		'匹配模式	0:二进制匹配	1:文本匹配（不区分大小写）
 
  	'**********
     ' 函数名: Contents
@@ -37,6 +38,7 @@ Class Class_Params
     ' 作  用: Constructor
     '**********
 	Private Sub Class_Initialize()
+		Mode = 1
     End Sub
 
 	'**********
@@ -51,7 +53,7 @@ Class Class_Params
 
 	Sub Open
 		Set Me.Item = Server.CreateObject("Scripting.Dictionary")
-		Me.Item.CompareMode  = 1	'不区分大小写
+		Me.Item.CompareMode  = Mode
 	End Sub
 
 	Sub Add(itemName,itemValue)
