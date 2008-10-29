@@ -113,7 +113,7 @@ Class Class_Db
     ' 参  数: source as sql string or recordset object
     ' 作  用: 将一条记录转为一个字典对象
     '**********
-	Function GetRecordObject(source)
+	Function GetRowObject(source)
 		Dim Params, i
 		If TypeName(rs) <> "Recordset" Then
 			Tpub.db.Exec rs,source
@@ -136,7 +136,7 @@ Class Class_Db
 			End if
 		Next
 		Tpub.db.closeRs(rs)
-		Set GetRecordObject = Params
+		Set GetRowObject = Params
 		Set Params = Nothing
 	End Function
 
