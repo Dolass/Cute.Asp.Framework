@@ -51,6 +51,7 @@ Class Class_Params
 
 	Sub Open
 		Set Me.Item = Server.CreateObject("Scripting.Dictionary")
+		Me.Item.CompareMode  = 1	'不区分大小写
 	End Sub
 
 	Sub Add(itemName,itemValue)

@@ -203,17 +203,16 @@ Class Class_Array
 	' 函数名: search
 	' 参  数: arr as a Array
 	' 参  数: value as searching value
-	' 作  用: search — 查询元素，不存在则返回-1
+	' 作  用: search — 查询元素，不存在则返回False
 	'**********
 	Function search(arr, Value)
-		Dim i
-		For i = 0 To UBound(arr)
-			If arr(i) = Value Then
-				search = i
-				Exit Function
-			End If
-		Next
-		search = -1
+		Dim a_tmp
+		a_tmp = Filter(arr,Value)
+		If UBound(a_tmp) = -1 Then
+			search = False
+			Exit Function
+		End If
+		search = a_tmp(0)
 	End Function
 	
 	'**********
