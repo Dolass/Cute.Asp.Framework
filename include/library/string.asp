@@ -244,7 +244,7 @@ Class Class_String
 	' 参  数: format as the formating type
 	' 作  用: formatDate — Format Date
 	'**********
-	Function regReplace(ByVal str,re,restr,isCase)	'内容,正则
+	Function regExpReplace(ByVal str,re,restr,isCase)	'内容,正则
 		If Len(str) > 0 Then
 			Dim Obj
 			Set Obj = New Regexp
@@ -252,7 +252,7 @@ Class Class_String
 				If isCase Then .IgnoreCase = False Else .IgnoreCase = True 
 				.Global = True
 				.Pattern = re
-				regReplace = .Replace(str,restr)
+				regExpReplace = .Replace(str,restr)
 			End With
 			Set Obj = Nothing
 		End If
