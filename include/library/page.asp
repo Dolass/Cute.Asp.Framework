@@ -36,8 +36,12 @@ Class Class_Page
 		i_pNumber = 1
 		i_pCount = 0
 		i_rCount = 0
-		CurrentPath = "http://" & Request.ServerVariables("SERVER_NAME") & Request.ServerVariables("SCRIPT_NAME")
-		PageProcedure = "P_DbTable_RowCount_Paging"
+		If CStr(CurrentPath) = "80" Then 
+			CurrentPath = "http://" & Request.ServerVariables("SERVER_NAME") & LCase(Request.ServerVariables("Script_Name")) 
+		Else
+			CurrentPath = "http://" & Request.ServerVariables("SERVER_NAME") & ":" & LCase(Request.ServerVariables("Server_Port")) & LCase(Request.ServerVariables("Script_Name"))
+		End If
+		PageProcedure = ""
 	End Sub
 	
 	'********** Ù–‘…Ë÷√**************************
@@ -100,9 +104,9 @@ Class Class_Page
 	'**********
 	Sub Header_b(OutRs,sTable,sPK,sFields,sWhere,sSort)
 		Dim Cmd, sql,StrOrder, bFlag
+		sSort = Trim(sSort)
 		bFlag = i_conn.Execute("select count(0) from sysobjects where id = object_id(N'["&Me.PageProcedure&"]') and OBJECTPROPERTY(id, N'IsProcedure') = 1")(0)
 		Set Cmd = Server.CreateObject("ADODB.Command")
-		On Error Resume Next
 		With Cmd
 			.ActiveConnection = i_conn
 			.CommandType = 4
