@@ -158,29 +158,29 @@ Class Class_Page
 			CurrentPath = regExpReplace(CurrentPath,"&?"&str,"",false)
 			str = str & "&"
 		End If
-		Response.Write "<span class=""pageIntroA"">"
+		echo "<span class=""pageIntroA"">"
 		If i_rCount<>"" Then 
-			Response.Write "总数:<kbd class=""p_total"">"&i_rCount&"</kbd> "&vbCrlf
+			echo "总数:<kbd class=""p_total"">"&i_rCount&"</kbd> "&vbCrlf
 		End If
-		Response.Write "每页:<kbd class=""p_size"">"&i_pSize&"</kbd> "&vbCrlf
-		Response.Write "</span>"
-		Response.Write "<span class=""pageContorlA"">"
+		echo "每页:<kbd class=""p_size"">"&i_pSize&"</kbd> "&vbCrlf
+		echo "</span>"
+		echo "<span class=""pageContorlA"">"
 		If i_pNumber<=1 Then
-			Response.Write  "<a href=""#;"" class=""p_disabled"" disabled title=""已经是第一页了"">首页</a> <a href=""#;"" class=""p_disabled"" disabled>上一页</a> "
+			echo  "<a href=""#;"" class=""p_disabled"" disabled title=""已经是第一页了"">首页</a> <a href=""#;"" class=""p_disabled"" disabled>上一页</a> "
 		Else
-			Response.Write "<a href="""&CurrentPath&str&"PageID=1"" class=""p_start"" title=""第一页"">首页</a> <a href="""&CurrentPath&str&"PageID="&i_pNumber-1&""" class=""p_pre"">上一页</a> "
+			echo "<a href="""&CurrentPath&str&"PageID=1"" class=""p_start"" title=""第一页"">首页</a> <a href="""&CurrentPath&str&"PageID="&i_pNumber-1&""" class=""p_pre"">上一页</a> "
 		End If
 		If i_pCount="" Then
-			Response.Write "<a href="""&CurrentPath&str&"PageID="&i_pNumber+1&""" class=""p_next"">下一页</a>  <a href="""&CurrentPath&str&"PageID=999999999"" class=""p_end"">尾页</a> "
+			echo "<a href="""&CurrentPath&str&"PageID="&i_pNumber+1&""" class=""p_next"">下一页</a>  <a href="""&CurrentPath&str&"PageID=999999999"" class=""p_end"">尾页</a> "
 		Else
 			If i_pNumber>=i_pCount Then
-				Response.Write "<a href=""#;"" class=""p_disabled"" disabled>下一页</a> <a href=""#;"" class=""p_disabled"" disabled title=""已经是最后一页了"">尾页</a>"
+				echo "<a href=""#;"" class=""p_disabled"" disabled>下一页</a> <a href=""#;"" class=""p_disabled"" disabled title=""已经是最后一页了"">尾页</a>"
 			Else
-				Response.Write "<a href="""&CurrentPath&str&"PageID="&i_pNumber+1&""" class=""p_next"">下一页</a> <a href="""&CurrentPath&str&"PageID="&i_pCount&""" class=""p_end"" title=""最后一页"">尾页</a>"
+				echo "<a href="""&CurrentPath&str&"PageID="&i_pNumber+1&""" class=""p_next"">下一页</a> <a href="""&CurrentPath&str&"PageID="&i_pCount&""" class=""p_end"" title=""最后一页"">尾页</a>"
 			End If
 		End If
 		Call CommonFooterContorl(str,p_Type)
-		Response.Write "</span>"
+		echo "</span>"
 	End Function
 	
 	
@@ -195,44 +195,44 @@ Class Class_Page
 			CurrentPath = regExpReplace(CurrentPath,"&?"&str,"",false)
 			str = str & "&"
 		End If
-		Response.Write "<span class=""pageIntroB"">"
+		echo "<span class=""pageIntroB"">"
 		If i_rCount <> "" Then
-			Response.Write "总数:<kbd class=""p_total"">"&i_rCount&"</kbd>"
+			echo "总数:<kbd class=""p_total"">"&i_rCount&"</kbd>"
 		End If
-		Response.Write " 每页:<kbd class=""p_size"">"&i_pSize&"</kbd>"
-		Response.Write "</span>"
-		Response.Write "<span class=""pageContorlB"">"
+		echo " 每页:<kbd class=""p_size"">"&i_pSize&"</kbd>"
+		echo "</span>"
+		echo "<span class=""pageContorlB"">"
 		If i_pNumber = 1 Then 
-			Response.Write " <a href=""#;"" class=""p_disabled"" disabled title=""已经是第一页了"">上一页</a>"
+			echo " <a href=""#;"" class=""p_disabled"" disabled title=""已经是第一页了"">上一页</a>"
 		Else
-			Response.Write " <a href="""&CurrentPath&"PageID="&i_pNumber-1&""&str&""" class=""p_pre"">上一页</a> "
+			echo " <a href="""&CurrentPath&"PageID="&i_pNumber-1&""&str&""" class=""p_pre"">上一页</a> "
 		End If
 		If i_pNumber > m - 4 Then 
-			Response.Write " <a href="""&CurrentPath&"PageID=1"&str&""" class=""p_start"" title=""第一页"">1</a> "
-			If i_pNumber > m - 3 Then Response.Write " ... "
+			echo " <a href="""&CurrentPath&"PageID=1"&str&""" class=""p_start"" title=""第一页"">1</a> "
+			If i_pNumber > m - 3 Then echo " ... "
 		End If
 		For i = i_pNumber - m + 5 to i_pNumber + m - 1
 			If i > 0 and i <= i_pCount Then 
 				If i = i_pNumber Then
-					Response.Write " <strong class=""p_cur"">"&i&"</strong> "
+					echo " <strong class=""p_cur"">"&i&"</strong> "
 				Else
-					Response.Write " <a href="""&CurrentPath&"PageID="&i&""&str&""" class=""p_page"">"&i&"</a> "
+					echo " <a href="""&CurrentPath&"PageID="&i&""&str&""" class=""p_page"">"&i&"</a> "
 				End If
 			End If
 			If i_pNumber < m - 3 And i > m - 1 Then Exit For
 			If i_pNumber > m - 5 And i >= i_pNumber + m - 5 Then Exit For
 		Next
 		If i_pNumber < i_pCount - m + 5 Then
-			If i_pNumber < i_pCount - m + 4 Then Response.Write " ... "
-			Response.Write " <a href="""&CurrentPath&"PageID="&i_pCount&""&str&""" class=""p_end"" title=""最后一页"">"&i_pCount&"</a> "
+			If i_pNumber < i_pCount - m + 4 Then echo " ... "
+			echo " <a href="""&CurrentPath&"PageID="&i_pCount&""&str&""" class=""p_end"" title=""最后一页"">"&i_pCount&"</a> "
 		End If
 		If i_pNumber = i_pCount Then 
-			Response.Write " <a href=""#;"" class=""p_disabled"" disabled title=""已经是最后一页了"">下一页</a> "
+			echo " <a href=""#;"" class=""p_disabled"" disabled title=""已经是最后一页了"">下一页</a> "
 		Else
-			Response.Write " <a href="""&CurrentPath&"PageID="&i_pNumber+1&""&str&""" class=""p_next"">下一页</a> "
+			echo " <a href="""&CurrentPath&"PageID="&i_pNumber+1&""&str&""" class=""p_next"">下一页</a> "
 		End If
 		Call CommonFooterContorl(str,p_Type)
-		Response.Write "</span>"
+		echo "</span>"
 	End Function
 
 	'**********
@@ -241,18 +241,18 @@ Class Class_Page
 	Private Sub CommonFooterContorl(str,p_Type)
 		Select Case p_Type
 		Case "select"
-			Response.Write "&nbsp;跳转到:<select name=""PageID"" onChange=""location.href='"&CurrentPath&"?PageID='+this.options[this.selectedIndex].value+'"&str&"'"" class=""p_select"">"&vbCrlf
+			echo "&nbsp;跳转到:<select name=""PageID"" onChange=""location.href='"&CurrentPath&"?PageID='+this.options[this.selectedIndex].value+'"&str&"'"" class=""p_select"">"&vbCrlf
 			Dim i
 			For i=1 to i_pCount
-				Response.Write "<option value="""&i&""""
-				If i=i_pNumber Then Response.Write " selected"
-				Response.Write ">第"&i&"页</option>"&vbCrlf
+				echo "<option value="""&i&""""
+				If i=i_pNumber Then echo " selected"
+				echo ">第"&i&"页</option>"&vbCrlf
 			Next
-			Response.Write "</select>"&vbCrlf
+			echo "</select>"&vbCrlf
 		Case Else
 			Randomize
 			Dim PageID : PageID = "PageID" & Int(Rnd() * 10000000)
-			Response.Write " 跳转到:<input type=""text"" id="""&PageID&""" name=""PageID"" onkeydown=""if(event.keyCode==13) document.getElementById('btn_"&PageID&"').click();"" size=""3"" value="""&i_pNumber&""" onclick=""this.select()"" maxlength=8 class=""p_text""> "&vbCrlf & _
+			echo " 跳转到:<input type=""text"" id="""&PageID&""" name=""PageID"" onkeydown=""if(event.keyCode==13) document.getElementById('btn_"&PageID&"').click();"" size=""3"" value="""&i_pNumber&""" onclick=""this.select()"" maxlength=8 class=""p_text""> "&vbCrlf & _
 							 "<input type=""button"" value=""GO"" onclick=""location.href='"&CurrentPath&"?PageID='+document.getElementById('"&PageID&"').value+'"&str&"'"" align=""absmiddle"" id=""btn_"&PageID&""" class=""p_btn""></form>"
 		End Select
 	End Sub
@@ -270,5 +270,9 @@ Class Class_Page
 			Set Obj = Nothing
 		End If
 	End Function
+
+	Private Sub echo(str)
+		Response.Write str
+	End Sub
 End Class
 %>
