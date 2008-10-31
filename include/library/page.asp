@@ -36,11 +36,16 @@ Class Class_Page
 		i_pNumber = 1
 		i_pCount = 0
 		i_rCount = 0
-		If CStr(CurrentPath) = "80" Then 
-			CurrentPath = "http://" & Request.ServerVariables("SERVER_NAME") & LCase(Request.ServerVariables("Script_Name")) 
+		Dim port : port = LCase(Request.ServerVariables("Server_Port"))
+		Dim page : page = LCase(Request.ServerVariables("Script_Name"))
+		Dim url
+		If CStr(port) = "80" Then 
+			CurrentPath = "http://" & Request.ServerVariables("server_name") & page 
 		Else
-			CurrentPath = "http://" & Request.ServerVariables("SERVER_NAME") & ":" & LCase(Request.ServerVariables("Server_Port")) & LCase(Request.ServerVariables("Script_Name"))
+			CurrentPath = "http://" & Request.ServerVariables("server_name") & ":" & port & page
 		End If
+		CurrentPath = CurrentPath & "?" & regExpReplace(Request.QueryString(),"&?pageid=\d+[^\&]*","",false)
+		CurrentPath = regExpReplace(CurrentPath,"(^http\:\/\/.+[^&\?]+)$","$1&",false)
 		PageProcedure = ""
 	End Sub
 	
@@ -149,6 +154,10 @@ Class Class_Page
 	'**********
 	Function Footer_a(str,p_Type)
 		If i_pCount = 1 Then Exit Function
+		If str <> "" Then
+			CurrentPath = regExpReplace(CurrentPath,"&?"&str,"",false)
+			str = str & "&"
+		End If
 		Response.Write "<span class=""pageIntroA"">"
 		If i_rCount<>"" Then 
 			Response.Write "总数:<kbd class=""p_total"">"&i_rCount&"</kbd> "&vbCrlf
@@ -159,15 +168,15 @@ Class Class_Page
 		If i_pNumber<=1 Then
 			Response.Write  "<a href=""#;"" class=""p_disabled"" disabled title=""已经是第一页了"">首页</a> <a href=""#;"" class=""p_disabled"" disabled>上一页</a> "
 		Else
-			Response.Write "<a href="""&CurrentPath&"?PageID=1"&str&""" class=""p_start"" title=""第一页"">首页</a> <a href="""&CurrentPath&"?PageID="&i_pNumber-1&""&str&""" class=""p_pre"">上一页</a> "
+			Response.Write "<a href="""&CurrentPath&str&"PageID=1"" class=""p_start"" title=""第一页"">首页</a> <a href="""&CurrentPath&str&"PageID="&i_pNumber-1&""" class=""p_pre"">上一页</a> "
 		End If
 		If i_pCount="" Then
-			Response.Write "<a href="""&CurrentPath&"?PageID="&i_pNumber+1&""&str&""" class=""p_next"">下一页</a>  <a href="""&CurrentPath&"?PageID=999999999"&str&""" class=""p_end"">尾页</a> "
+			Response.Write "<a href="""&CurrentPath&str&"PageID="&i_pNumber+1&""" class=""p_next"">下一页</a>  <a href="""&CurrentPath&str&"PageID=999999999"" class=""p_end"">尾页</a> "
 		Else
 			If i_pNumber>=i_pCount Then
 				Response.Write "<a href=""#;"" class=""p_disabled"" disabled>下一页</a> <a href=""#;"" class=""p_disabled"" disabled title=""已经是最后一页了"">尾页</a>"
 			Else
-				Response.Write "<a href="""&CurrentPath&"?PageID="&i_pNumber+1&""&str&""" class=""p_next"">下一页</a> <a href="""&CurrentPath&"?PageID="&i_pCount&""&str&""" class=""p_end"" title=""最后一页"">尾页</a>"
+				Response.Write "<a href="""&CurrentPath&str&"PageID="&i_pNumber+1&""" class=""p_next"">下一页</a> <a href="""&CurrentPath&str&"PageID="&i_pCount&""" class=""p_end"" title=""最后一页"">尾页</a>"
 			End If
 		End If
 		Call CommonFooterContorl(str,p_Type)
@@ -182,6 +191,10 @@ Class Class_Page
 		Dim i, m
 		m = 9
 		If i_pCount = 1 Then Exit Function
+		If str <> "" Then
+			CurrentPath = regExpReplace(CurrentPath,"&?"&str,"",false)
+			str = str & "&"
+		End If
 		Response.Write "<span class=""pageIntroB"">"
 		If i_rCount <> "" Then
 			Response.Write "总数:<kbd class=""p_total"">"&i_rCount&"</kbd>"
@@ -192,10 +205,10 @@ Class Class_Page
 		If i_pNumber = 1 Then 
 			Response.Write " <a href=""#;"" class=""p_disabled"" disabled title=""已经是第一页了"">上一页</a>"
 		Else
-			Response.Write " <a href="""&CurrentPath&"?PageID="&i_pNumber-1&""&str&""" class=""p_pre"">上一页</a> "
+			Response.Write " <a href="""&CurrentPath&"PageID="&i_pNumber-1&""&str&""" class=""p_pre"">上一页</a> "
 		End If
 		If i_pNumber > m - 4 Then 
-			Response.Write " <a href="""&CurrentPath&"?PageID=1"&str&""" class=""p_start"" title=""第一页"">1</a> "
+			Response.Write " <a href="""&CurrentPath&"PageID=1"&str&""" class=""p_start"" title=""第一页"">1</a> "
 			If i_pNumber > m - 3 Then Response.Write " ... "
 		End If
 		For i = i_pNumber - m + 5 to i_pNumber + m - 1
@@ -203,7 +216,7 @@ Class Class_Page
 				If i = i_pNumber Then
 					Response.Write " <strong class=""p_cur"">"&i&"</strong> "
 				Else
-					Response.Write " <a href="""&CurrentPath&"?PageID="&i&""&str&""" class=""p_page"">"&i&"</a> "
+					Response.Write " <a href="""&CurrentPath&"PageID="&i&""&str&""" class=""p_page"">"&i&"</a> "
 				End If
 			End If
 			If i_pNumber < m - 3 And i > m - 1 Then Exit For
@@ -211,12 +224,12 @@ Class Class_Page
 		Next
 		If i_pNumber < i_pCount - m + 5 Then
 			If i_pNumber < i_pCount - m + 4 Then Response.Write " ... "
-			Response.Write " <a href="""&CurrentPath&"?PageID="&i_pCount&""&str&""" class=""p_end"" title=""最后一页"">"&i_pCount&"</a> "
+			Response.Write " <a href="""&CurrentPath&"PageID="&i_pCount&""&str&""" class=""p_end"" title=""最后一页"">"&i_pCount&"</a> "
 		End If
 		If i_pNumber = i_pCount Then 
 			Response.Write " <a href=""#;"" class=""p_disabled"" disabled title=""已经是最后一页了"">下一页</a> "
 		Else
-			Response.Write " <a href="""&CurrentPath&"?PageID="&i_pNumber+1&""&str&""" class=""p_next"">下一页</a> "
+			Response.Write " <a href="""&CurrentPath&"PageID="&i_pNumber+1&""&str&""" class=""p_next"">下一页</a> "
 		End If
 		Call CommonFooterContorl(str,p_Type)
 		Response.Write "</span>"
@@ -243,5 +256,19 @@ Class Class_Page
 							 "<input type=""button"" value=""GO"" onclick=""location.href='"&CurrentPath&"?PageID='+document.getElementById('"&PageID&"').value+'"&str&"'"" align=""absmiddle"" id=""btn_"&PageID&""" class=""p_btn""></form>"
 		End Select
 	End Sub
+
+	Private Function regExpReplace(ByVal str,re,restr,isCase)	'内容,正则
+		If Len(str) > 0 Then
+			Dim Obj
+			Set Obj = New Regexp
+			With Obj
+				If isCase Then .IgnoreCase = False Else .IgnoreCase = True 
+				.Global = True
+				.Pattern = re
+				regExpReplace = .Replace(str,restr)
+			End With
+			Set Obj = Nothing
+		End If
+	End Function
 End Class
 %>
