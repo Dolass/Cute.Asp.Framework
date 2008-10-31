@@ -20,28 +20,30 @@ Sub echo(ByVal str)
 End Sub
 
 '**********
-' 函数名: isNothing
+' 函数名: isset
 ' 参  数: Obj as a object
-' 作  用: isNothing — Check if the object is nothing
+' 作  用: isNothing — Check if the object is nothing or null or undefined
 '**********
-Function isNothing(Obj)
-    If Not IsObject(Obj) Then
-        isNothing = true
-        Exit Function
-    End If
-    If Obj Is Nothing Then
-        isNothing = true
-        Exit Function
-    End If
+Function isset(Obj)
+	If IsObject(Obj) Then
+		If Obj Is Nothing Then
+			isset = true
+			Exit Function
+		End If
+	End If
     If IsNull(Obj) Then
-        IsNothing = true
+        isset = true
         Exit Function
     End If
     If IsEmpty(Obj) Then
-        IsNothing = true
+        isset = true
         Exit Function
     End If
-    isNothing = false
+	If Obj = "" Then
+		isset = true
+		Exit Function
+	End If
+    isset = false
 End Function
 
 '**********

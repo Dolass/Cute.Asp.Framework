@@ -141,40 +141,6 @@ Class Class_Db
 	End Function
 
     '**********
-    ' 方法名: Update
-    ' 参  数: Table as Data Table
-    ' 参  数: Params as Dictionary
-    ' 参  数: Where as 条件语句
-    ' 作  用: 更新记录
-    '**********
-	Function Update(Table,Params,Where)
-		Dim sqlCmd, parameteres, oParams
-		Dim iName
-		sqlCmd="Update "&Table&" set "
-		parameteres = " "
-		Set oParams = Server.CreateObject("Scripting.Dictionary")
-		If Not IsNull(params) Then
-			For Each iName in params
-				sqlCmd = sqlCmd & iName & "=@" & iName & ","
-				parameteres = parameteres & "@" & iName & " varchar(8000)" & ","
-			Next
-		End If
-		sqlCmd = Left(sqlCmd,Len(sqlCmd)-1)
-		If Trim(Where) <> "" Then sqlCmd=sqlCmd&" Where "&Where&""
-		parameteres = Left(parameteres,Len(parameteres)-1)
-		oParams.Add "@stmt",sqlCmd
-		oParams.Add "@parameters",parameteres
-		If Not IsNull(Params) Then
-			For Each iName in Params
-				oParams.Add "@"&iName,Params(iName)
-			Next
-		End If
-		Call Me.ExecuteNonQuery("sp_executesql",oParams)
-		Set Params = Nothing
-		Set oParams = Nothing
-	End Function
-
-    '**********
     ' 方法名: Insert
     ' 参  数: Table as Data Table
     ' 参  数: Params as Dictionary
@@ -196,6 +162,7 @@ Class Class_Db
 		sqlCmd_a = Left(sqlCmd_a,Len(sqlCmd_a)-1)
 		sqlCmd_b = Left(sqlCmd_b,Len(sqlCmd_b)-1)
 		sqlCmd = sqlCmd & sqlCmd_a & ")  values(" & sqlCmd_b & ")"
+		sqlCmd = sqlCmd & vbCrlf & "select IsNull(SCOPE_IDENTITY(),-100)"
 		parameteres = Left(parameteres,Len(parameteres)-1)
 		oParams.Add "@stmt",sqlCmd
 		oParams.Add "@parameters",parameteres
@@ -204,7 +171,42 @@ Class Class_Db
 				oParams.Add "@"&iName,Params(iName)
 			Next
 		End If
-		Call Me.ExecuteNonQuery("sp_executesql",oParams)
+		Insert = Me.ExecuteScalar("sp_executesql",oParams)
+		Set Params = Nothing
+		Set oParams = Nothing
+	End Function
+
+    '**********
+    ' 方法名: Update
+    ' 参  数: Table as Data Table
+    ' 参  数: Params as Dictionary
+    ' 参  数: Where as 条件语句
+    ' 作  用: 更新记录
+    '**********
+	Function Update(Table,Params,Where)
+		Dim sqlCmd, parameteres, oParams
+		Dim iName
+		sqlCmd="Update "&Table&" set "
+		parameteres = " "
+		Set oParams = Server.CreateObject("Scripting.Dictionary")
+		If Not IsNull(params) Then
+			For Each iName in params
+				sqlCmd = sqlCmd & iName & "=@" & iName & ","
+				parameteres = parameteres & "@" & iName & " varchar(8000)" & ","
+			Next
+		End If
+		sqlCmd = Left(sqlCmd,Len(sqlCmd)-1)
+		If Trim(Where) <> "" Then sqlCmd=sqlCmd&" Where "&Where&""
+		sqlCmd = sqlCmd & vbCrlf & "select IsNull(@@ROWCOUNT,-100)"
+		parameteres = Left(parameteres,Len(parameteres)-1)
+		oParams.Add "@stmt",sqlCmd
+		oParams.Add "@parameters",parameteres
+		If Not IsNull(Params) Then
+			For Each iName in Params
+				oParams.Add "@"&iName,Params(iName)
+			Next
+		End If
+		Update = Me.ExecuteScalar("sp_executesql",oParams)
 		Set Params = Nothing
 		Set oParams = Nothing
 	End Function
