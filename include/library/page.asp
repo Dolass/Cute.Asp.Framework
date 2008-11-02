@@ -46,6 +46,7 @@ Class Class_Page
 		End If
 		CurrentPath = CurrentPath & "?" & regExpReplace(Request.QueryString(),"&?pageid=\d+[^\&]*","",false)
 		CurrentPath = regExpReplace(CurrentPath,"(^http\:\/\/.+[^&\?]+)$","$1&",false)
+		CurrentPath = Replace(CurrentPath,"?&","?")
 		PageProcedure = "PagingLarge"
 	End Sub
 	
@@ -236,6 +237,7 @@ Class Class_Page
 		If i_pCount = 1 Then Exit Function
 		If str <> "" Then
 			CurrentPath = regExpReplace(CurrentPath,"&?"&str,"",false)
+			CurrentPath = Replace(CurrentPath,"?&","")
 			str = str & "&"
 		End If
 		echo "<span class=""pageIntroB"">"
@@ -284,7 +286,7 @@ Class Class_Page
 	Private Sub CommonFooterContorl(str,p_Type)
 		Select Case p_Type
 		Case "select"
-			echo "&nbsp;跳转到:<select name=""PageID"" onChange=""location.href='"&CurrentPath&"?PageID='+this.options[this.selectedIndex].value+'"&str&"'"" class=""p_select"">"&vbCrlf
+			echo "&nbsp;跳转到:<select name=""PageID"" onchange=""location.href='"&CurrentPath&"?PageID='+this.options[this.selectedIndex].value+'"&str&"'"" class=""p_select"">"&vbCrlf
 			Dim i
 			For i=1 to i_pCount
 				echo "<option value="""&i&""""
@@ -296,7 +298,7 @@ Class Class_Page
 			Randomize
 			Dim PageID : PageID = "PageID" & Int(Rnd() * 10000000)
 			echo " 跳转到:<input type=""text"" id="""&PageID&""" name=""PageID"" onkeydown=""if(event.keyCode==13) document.getElementById('btn_"&PageID&"').click();"" size=""3"" value="""&i_pNumber&""" onclick=""this.select()"" maxlength=8 class=""p_text""> "&vbCrlf & _
-							 "<input type=""button"" value=""GO"" onclick=""location.href='"&CurrentPath&"?PageID='+document.getElementById('"&PageID&"').value+'"&str&"'"" id=""btn_"&PageID&""" class=""p_btn""></form>"
+							 "<input type=""button"" value=""GO"" onclick=""location.href='"&CurrentPath&"?PageID='+document.getElementById('"&PageID&"').value+'"&str&"'"" id=""btn_"&PageID&""" class=""p_btn"">"
 		End Select
 	End Sub
 
