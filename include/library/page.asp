@@ -46,7 +46,7 @@ Class Class_Page
 		End If
 		CurrentPath = CurrentPath & "?" & regExpReplace(Request.QueryString(),"&?pageid=\d+[^\&]*","",false)
 		CurrentPath = regExpReplace(CurrentPath,"(^http\:\/\/.+[^&\?]+)$","$1&",false)
-		PageProcedure = ""
+		PageProcedure = "PagingLarge"
 	End Sub
 	
 	'**********属性设置**************************
@@ -93,60 +93,103 @@ Class Class_Page
 	'**********分页模板Top（1）******************
 	'Call Header_a(Obj,SQL语句)
 	'**********
-	Sub Header_a(OutRs,sql)
-		Set OutRs = Server.CreateObject("ADODB.Recordset")
-		OutRs.open sql,i_conn,1,1
-		If Not OutRs.eof Then
-			i_rCount = OutRs.RecordCount
-			i_pCount = Abs(Int(-(i_rCount / i_pSize)))
-			If i_pNumber > i_pCount Then i_pNumber = i_pCount
-			OutRs.Move i_pSize * (Abs(i_pNumber) - 1)
-		End If
-	End Sub
-	
-	'**********分页模板Top（2）******************
-	'Call Header_b(Obj,数据表名,主键,查询字段,查询条件,排序)
-	'**********
-	Sub Header_b(OutRs,sTable,sPK,sFields,sWhere,sSort)
+	Sub Header_a(OutRs,sTable,sFields,sWhere,sSort)
 		Dim Cmd, sql,StrOrder, bFlag
 		sSort = Trim(sSort)
-		bFlag = i_conn.Execute("select count(0) from sysobjects where id = object_id(N'["&Me.PageProcedure&"]') and OBJECTPROPERTY(id, N'IsProcedure') = 1")(0)
 		Set Cmd = Server.CreateObject("ADODB.Command")
 		With Cmd
 			.ActiveConnection = i_conn
 			.CommandType = 4
-			If bFlag > 0 Then
+			.CommandText = Me.PageProcedure
+			.Parameters.Append .CreateParameter ("@TableName",200,,1000,sTable)
+			.Parameters.Append .CreateParameter ("@Fields",200,,1000,sFields)
+			.Parameters.Append .CreateParameter ("@OrderField",200,,200,sSort)
+			.Parameters.Append .CreateParameter ("@sqlWhere",200,,1000,sWhere)
+			.Parameters.Append .CreateParameter ("@pageSize",5,,,i_pSize)
+			.Parameters.Append .CreateParameter ("@pageIndex",5,,,i_pNumber)
+			Set OutRs = .Execute
+		End With
+		Set Cmd = Nothing
+		i_pCount = OutRs("fldTotalPage")
+		i_rCount = OutRs("fldtotalRecord")
+		Set OutRs = OutRs.NextRecordset
+		If i_pNumber > i_pCount Then i_pNumber = i_pCount
+	End Sub
+	
+	'**********分页模板Top（2）******************
+	'Call Header_b(Obj,数据表名,主键,查询字段,查询条件,排序)
+	'SQL Server 2000
+	'**********
+	Sub Header_b(OutRs,sTable,sFields,sWhere,sGroup,sSort)
+		Dim Cmd, sql,StrOrder, bFlag
+		sSort = Trim(sSort)
+		Call i_conn.Execute("select count(0) from sysobjects where id = object_id(N'["&Me.PageProcedure&"]') and OBJECTPROPERTY(id, N'IsProcedure') = 1",bFlag)
+		Set Cmd = Server.CreateObject("ADODB.Command")
+		With Cmd
+			.ActiveConnection = i_conn
+			.CommandType = 4
+			If bFlag Then
 				.CommandText = Me.PageProcedure
 			Else
 				Dim sqlParams, sqlCmd 
-				sqlParams = "@Tables varchar(1000)," & vbCr & "@PK varchar(100)," & vbCr & "@Sort varchar(200) = NULL," & vbCr & "@PageNumber int = 1," & vbCr & "@PageSize int = 10," & vbCr & "@Fields varchar(1000) = '**********'," & vbCr & "@Filter varchar(1000) = NULL" & vbCr
-				sqlCmd = "IF @Sort IS NULL OR @Sort = ''" & vbCr & "SET @Sort = @PK" & vbCr & "DECLARE @SortTable varchar(100),@SortName varchar(100),@strSortColumn varchar(200),@operator char(2),@type varchar(100),@prec int" & vbCr & "IF CHARINDEX('DESC',@Sort)>0" & vbCr & "BEGIN" & vbCr & "SET @strSortColumn = REPLACE(@Sort, 'DESC', '')" & vbCr & "SET @operator = '<='" & vbCr & "END" & vbCr & "ELSE" & vbCr & "BEGIN" & vbCr & "IF CHARINDEX('ASC', @Sort) = 0" & vbCr & "SET @strSortColumn = REPLACE(@Sort, 'ASC', '')" & vbCr & "SET @operator = '>='" & vbCr & "END" & vbCr & "IF CHARINDEX('.', @strSortColumn) > 0" & vbCr & "BEGIN" & vbCr & "SET @SortTable = SUBSTRING(@strSortColumn, 0, CHARINDEX('.',@strSortColumn))" & vbCr & "SET @SortName = SUBSTRING(@strSortColumn, CHARINDEX('.',@strSortColumn) + 1, LEN(@strSortColumn))" & vbCr & "END" & vbCr & "ELSE" & vbCr & "BEGIN" & vbCr & "SET @SortTable = @Tables" & vbCr & "SET @SortName = @strSortColumn" & vbCr & "END" & vbCr & "SELECT @type=t.name, @prec=c.prec FROM sysobjects o JOIN syscolumns c on o.id=c.id JOIN systypes t on c.xusertype=t.xusertype WHERE o.name = @SortTable AND c.name = @SortName" & vbCr & "IF CHARINDEX('char', @type) > 0" & vbCr & "SET @type = @type + '(' + CAST(@prec AS varchar) + ')'" & vbCr & "DECLARE @strPageSize varchar(50),@strStartRow varchar(50),@strFilter varchar(1000),@strSimpleFilter varchar(1000),@strGroup varchar(1000)" & vbCr & "IF @PageNumber < 1" & vbCr & "SET @PageNumber = 1" & vbCr & "SET @strPageSize = CAST(@PageSize AS varchar(50))" & vbCr & "SET @strStartRow = CAST(((@PageNumber - 1)*@PageSize + 1) AS varchar(50))" & vbCr & "IF @Filter IS NOT NULL AND @Filter != ''" & vbCr & "BEGIN" & vbCr & "SET @strFilter = ' WHERE ' + @Filter + ' '" & vbCr & "SET @strSimpleFilter = ' AND ' + @Filter + ' '" & vbCr & "END" & vbCr & "ELSE" & vbCr & "BEGIN" & vbCr & "SET @strSimpleFilter = ''" & vbCr & "SET @strFilter = ''" & vbCr & "END" & vbCr & "EXEC ('" & vbCr & "DECLARE @PageCount Int,@Count int" & vbCr & "SELECT @Count=Count(*) FROM ' + @Tables + @strFilter  + '" & vbCr & "Set @PageCount = ABS(CEILING(@Count/' + @strPageSize + '.))" & vbCr & "Select @PageCount As PageCount,@Count as RecordCount" & vbCr & "')" & vbCr & "EXEC('" & vbCr & "DECLARE @SortColumn ' + @type + '" & vbCr & "SET ROWCOUNT ' + @strStartRow + '" & vbCr & "SELECT @SortColumn=' + @strSortColumn + ' FROM ' + @Tables + @strFilter + ' ORDER BY ' + @Sort + '" & vbCr & "SET ROWCOUNT ' + @strPageSize + '" & vbCr & "SELECT ' + @Fields + ' FROM ' + @Tables + ' WHERE ' + @strSortColumn + @operator + ' @SortColumn ' + @strSimpleFilter + ' ORDER BY ' + @Sort + '" & vbCr & "')" & vbCr
+				sqlParams = "@TableName VARCHAR(200),@Fields VARCHAR(200),@sqlWhere VARCHAR(200) = '',@Group VARCHAR(200) = '',@OrderField VARCHAR(200) = '',@PageSize INT,@CurrentPage INT = 1"
+				sqlCmd = "DECLARE @SortColumn VARCHAR(200) DECLARE @Operator CHAR(2) DECLARE @SortTable VARCHAR(200) DECLARE @SortName VARCHAR(200) Declare @totalRecord int DECLARE @totalPage INT Declare @sql nvarchar(4000) IF @Fields = '' SET @Fields = '*' IF @sqlWhere = '' SET @sqlWhere = ' WHERE 1=1' ELSE SET @sqlWhere = ' WHERE ' + @sqlWhere IF @Group <>'' SET @Group = ' GROUP BY ' + @Group IF @OrderField <> '' BEGIN DECLARE @pos1 INT, @pos2 INT SET @OrderField = REPLACE(REPLACE(@OrderField, ' asc', ' ASC'), ' desc', ' DESC') IF CHARINDEX(' DESC', @OrderField) > 0 IF CHARINDEX(' ASC', @OrderField) > 0 BEGIN IF CHARINDEX(' DESC', @OrderField) < CHARINDEX(' ASC', @OrderField) SET @Operator = '<=' ELSE SET @Operator = '>=' END ELSE SET @Operator = '<=' ELSE SET @Operator = '>=' SET @SortColumn = REPLACE(REPLACE(REPLACE(@OrderField, ' ASC', ''), ' DESC', ''), ' ', '') SET @pos1 = CHARINDEX(',', @SortColumn) IF @pos1 > 0 SET @SortColumn = SUBSTRING(@SortColumn, 1, @pos1-1) SET @pos2 = CHARINDEX('.', @SortColumn) IF @pos2 > 0 BEGIN SET @SortTable = SUBSTRING(@SortColumn, 1, @pos2-1) IF @pos1 > 0  SET @SortName = SUBSTRING(@SortColumn, @pos2+1, @pos1-@pos2-1) ELSE SET @SortName = SUBSTRING(@SortColumn, @pos2+1, LEN(@SortColumn)-@pos2) END ELSE BEGIN SET @SortTable = @TableName SET @SortName = @SortColumn END END DECLARE @type varchar(50) DECLARE @prec int SELECT @type=t.name, @prec=c.prec FROM sysobjects o  JOIN syscolumns c on o.id=c.id JOIN systypes t on c.xusertype=t.xusertype WHERE o.name = @SortTable AND c.name = @SortName IF CHARINDEX('char', @type) > 0 SET @type = @type + '(' + CAST(@prec AS varchar) + ')' DECLARE @TopRows INT SET @TopRows = @PageSize * (@CurrentPage-1) + 1 if (@SqlWhere='' or @sqlWhere=NULL) set @sql = 'select @totalRecord = count(1) from ' + @TableName + @Group else set @sql = 'select @totalRecord = count(1) from ' + @TableName + @sqlWhere + @Group EXEC sp_executesql @sql,N'@totalRecord int OUTPUT',@totalRecord OUTPUT SELECT @totalPage=CEILING((@totalRecord+0.0)/@PageSize) SELECT @totalRecord AS RecordCount,@totalPage AS PageCount EXEC(' DECLARE @SortColumnBegin ' + @type + ' SET ROWCOUNT ' + @TopRows + ' SELECT @SortColumnBegin=' + @SortColumn + ' FROM ' + @TableName + ' ' + @sqlWhere + ' ' + @Group + ' ORDER BY ' + @OrderField + ' SET ROWCOUNT ' + @PageSize + ' SELECT ' + @Fields + ' FROM ' + @TableName + ' ' + @sqlWhere + ' AND ' + @SortColumn + '' + @Operator + '@SortColumnBegin ' + @Group + ' ORDER BY ' + @OrderField)"
 				.CommandText = "sp_executesql"
 				.Parameters.Append .CreateParameter("@stmt",203,,8000,sqlCmd)
 				.Parameters.Append .CreateParameter("@parameters",203,,8000,sqlParams)
 			End If
-			.Parameters.Append .CreateParameter ("@Table",200,,1000,sTable)
-			.Parameters.Append .CreateParameter ("@PK",200,,100,sPK)
-			.Parameters.Append .CreateParameter ("@Sort",200,,200,sSort)
-			.Parameters.Append .CreateParameter ("@PageNumber",3,,,i_pNumber)
-			.Parameters.Append .CreateParameter ("@PageSize",2,,,i_pSize)
+			.Parameters.Append .CreateParameter ("@TableName",200,,1000,sTable)
 			.Parameters.Append .CreateParameter ("@Fields",200,,1000,sFields)
-			.Parameters.Append .CreateParameter ("@Filter",200,,1000,sWhere)
+			.Parameters.Append .CreateParameter ("@sqlWhere",200,,1000,sWhere)
+			.Parameters.Append .CreateParameter ("@Group",200,,1000,sGroup)
+			.Parameters.Append .CreateParameter ("@OrderField",200,,200,sSort)
+			.Parameters.Append .CreateParameter ("@PageSize",5,,,i_pSize)
+			.Parameters.Append .CreateParameter ("@CurrentPage",5,,,i_pNumber)
 			Set OutRs = .Execute
 		End With
 		Set Cmd = Nothing
 		i_pCount = OutRs("PageCount")
 		i_rCount = OutRs("RecordCount")
 		Set OutRs = OutRs.NextRecordset
-		If i_rCount = 0 Then
-			If sWhere = "" Or IsNull(sWhere) Then
-				i_rCount = i_conn.Execute("SELECT COUNT(0) FROM "&sTable)(0)
-			Else
-				i_rCount = i_conn.Execute("SELECT COUNT(0) FROM "&sTable&" WHERE "&sWhere)(0)
-			End If
-		End If
 		If i_pNumber > i_pCount Then i_pNumber = i_pCount
-		On Error Goto 0
+	End Sub
+
+	'**********分页模板Top（3）******************
+	'Call Header_c(Obj,数据表名,查询字段,查询条件,排序)
+	'SQL Server 2005
+	'**********
+	Sub Header_c(OutRs,sTable,sFields,sWhere,sGroup,sSort)
+		Dim Cmd, sql,StrOrder, bFlag
+		sSort = Trim(sSort)
+		Call i_conn.Execute("select Top 1 1 from sysobjects where id = object_id(N'["&Me.PageProcedure&"]') and OBJECTPROPERTY(id, N'IsProcedure') = 1",bFlag)
+		Set Cmd = Server.CreateObject("ADODB.Command")
+		With Cmd
+			.ActiveConnection = i_conn
+			.CommandType = 4
+			If bFlag Then
+				.CommandText = Me.PageProcedure
+			Else
+				Dim sqlParams, sqlCmd 
+				sqlParams = "@TableName varchar(350),@Fields varchar(5000) = '*',@sqlWhere varchar(5000) = Null,@Group varchar(5000) = Null,@OrderField varchar(5000),@PageSize int,@CurrentPage int = 1"
+				sqlCmd = "Declare @sql nvarchar(4000) Declare @totalRecord int  DECLARE @totalPage INT if (@SqlWhere='' or @sqlWhere=NULL) set @sql = 'select @totalRecord = count(1) from ' + @TableName else set @sql = 'select @totalRecord = count(1) from ' + @TableName + ' where ' + @sqlWhere EXEC sp_executesql @sql,N'@totalRecord int OUTPUT',@totalRecord OUTPUT SELECT @totalPage=CEILING((@totalRecord+0.0)/@PageSize) SELECT @totalRecord AS 'RecordCount',@totalPage AS 'PageCount' IF @Group <>'' SET @Group = ' GROUP BY ' + @Group if (@SqlWhere='' or @sqlWhere=NULL) set @sql = 'Select * FROM (select ROW_NUMBER() Over(order by ' + @OrderField + ') as rowId,' + @Fields + ' from ' + @TableName + @Group else set @sql = 'Select * FROM (select ROW_NUMBER() Over(order by ' + @OrderField + ') as rowId,' + @Fields + ' from ' + @TableName + ' where ' + @SqlWhere + @Group if @CurrentPage<=0  Set @CurrentPage = 1 if @CurrentPage>@TotalPage Set @CurrentPage = @TotalPage Declare @StartRecord int Declare @EndRecord int set @StartRecord = (@CurrentPage-1)*@PageSize + 1 set @EndRecord = @StartRecord + @PageSize - 1 set @Sql = @Sql + ') as tempTable where rowId >=' + CONVERT(VARCHAR(50),@StartRecord) + ' and rowid<= ' + CONVERT(VARCHAR(50),@EndRecord) Exec(@Sql)"
+				.CommandText = "sp_executesql"
+				.Parameters.Append .CreateParameter("@stmt",203,,8000,sqlCmd)
+				.Parameters.Append .CreateParameter("@parameters",203,,8000,sqlParams)
+			End If
+			.Parameters.Append .CreateParameter ("@TableName",200,,1000,sTable)
+			.Parameters.Append .CreateParameter ("@Fields",200,,1000,sFields)
+			.Parameters.Append .CreateParameter ("@sqlWhere",200,,1000,sWhere)
+			.Parameters.Append .CreateParameter ("@Group",200,,1000,sGroup)
+			.Parameters.Append .CreateParameter ("@OrderField",200,,200,sSort)
+			.Parameters.Append .CreateParameter ("@PageSize",5,,,i_pSize)
+			.Parameters.Append .CreateParameter ("@CurrentPage",5,,,i_pNumber)
+			Set OutRs = .Execute
+		End With
+		Set Cmd = Nothing
+		i_pCount = OutRs("PageCount")
+		i_rCount = OutRs("RecordCount")
+		Set OutRs = OutRs.NextRecordset
+		If i_pNumber > i_pCount Then i_pNumber = i_pCount
 	End Sub
 
 	'**********分页模板End（1）******************
@@ -253,7 +296,7 @@ Class Class_Page
 			Randomize
 			Dim PageID : PageID = "PageID" & Int(Rnd() * 10000000)
 			echo " 跳转到:<input type=""text"" id="""&PageID&""" name=""PageID"" onkeydown=""if(event.keyCode==13) document.getElementById('btn_"&PageID&"').click();"" size=""3"" value="""&i_pNumber&""" onclick=""this.select()"" maxlength=8 class=""p_text""> "&vbCrlf & _
-							 "<input type=""button"" value=""GO"" onclick=""location.href='"&CurrentPath&"?PageID='+document.getElementById('"&PageID&"').value+'"&str&"'"" align=""absmiddle"" id=""btn_"&PageID&""" class=""p_btn""></form>"
+							 "<input type=""button"" value=""GO"" onclick=""location.href='"&CurrentPath&"?PageID='+document.getElementById('"&PageID&"').value+'"&str&"'"" id=""btn_"&PageID&""" class=""p_btn""></form>"
 		End Select
 	End Sub
 
