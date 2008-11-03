@@ -25,25 +25,25 @@ End Sub
 ' ×÷  ÓÃ: isNothing ¡ª Check if the object is nothing or null or undefined
 '**********
 Function isset(Obj)
+    isset = true
 	If IsObject(Obj) Then
 		If Obj Is Nothing Then
-			isset = true
+			isset = false
 			Exit Function
 		End If
 	End If
     If IsNull(Obj) Then
-        isset = true
+        isset = false
         Exit Function
     End If
     If IsEmpty(Obj) Then
-        isset = true
+        isset = false
         Exit Function
     End If
 	If Obj = "" Then
-		isset = true
+		isset = false
 		Exit Function
 	End If
-    isset = false
 End Function
 
 '**********
