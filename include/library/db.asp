@@ -114,12 +114,12 @@ Class Class_Db
     ' 作  用: 将一条记录转为一个字典对象
     '**********
 	Function GetRowObject(source)
-		Dim Params, i
-		If TypeName(rs) <> "Recordset" Then
-			Tpub.db.Exec rs,source
+		Dim Params, i, rs
+		If TypeName(source) <> "Recordset" Then
+			Me.Exec rs,source
 		End If
 		If rs.eof Then 
-			Set GetEntryObject = Nothing
+			Set GetRowObject = Nothing
 			Exit Function
 		End If
 		Set Params = Server.CreateObject("Scripting.Dictionary")
@@ -135,7 +135,7 @@ Class Class_Db
 				Params.Add rs.Fields(i).Name,rs(i)&""
 			End if
 		Next
-		Tpub.db.closeRs(rs)
+		Me.closeRs(rs)
 		Set GetRowObject = Params
 		Set Params = Nothing
 	End Function
