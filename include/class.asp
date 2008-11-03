@@ -20,13 +20,14 @@ Set Tpub = New Class_Wrap
 
 Class Class_Wrap
 
-	Public Db,[String],Params,[Array],Upload,Page,File,Debug,Cookie,Session,[Date]
+	Public Db,[String],Params,[Array],Upload,Page,File,Debug,Cookie,Session,[Date],Cache
 
 	Public SHA1,Md5,Json,ValidCode,Export,Email,InterFace,BEDcode,DES,Xml
 
 	Private Sub Class_Initialize()
 		On Error Resume Next
 		Set Db				= New Class_Db				'数据库操作类
+		Set Cache			= New Class_Cache			'缓存操作类
 		Set [String]		= New Class_String			'String操作类
 		Set Params			= New Class_Params			'Dictionary简化操作类
 		Set [Array]			= New Class_Array			'数组操作类
@@ -55,6 +56,7 @@ Class Class_Wrap
 	Private Sub Class_Terminate()
 		On Error Resume Next
 		Set Db				= Nothing
+		Set Cache			= Nothing
 		Set [String]		= Nothing
 		Set Params			= Nothing
 		Set [Array]			= Nothing

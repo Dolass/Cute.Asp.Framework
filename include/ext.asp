@@ -26,23 +26,24 @@ End Sub
 '**********
 Function isset(Obj)
     isset = true
+    If IsEmpty(Obj) Then
+        isset = false
+        Exit Function
+    End If
+    If IsNull(Obj) Then
+        isset = false
+        Exit Function
+    End If
 	If IsObject(Obj) Then
 		If Obj Is Nothing Then
 			isset = false
 			Exit Function
 		End If
-	End If
-    If IsNull(Obj) Then
-        isset = false
-        Exit Function
-    End If
-    If IsEmpty(Obj) Then
-        isset = false
-        Exit Function
-    End If
-	If Obj = "" Then
-		isset = false
-		Exit Function
+	Else
+		If Obj = "" Then
+			isset = false
+			Exit Function
+		End If
 	End If
 End Function
 
