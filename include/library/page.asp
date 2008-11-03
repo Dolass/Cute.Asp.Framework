@@ -94,27 +94,15 @@ Class Class_Page
 	'**********分页模板Top（1）******************
 	'Call Header_a(Obj,SQL语句)
 	'**********
-	Sub Header_a(OutRs,sTable,sFields,sWhere,sSort)
-		Dim Cmd, sql,StrOrder, bFlag
-		sSort = Trim(sSort)
-		Set Cmd = Server.CreateObject("ADODB.Command")
-		With Cmd
-			.ActiveConnection = i_conn
-			.CommandType = 4
-			.CommandText = Me.PageProcedure
-			.Parameters.Append .CreateParameter ("@TableName",200,,1000,sTable)
-			.Parameters.Append .CreateParameter ("@Fields",200,,1000,sFields)
-			.Parameters.Append .CreateParameter ("@OrderField",200,,200,sSort)
-			.Parameters.Append .CreateParameter ("@sqlWhere",200,,1000,sWhere)
-			.Parameters.Append .CreateParameter ("@pageSize",5,,,i_pSize)
-			.Parameters.Append .CreateParameter ("@pageIndex",5,,,i_pNumber)
-			Set OutRs = .Execute
-		End With
-		Set Cmd = Nothing
-		i_pCount = OutRs("fldTotalPage")
-		i_rCount = OutRs("fldtotalRecord")
-		Set OutRs = OutRs.NextRecordset
-		If i_pNumber > i_pCount Then i_pNumber = i_pCount
+	Sub Header_a(OutRs,sql)
+		Set OutRs = Server.CreateObject("ADODB.Recordset")
+		OutRs.open sql,i_conn,1,1
+		If Not OutRs.eof Then
+			i_rCount = OutRs.RecordCount
+			i_pCount = Abs(Int(-(i_rCount / i_pSize)))
+			If i_pNumber > i_pCount Then i_pNumber = i_pCount
+			OutRs.Move i_pSize * (Abs(i_pNumber) - 1)
+		End If
 	End Sub
 	
 	'**********分页模板Top（2）******************
