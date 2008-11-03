@@ -18,13 +18,12 @@
 '	构建类
 '**********
 Class Class_Cache
+	Public	Mark	'前缀
 
 	Private IExpires
-	Private sysName
-	Private localName, localValue
 
     Public Default Property Get Contents(Value)
-        Contents = getCache(Value)
+        Contents = [get](Value)
     End Property
 
     Private Property Let Expires(Value)
@@ -35,20 +34,12 @@ Class Class_Cache
         Expires = IExpires
     End Property
 
-	Public Property Let CacheName(str)
-		sysName = str
-	End Property
-	
-	Private Property Get CacheName()
-		If Len(sysName) = 0 Then sysName = "terranc"
-		CacheName = sysName
-	End Property
-		
     '**********
     ' 函数名: class_Initialize
     ' 作  用: Constructor
     '**********
 	Private Sub class_initialize()
+		Mark = "cute_"
     End Sub
 
     '**********
@@ -78,11 +69,11 @@ Class Class_Cache
     ' 函数名: SetCache
     ' 作  用: Set a cache
     '**********
-	Sub setCache(Key, Value, Expire)
+	Sub [set](Key, Value, Expire)
         Expires = Expire
         Lock
-        Application(CacheName & "_" & Key) = Value
-        Application(CacheName & "_" & Key & "_Expires") = Expires
+		Application(Mark & "_" & Key) = Value
+        Application(Mark & "_" & Key & "_Expires") = Expires
         unLock
     End Sub
 
@@ -90,16 +81,16 @@ Class Class_Cache
     ' 函数名: getCache
     ' 作  用: Get a cache
     '**********
-	Function getCache(Key)
+	Function [get](Key)
         Dim Expire
-        Expire = Application(CacheName & "_" & Key & "_Expires")
+        Expire = Application(Mark & "_" & Key & "_Expires")
         If IsNull(Expire) Or IsEmpty(Expire) Then
-            getCache = ""
+            [get] = ""
         Else
             If IsDate(Expire) And CDate(Expire) > Now Then
-                getCache = Application(CacheName & "_" & Key)
+                [get] = Application(Mark & "_" & Key)
             Else
-                Call Remove(CacheName & "_" & Key)
+                Call Remove(Mark & "_" & Key)
                 Value = ""
             End If
         End If
@@ -111,8 +102,8 @@ Class Class_Cache
     '**********
 	Sub Remove(Key)
         Lock
-        Application.Contents.Remove(CacheName & "_" & Key)
-        Application.Contents.Remove(CacheName & "_" & Key & "_Expires")
+        Application.Contents.Remove(Mark & "_" & Key)
+        Application.Contents.Remove(Mark & "_" & Key & "_Expires")
         unLock
     End Sub
 
@@ -121,15 +112,9 @@ Class Class_Cache
     ' 作  用: remove all cache
     '**********
 	Sub RemoveAll()
-        Clear()
-    End Sub
-
-    '**********
-    ' 函数名: clear
-    ' 作  用: Get a cookie
-    '**********
-	Private Sub Clear()
+        Lock
         Application.Contents.RemoveAll()
+        unLock
     End Sub
 
     '**********

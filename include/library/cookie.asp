@@ -29,6 +29,7 @@ Class Class_Cookie
     ' ×÷  ÓÃ: Save the session
     '**********
 	Private Sub class_initialize()
+		Mark = "cute_"
     End Sub
 
     '**********

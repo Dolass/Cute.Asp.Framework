@@ -33,6 +33,7 @@ Class Class_Session
     ' 作  用: Save the session
     '**********
 	Private Sub class_initialize()
+		Mark = "cute_"
     End Sub
 
     '**********
@@ -47,7 +48,11 @@ Class Class_Session
     ' 作  用: Add a Session
     '**********
 	Sub [set](Key, Value)
-        Session(Me.Mark & Key) = Value
+		If IsObject(Value) Then
+			Set Session(Me.Mark & Key) = Value
+		Else
+			Session(Me.Mark & Key) = Value
+		End If
     End Sub
 
     '**********
@@ -55,7 +60,11 @@ Class Class_Session
     ' 作  用: get a Session
     '**********
 	Function [get](Key)
-        [get] = Session(Me.Mark & Key)
+		If IsObject(Session(Me.Mark & Key)) Then
+			Set [get] = Session(Me.Mark & Key)
+		Else
+			[get] = Session(Me.Mark & Key)
+		End If
     End Function
 
     '**********
@@ -63,6 +72,9 @@ Class Class_Session
     ' 作  用: Remove a Session
     '**********
 	Sub Remove(Key)
+		If IsObject(Session(Me.Mark & Key)) Then
+			Set Session(Me.Mark & Key) = Nothing
+		End If
         Session.Contents.Remove(Me.Mark & Key)
     End Sub
 
@@ -71,18 +83,10 @@ Class Class_Session
     ' 作  用: Remove all Session
     '**********
 	Sub RemoveAll()
-		Session.abandon()
-	End Sub
-
-    '**********
-    ' 函数名: Clear
-    ' 作  用: Remove all cookies
-    '**********
-	Private Sub Clear()
         Dim iSession
         For Each iSession In Session.Contents
-            Session.Contents.Remove(iSession)
+			Me.Remove(iSession)
         Next
-    End Sub
+	End Sub
 End Class
 %>
