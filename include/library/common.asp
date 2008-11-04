@@ -125,18 +125,17 @@ Function rq(Requester,Name,iType,Default)
 	Case 0
 		tmp = Name
 	Case 1
-		tmp = Request(Name)
+		tmp = Trim(Request(Name)))
 	Case 2
-		tmp = Request.QueryString(Name)
+		tmp = Trim(Request.QueryString(Name)
 	Case 3
-		tmp = Form(Name)
+		tmp = Trim(Form(Name))
 	Case 4
 		tmp = Request.Cookies(Name)
 	End Select
-	If Trim(tmp) = "" Then tmp = Default
+	If tmp = "" Then tmp = Default
 	Select Case iType
 	Case 0
-		tmp = Trim(tmp)
 		If IsNumeric(tmp) = False Then
 			tmp = Default
 		Else
@@ -145,7 +144,6 @@ Function rq(Requester,Name,iType,Default)
 	Case 1
 		tmp = sqlFilter(tmp)
 	Case 2
-		tmp = Trim(tmp)
 		If Not IsDate(tmp) Or Len(tmp) <= 0 Then 
 			tmp = CDate(Default)
 		Else
