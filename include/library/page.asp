@@ -157,7 +157,7 @@ Class Class_Page
 		With Cmd
 			.ActiveConnection = i_conn
 			.CommandType = 4
-			If bFlag Then
+			If bFlag > 0 Then
 				.CommandText = Me.PageProcedure
 			Else
 				Dim sqlParams, sqlCmd 
