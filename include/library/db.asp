@@ -162,7 +162,6 @@ Class Class_Db
 		sqlCmd_a = Left(sqlCmd_a,Len(sqlCmd_a)-1)
 		sqlCmd_b = Left(sqlCmd_b,Len(sqlCmd_b)-1)
 		sqlCmd = sqlCmd & sqlCmd_a & ")  values(" & sqlCmd_b & ")"
-		sqlCmd = sqlCmd & vbCrlf & "select IsNull(SCOPE_IDENTITY(),-100)"
 		parameteres = Left(parameteres,Len(parameteres)-1)
 		oParams.Add "@stmt",sqlCmd
 		oParams.Add "@parameters",parameteres
@@ -171,7 +170,7 @@ Class Class_Db
 				oParams.Add "@"&iName,Params(iName)
 			Next
 		End If
-		Insert = Me.ExecuteScalar("sp_executesql",oParams)
+		Insert = Me.ExecuteNonQuery("sp_executesql",oParams)
 		Set Params = Nothing
 		Set oParams = Nothing
 	End Function
@@ -197,7 +196,6 @@ Class Class_Db
 		End If
 		sqlCmd = Left(sqlCmd,Len(sqlCmd)-1)
 		If Trim(Where) <> "" Then sqlCmd=sqlCmd&" Where "&Where&""
-		sqlCmd = sqlCmd & vbCrlf & "select IsNull(@@ROWCOUNT,-100)"
 		parameteres = Left(parameteres,Len(parameteres)-1)
 		oParams.Add "@stmt",sqlCmd
 		oParams.Add "@parameters",parameteres
@@ -206,7 +204,7 @@ Class Class_Db
 				oParams.Add "@"&iName,Params(iName)
 			Next
 		End If
-		Update = Me.ExecuteScalar("sp_executesql",oParams)
+		Update = Me.ExecuteNonQuery("sp_executesql",oParams)
 		Set Params = Nothing
 		Set oParams = Nothing
 	End Function
@@ -243,7 +241,7 @@ Class Class_Db
 	' 功能	：	执行存储过程不返回任何内容
 	'**********
 	Function ExecuteNonQuery(commandName , ByVal params)
-		Call ExecuteSqlCommand(commandName , params , 0)
+		ExecuteNonQuery = ExecuteSqlCommand(commandName , params , 0)
 	End Function
 	
 	'**********
@@ -302,7 +300,7 @@ Class Class_Db
 				ExecuteSqlCommand = Array(RSReturn, cmd("@ReturnValue"))
 				' 默认方式，不返回任何参数或对象
 			Case Else
-				Call cmd.Execute(, , 128)
+				Call cmd.Execute(ExecuteSqlCommand, , 128)
 		End Select
 	
 		Set cmd = Nothing
