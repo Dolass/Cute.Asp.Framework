@@ -125,9 +125,9 @@ Function rq(Requester,Name,iType,Default)
 	Case 0
 		tmp = Name
 	Case 1
-		tmp = Trim(Request(Name)))
+		tmp = Trim(Request(Name))
 	Case 2
-		tmp = Trim(Request.QueryString(Name)
+		tmp = Trim(Request.QueryString(Name))
 	Case 3
 		tmp = Trim(Form(Name))
 	Case 4
