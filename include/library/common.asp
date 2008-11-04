@@ -133,20 +133,19 @@ Function rq(Requester,Name,iType,Default)
 	Case 4
 		tmp = Request.Cookies(Name)
 	End Select
-	tmp = Trim(tmp)
-	If tmp = "" Then tmp = Default
+	If Trim(tmp) = "" Then tmp = Default
 	Select Case iType
 	Case 0
+		tmp = Trim(tmp)
 		If IsNumeric(tmp) = False Then
 			tmp = Default
 		Else
 			tmp = CSng(tmp)
 		End If
 	Case 1
-		If tmp <> "" Then
-			tmp = sqlFilter(tmp)
-		End If
+		tmp = sqlFilter(tmp)
 	Case 2
+		tmp = Trim(tmp)
 		If Not IsDate(tmp) Or Len(tmp) <= 0 Then 
 			tmp = CDate(Default)
 		Else
