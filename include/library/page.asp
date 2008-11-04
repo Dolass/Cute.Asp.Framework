@@ -28,7 +28,7 @@
 '**********
 
 Class Class_Page
-	Private i_pCount,i_rCount,i_pSize,i_pNumber,i_conn,CurrentPath
+	Private i_pCount,i_rCount,i_pSize,i_pNumber,i_conn,CurrentPath,s_Sql
 	Public PageProcedure
 
 	Private Sub Class_Initialize()
@@ -90,11 +90,15 @@ Class Class_Page
 	Public Property Get RecordCount()
 		RecordCount = i_rCount
 	End Property
+	
+	Public Property Get GetSqlString()
+		GetSqlString = s_Sql
+	End Property
 
 	'**********分页模板Top（1）******************
 	'Call Header_a(Obj,SQL语句)
 	'**********
-	Sub Header_a(OutRs,sql)
+	Sub Header_a(OutRs,ByVal sql)
 		Set OutRs = Server.CreateObject("ADODB.Recordset")
 		OutRs.open sql,i_conn,1,1
 		If Not OutRs.eof Then
@@ -111,7 +115,8 @@ Class Class_Page
 	'Call Header_b(Obj,数据表名,主键,查询字段,查询条件,排序)
 	'SQL Server 2000
 	'**********
-	Sub Header_b(OutRs,sTable,sFields,sWhere,sGroup,sSort)
+	Sub Header_b(OutRs,ByVal sTable,ByVal sFields,ByVal sWhere,ByVal sGroup,ByVal sSort)
+		Call SetSqlString(sTable,sFields,sWhere,sGroup,sSort)
 		Dim Cmd, sql,StrOrder, bFlag
 		sSort = Trim(sSort)
 		Call i_conn.Execute("select count(0) from sysobjects where id = object_id(N'["&Me.PageProcedure&"]') and OBJECTPROPERTY(id, N'IsProcedure') = 1",bFlag)
@@ -149,7 +154,8 @@ Class Class_Page
 	'Call Header_c(Obj,数据表名,查询字段,查询条件,排序)
 	'SQL Server 2005
 	'**********
-	Sub Header_c(OutRs,sTable,sFields,sWhere,sGroup,sSort)
+	Sub Header_c(OutRs,ByVal sTable,ByVal sFields,ByVal sWhere,ByVal sGroup,ByVal sSort)
+		Call SetSqlString(sTable,sFields,sWhere,sGroup,sSort)
 		Dim Cmd, sql,StrOrder, bFlag
 		sSort = Trim(sSort)
 		Call i_conn.Execute("select Top 1 1 from sysobjects where id = object_id(N'["&Me.PageProcedure&"]') and OBJECTPROPERTY(id, N'IsProcedure') = 1",bFlag)
@@ -186,7 +192,7 @@ Class Class_Page
 	'**********分页模板End（1）******************
 	'Footer_a(后续参数,表现类型)
 	'**********
-	Function Footer_a(str,p_Type)
+	Function Footer_a(ByVal str,ByVal p_Type)
 		If i_pCount = 1 Then Exit Function
 		If str <> "" Then
 			CurrentPath = regExpReplace(CurrentPath,"&?"&str,"",false)
@@ -221,7 +227,7 @@ Class Class_Page
 	'**********分页模板End（2）******************
 	'Footer_b(后续参数,表现类型)
 	'**********
-	Function Footer_b(str,p_Type)
+	Function Footer_b(ByVal str,ByVal p_Type)
 		Dim i, m
 		m = 9
 		If i_pCount = 1 Then Exit Function
@@ -290,6 +296,13 @@ Class Class_Page
 			echo " 跳转到:<input type=""text"" id="""&PageID&""" name=""PageID"" onkeydown=""if(event.keyCode==13) document.getElementById('btn_"&PageID&"').click();"" size=""3"" value="""&i_pNumber&""" onclick=""this.select()"" maxlength=8 class=""p_text""> "&vbCrlf & _
 							 "<input type=""button"" value=""GO"" onclick=""location.href='"&CurrentPath&"?PageID='+document.getElementById('"&PageID&"').value+'"&str&"'"" id=""btn_"&PageID&""" class=""p_btn"">"
 		End Select
+	End Sub
+
+	Private Sub SetSqlString(ByVal sTable,ByVal sFields,ByVal sWhere,ByVal sGroup,ByVal sSort)
+		If Trim(sFields) = "" Then sFields = "*"
+		If Trim(sWhere) <> "" Then sWhere = " where " & sWhere
+		If Trim(sGroup) <> "" Then sGroup = " group by " & sGroup
+		s_Sql = "select " & sFields & " from " & sTable & sWhere & sGroup & " order by " & sSort
 	End Sub
 
 	Private Function regExpReplace(ByVal str,re,restr,isCase)	'内容,正则
