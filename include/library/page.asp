@@ -74,6 +74,7 @@ Class Class_Page
 	'Page : 当前页码
 	'PageCount : 结果页数
 	'RecordCount : 结果记录总数
+	'GetSqlString : 获取Sql语句
 	'**********
 	Public Property Get Size()
 		Size = i_pSize
@@ -193,7 +194,7 @@ Class Class_Page
 	'Footer_a(后续参数,表现类型)
 	'**********
 	Function Footer_a(ByVal str,ByVal p_Type)
-		If i_pCount = 1 Then Exit Function
+		If i_pCount <= 1 Then Exit Function
 		If str <> "" Then
 			CurrentPath = regExpReplace(CurrentPath,"&?"&str,"",false)
 			str = str & "&"
@@ -230,7 +231,7 @@ Class Class_Page
 	Function Footer_b(ByVal str,ByVal p_Type)
 		Dim i, m
 		m = 9
-		If i_pCount = 1 Then Exit Function
+		If i_pCount <= 1 Then Exit Function
 		If str <> "" Then
 			CurrentPath = regExpReplace(CurrentPath,"&?"&str,"",false)
 			CurrentPath = Replace(CurrentPath,"?&","")
