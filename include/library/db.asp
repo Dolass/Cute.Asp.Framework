@@ -149,7 +149,8 @@ Class Class_Db
 	Function Insert(Table,Params)
 		Dim sqlCmd, sqlCmd_a, sqlCmd_b, parameteres, oParams
 		Dim iName
-		sqlCmd = "Insert Into "&Table&" ("
+		sqlCmd = "Set nocount on" & vbCrlf
+		sqlCmd = sqlCmd & "Insert Into "&Table&" ("
 		parameteres = " "
 		Set oParams = Server.CreateObject("Scripting.Dictionary")
 		If Not IsNull(params) Then
@@ -162,6 +163,7 @@ Class Class_Db
 		sqlCmd_a = Left(sqlCmd_a,Len(sqlCmd_a)-1)
 		sqlCmd_b = Left(sqlCmd_b,Len(sqlCmd_b)-1)
 		sqlCmd = sqlCmd & sqlCmd_a & ")  values(" & sqlCmd_b & ")"
+		sqlCmd = sqlCmd & vbCrlf & "select IsNull(SCOPE_IDENTITY(),-100)"
 		parameteres = Left(parameteres,Len(parameteres)-1)
 		oParams.Add "@stmt",sqlCmd
 		oParams.Add "@parameters",parameteres
@@ -170,7 +172,7 @@ Class Class_Db
 				oParams.Add "@"&iName,Params(iName)
 			Next
 		End If
-		Insert = Me.ExecuteNonQuery("sp_executesql",oParams)
+		Insert = Me.ExecuteScalar("sp_executesql",oParams)
 		Set Params = Nothing
 		Set oParams = Nothing
 	End Function
@@ -185,7 +187,8 @@ Class Class_Db
 	Function Update(Table,Params,Where)
 		Dim sqlCmd, parameteres, oParams
 		Dim iName
-		sqlCmd="Update "&Table&" set "
+		sqlCmd = "Set nocount on" & vbCrlf
+		sqlCmd = sqlCmd & "Update "&Table&" set "
 		parameteres = " "
 		Set oParams = Server.CreateObject("Scripting.Dictionary")
 		If Not IsNull(params) Then
@@ -196,6 +199,7 @@ Class Class_Db
 		End If
 		sqlCmd = Left(sqlCmd,Len(sqlCmd)-1)
 		If Trim(Where) <> "" Then sqlCmd=sqlCmd&" Where "&Where&""
+		sqlCmd = sqlCmd & vbCrlf & "select IsNull(@@ROWCOUNT,-100)"
 		parameteres = Left(parameteres,Len(parameteres)-1)
 		oParams.Add "@stmt",sqlCmd
 		oParams.Add "@parameters",parameteres
@@ -204,7 +208,7 @@ Class Class_Db
 				oParams.Add "@"&iName,Params(iName)
 			Next
 		End If
-		Update = Me.ExecuteNonQuery("sp_executesql",oParams)
+		Update = Me.ExecuteScalar("sp_executesql",oParams)
 		Set Params = Nothing
 		Set oParams = Nothing
 	End Function
@@ -294,13 +298,13 @@ Class Class_Db
 				ExecuteSqlCommand = cmd("@ReturnValue")
 				' 执行后得到记录集
 			Case 2
-				Set ExecuteSqlCommand = cmd.Execute()
+				Set ExecuteSqlCommand = cmd.Execute(,,AdCmdTableDirect)
 			Case 3
 				Set RSReturn = cmd.Execute()
 				ExecuteSqlCommand = Array(RSReturn, cmd("@ReturnValue"))
 				' 默认方式，不返回任何参数或对象
 			Case Else
-				Call cmd.Execute(ExecuteSqlCommand, , AdCmdText)
+				Call cmd.Execute(ExecuteSqlCommand, , 128)
 		End Select
 	
 		Set cmd = Nothing
