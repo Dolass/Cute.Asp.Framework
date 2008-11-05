@@ -300,7 +300,7 @@ Class Class_Db
 				ExecuteSqlCommand = Array(RSReturn, cmd("@ReturnValue"))
 				' 默认方式，不返回任何参数或对象
 			Case Else
-				Call cmd.Execute(ExecuteSqlCommand, , 128)
+				Call cmd.Execute(ExecuteSqlCommand, , AdCmdText)
 		End Select
 	
 		Set cmd = Nothing
