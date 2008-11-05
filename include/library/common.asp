@@ -182,9 +182,9 @@ End Function
 '**********
 Function sqlFilter(str)
 	If str = "" Then Exit Function
+	str = Replace(str,"net user","net&nbsp;user",1,-1,1)
+	str = Replace(str,"xp_cmdshell","xp&#95;cmdshell",1,-1,1)
 	str = Replace(str,";","&#59;")
-	'str = Replace(str,"<","&lt;")
-	'str = Replace(str,">","&gt;")
 	str = Replace(str,"\","&#92;")
 	str = Replace(str, "'", "&#39;")
 	str = Replace(str,"--","&#45;&#45;")
