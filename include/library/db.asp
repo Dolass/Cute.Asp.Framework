@@ -125,15 +125,7 @@ Class Class_Db
 		Set Params = Server.CreateObject("Scripting.Dictionary")
 		Params.CompareMode = 1
 		For i=0 To rs.fields.count-1
-			If IsNumeric(rs(i)) Then
-				If TypeName(Not rs(i)) = "Boolean" Then
-					Params.Add rs.Fields(i).Name,Not Not rs(i)
-				Else
-					Params.Add rs.Fields(i).Name,rs(i)+0
-				End If
-			Else
-				Params.Add rs.Fields(i).Name,rs(i)&""
-			End if
+			Params.Add rs.Fields(i).Name,rs(i).Value
 		Next
 		Me.closeRs(rs)
 		Set GetRowObject = Params
@@ -169,7 +161,7 @@ Class Class_Db
 		oParams.Add "@parameters",parameteres
 		If Not IsNull(Params) Then
 			For Each iName in Params
-				oParams.Add "@"&iName,Params(iName)
+				oParams.Add "@"&iName,Params(iName)&""
 			Next
 		End If
 		Insert = Me.ExecuteScalar("sp_executesql",oParams)
@@ -205,7 +197,7 @@ Class Class_Db
 		oParams.Add "@parameters",parameteres
 		If Not IsNull(Params) Then
 			For Each iName in Params
-				oParams.Add "@"&iName,Params(iName)
+				oParams.Add "@"&iName,Params(iName)&""
 			Next
 		End If
 		Update = Me.ExecuteScalar("sp_executesql",oParams)
@@ -284,7 +276,7 @@ Class Class_Db
 		If Not IsNull(params) Then
 			For Each iName in params
 				If iName <> "@stmt" And iName <> "@statement" And iName <> "@parameters" Then
-					cmd.Parameters.Append cmd.CreateParameter(iName , 200 , 1 , 8000 , params(iName))
+					cmd.Parameters.Append cmd.CreateParameter(iName , 200 , 1 , 8000 , params(iName)&"")
 				Else
 					cmd.Parameters.Append cmd.CreateParameter(iName , 203 , 1 , 4000 , params(iName))
 				End If
@@ -298,7 +290,7 @@ Class Class_Db
 				ExecuteSqlCommand = cmd("@ReturnValue")
 				' 执行后得到记录集
 			Case 2
-				Set ExecuteSqlCommand = cmd.Execute(,,AdCmdTableDirect)
+				Set ExecuteSqlCommand = cmd.Execute()
 			Case 3
 				Set RSReturn = cmd.Execute()
 				ExecuteSqlCommand = Array(RSReturn, cmd("@ReturnValue"))
