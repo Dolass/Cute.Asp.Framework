@@ -40,34 +40,34 @@ Class Class_String
 	End Function
 
 	'**********
-	' 函数名: strLen
+	' 函数名: Length
 	' 参  数: str as the input string
 	' 作  用: 计算字符串长度
 	'**********
-	Function strLen(Str)
+	Function Length(Str)
 		If Trim(Str) = "" Or IsNull(Str) Then
-			strlen = 0
+			Length = 0
 		Else
 			Dim P_len, x
 			P_len = 0
-			StrLen = 0
+			Length = 0
 			P_len = Len(Trim(Str))
 			For x = 1 To P_len
 				If Asc(Mid(Str, x, 1))<0 Then
-					StrLen = Int(StrLen) + 2
+					Length = Int(Length) + 2
 				Else
-					StrLen = Int(StrLen) + 1
+					Length = Int(Length) + 1
 				End If
 			Next
 		End If
 	End Function
 
 	'**********
-	' 函数名: cutStr
+	' 函数名: Cut
 	' 参  数: str as the input string
 	' 作  用: 截断字符串
 	'**********
-	Function cutStr(ByVal txt,ByVal length,ByVal isEnd)
+	Function Cut(ByVal txt,ByVal length,ByVal isEnd)
 		Dim x, y, ii
 		If txt="" Then Exit Function
 		txt = Trim(txt)
@@ -89,9 +89,9 @@ Class Class_String
 					Exit For
 				End If
 			Next
-			cutStr = txt
+			Cut = txt
 		Else
-			cutStr = ""
+			Cut = ""
 		End If
 	End Function
 
@@ -101,14 +101,14 @@ Class Class_String
 	' 参  数: re as regex
 	' 作  用: 高亮字符串
 	'**********
-	Function KeyWordLight(str, re)
+	Function KeyWordLight(ByVal str, ByVal re)
 		Dim s_str, a_re, reg, i
 		If Len(str)>0 And Len(re)>0 Then
 			s_str = str
-			a_re = Split(re, ",")
+			a_re = Split(re, "|")
 			For i = 0 To UBound(a_re)
 				If Len(Trim(a_re(i)))>0 Then
-					s_str = regReplace(s_str, "<strong class=""wordlight"">$1</strong>","("&a_re(i)&")",true)
+					s_str = regExpReplace(s_str,"("&a_re(i)&")", "<strong class=""wordlight"">$1</strong>",true)
 				End If
 			Next
 			KeyWordLight = s_str
@@ -239,12 +239,9 @@ Class Class_String
 	End Function
 
 	'**********
-	' 函数名: regReplace
-	' 参  数: DateTime as the input time
-	' 参  数: format as the formating type
-	' 作  用: formatDate — Format Date
+	' 函数名: regExpReplace
 	'**********
-	Function regExpReplace(ByVal str,re,restr,isCase)	'内容,正则
+	Function regExpReplace(ByVal str,ByVal re,ByVal restr,isCase)	'内容,正则
 		If Len(str) > 0 Then
 			Dim Obj
 			Set Obj = New Regexp
