@@ -22,7 +22,7 @@ Class Class_Array
 	' 参  数: arr as a Array
 	' 作  用: max — 取出最大值
 	'**********
-	Function max(arr)
+	Function max(ByVal arr)
 		Dim tmp
 		tmp = Me.rsort(arr)
 		max = tmp(0)
@@ -33,7 +33,7 @@ Class Class_Array
 	' 参  数: arr as a Array
 	' 作  用: min — 取出最小值
 	'**********
-	Function min(arr)
+	Function min(ByVal arr)
 		Dim tmp
 		tmp = Me.sort(arr)
 		min = tmp(0)
@@ -44,7 +44,7 @@ Class Class_Array
 	' 参  数: arr as an Array
 	' 作  用: unshift — 从前压入元素
 	'**********
-	Function unshift(arr, var)
+	Function unshift(ByVal arr, ByVal var)
 		Dim i, tmp
 		tmp = Me.toString(arr)
 		tmp = var & "," & tmp
@@ -57,7 +57,7 @@ Class Class_Array
 	' 参  数: arr as an Array
 	' 作  用: shift — 从前删除元素
 	'**********
-	Function shift(arr)
+	Function shift(ByVal arr)
 		Dim i, tmp
 		tmp = ""
 		For i = 0 To UBound(arr)
@@ -73,7 +73,7 @@ Class Class_Array
 	' 参  数: var as a variable added to an array
 	' 作  用: push — 从后压入元素
 	'**********
-	Function push(arr, var)
+	Function push(ByVal arr, ByVal var)
 		Dim tmp : tmp = Me.toString(arr)
 		tmp = tmp & "," & Me.convComma(var)
 		tmp = Me.toArray(tmp)
@@ -85,7 +85,7 @@ Class Class_Array
 	' 参  数: arr as an array
 	' 作  用: pop — 从后删除元素
 	'**********
-	Function pop(arr)
+	Function pop(ByVal arr)
 		Dim i, tmp
 		For i = 0 To UBound(arr)
 			If i<>UBound(arr) Then tmp = tmp & arr(i) & ","
@@ -99,7 +99,7 @@ Class Class_Array
 	' 参  数: str as a string such as "1,2,3,"
 	' 作  用: Strip "," of string
 	'**********
-	Function strip(Str)
+	Function strip(ByVal Str)
 		If IsArray(Str) Then Str = Me.toString(Str)
 		If Left(Str, 1) = "," Then Str = Right(Str, Len(Str) -1)
 		If Right(Str, 1) = "," Then Str = Left(Str, Len(Str) -1)
@@ -113,7 +113,7 @@ Class Class_Array
 	' 参  数: callback as callback function
 	' 作  用: walk — 对数组内元素执行函数后返回新数组
 	'**********
-	Function walk(arr, callback)
+	Function walk(ByVal arr, ByVal callback)
 		Dim e : e = ""
 		Dim tmp : tmp = ""
 		For Each e in arr
@@ -134,7 +134,7 @@ Class Class_Array
 	' 参  数: final as end index
 	' 作  用: splice — 从一个数组中移除一个或多个元素
 	'**********
-	Function splice(arr, start, final)
+	Function splice(ByVal arr, ByVal start, ByVal final)
 		Dim i, temp, tmp
 		If start > final Then
 			temp = start
@@ -155,7 +155,7 @@ Class Class_Array
 	' 参  数: value as element to insert into an array
 	' 作  用: fill — 插入元素
 	'**********
-	Function fill(arr, index, Value)
+	Function fill(ByVal arr, ByVal index, ByVal Value)
 		Dim i, tmp
 		For i = 0 To UBound(arr)
 			If i <> index Then
@@ -173,7 +173,7 @@ Class Class_Array
 	' 参  数: arr as a Array
 	' 作  用: unique — 移除重复的元素
 	'**********
-	Function unique(arr)
+	Function unique(ByVal arr)
 		Dim tmp, e
 		For Each e in arr
 			If InStr(1, tmp, e) = 0 Then
@@ -189,7 +189,7 @@ Class Class_Array
 	' 参  数: arr as a Array
 	' 作  用: reverse — 反向
 	'**********
-	Function reverse(arr)
+	Function reverse(ByVal arr)
 		Dim tmp, e
 		For Each e in arr
 			tmp = tmp & e & ","
@@ -205,7 +205,7 @@ Class Class_Array
 	' 参  数: value as searching value
 	' 作  用: search — 查询元素，不存在则返回False
 	'**********
-	Function search(arr, Value)
+	Function search(ByVal arr, ByVal Value)
 		Dim a_tmp
 		a_tmp = Filter(arr,Value)
 		If UBound(a_tmp) = -1 Then
@@ -221,7 +221,7 @@ Class Class_Array
 	' 参  数: num as specifies how many entries you want to pick
 	' 作  用: rand — 乱序
 	'**********
-	Function rand(arr, num)
+	Function rand(ByVal arr, ByVal num)
 		Dim tmpi, tmp, i
 		For i = 0 To num -1
 			Randomize
@@ -237,7 +237,7 @@ Class Class_Array
 	' 参  数: arr as a Array
 	' 作  用: sort — 顺序
 	'**********
-	Function sort(arr)
+	Function sort(ByVal arr)
 		Dim tmp, i, j
 		ReDim tmpA(UBound(arr))
 		For i = 0 To UBound(tmpA)
@@ -260,7 +260,7 @@ Class Class_Array
 	' 参  数: arr as a Array
 	' 作  用: rsort — 倒序
 	'**********
-	Function rsort(arr)
+	Function rsort(ByVal arr)
 		Dim tmp, i, j
 		ReDim tmpA(UBound(arr))
 		For i = 0 To UBound(tmpA)
@@ -283,7 +283,7 @@ Class Class_Array
 	' 参  数: arr as a Array
 	' 作  用: shuffle — 随机排序
 	'**********
-	Function shuffle(arr)
+	Function shuffle(ByVal arr)
 		Dim m, n, i
 		'i = search(arr,rand(arr,1))
 		'arr = splice(arr,i,i+1)
@@ -301,7 +301,7 @@ Class Class_Array
 	' 函数名: convComma
 	' 参  数: star as a string
 	'**********
-	Function convComma(str)
+	Function convComma(ByVal str)
 		convComma = Replace(str,",","&#44;")
 	End Function
 
@@ -311,7 +311,7 @@ Class Class_Array
 	' 参  数: arr as a output array
 	' 作  用: Join array elements with a string
 	'**********
-	Function toString(arr)
+	Function toString(ByVal arr)
 		If IsArray(arr) Then
 			Dim tmp
 			tmp = Join(arr, ",")
@@ -328,7 +328,7 @@ Class Class_Array
 	' Remarks: dim a : a = "a, b, c"
 	'		   prinr(toArray(a))
 	'**********
-	Function toArray(str)
+	Function toArray(ByVal str)
 		Dim tmp
 		tmp = Split(str, ",")
 		toArray = tmp

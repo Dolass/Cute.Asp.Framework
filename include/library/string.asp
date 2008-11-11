@@ -44,7 +44,7 @@ Class Class_String
 	' 参  数: str as the input string
 	' 作  用: 计算字符串长度
 	'**********
-	Function Length(Str)
+	Function Length(ByVal Str)
 		If Trim(Str) = "" Or IsNull(Str) Then
 			Length = 0
 		Else
@@ -122,7 +122,7 @@ Class Class_String
 	'			  ----正则规则
 	'返回值: True 符合   False 不符合
 	'**********
-	Function Validate( str, cType)
+	Function Validate(ByVal str, ByVal cType)
 		Dim re, obj
 		Set obj = New RegExp
 		Select Case UCASE(cType)
@@ -154,7 +154,7 @@ Class Class_String
 	' 参  数: str as the input string
 	' 作  用: filter html code
 	'**********
-	Function htmlEncode(Str)
+	Function htmlEncode(ByVal Str)
 		If Trim(Str) = "" Or IsNull(Str) Then
 			htmlEncode = ""
 		Else
@@ -173,7 +173,7 @@ Class Class_String
 	' 参  数: str as the input string
 	' 作  用: Decode the html tag
 	'**********
-	Function htmlDecode(str)
+	Function htmlDecode(ByVal str)
 		If Not IsNull(str) And str <> "" Then
 			str = Replace(str, "&quot;", """")
 			str = Replace(str, "&apos;", "'")
@@ -225,7 +225,7 @@ Class Class_String
 	' 参  数: str as the input string
 	' 作  用: 过滤HTML
 	'**********
-	Function stripHTML(strHTML)
+	Function stripHTML(ByVal strHTML)
 		Dim objRegExp, strOutput
 		Set objRegExp = New Regexp
 		objRegExp.IgnoreCase = true
