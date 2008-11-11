@@ -165,7 +165,6 @@ Class Class_Db
 			Next
 		End If
 		Insert = Me.ExecuteScalar("sp_executesql",oParams)
-		Set Params = Nothing
 		Set oParams = Nothing
 	End Function
 
@@ -201,7 +200,6 @@ Class Class_Db
 			Next
 		End If
 		Update = Me.ExecuteScalar("sp_executesql",oParams)
-		Set Params = Nothing
 		Set oParams = Nothing
 	End Function
 
