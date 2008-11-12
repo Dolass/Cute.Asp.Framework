@@ -25,7 +25,7 @@ Class Class_Date
     ' ×÷  ÓÃ: Save the session
     '**********
 	Private Sub class_initialize()
-		TimeZone = -1
+		TimeZone = 8
     End Sub
 
     '**********
