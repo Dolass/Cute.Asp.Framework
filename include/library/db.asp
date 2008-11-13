@@ -33,7 +33,7 @@ Class Class_Db
 	
     Private Sub Class_Terminate()
         Me.Close()
-		Me.CloseRs(null)
+		Me.CloseRs null
     End Sub
 	
     '**********
@@ -88,7 +88,7 @@ Class Class_Db
 		End If
 	End Sub
 
-    Sub setRs( OutRs, strsql, CursorAndLockType)
+    Sub setRs(OutRs, strsql, CursorAndLockType)
 		Set OutRs = Server.Createobject("ADODB.Recordset")
         OutRs.Open strsql, Conn, 1, CursorAndLockType
     End Sub
@@ -127,7 +127,7 @@ Class Class_Db
 		For i=0 To rs.fields.count-1
 			Params.Add rs.Fields(i).Name,rs(i).Value
 		Next
-		Me.closeRs(rs)
+		Me.closeRs rs
 		Set GetRowObject = Params
 		Set Params = Nothing
 	End Function
@@ -184,7 +184,13 @@ Class Class_Db
 		Set oParams = Server.CreateObject("Scripting.Dictionary")
 		If Not IsNull(params) Then
 			For Each iName in params
-				sqlCmd = sqlCmd & iName & "=@" & iName & ","
+				If InStr(iName,"#") > 0 Then
+					params.Key(iName) = Replace(iName,"#","")
+					iName = Replace(iName,"#","")
+					sqlCmd = sqlCmd & iName & "=" & iName & " + @" & iName & ","
+				Else
+					sqlCmd = sqlCmd & iName & "=@" & iName & ","
+				End If
 				parameteres = parameteres & "@" & iName & " varchar(8000)" & ","
 			Next
 		End If
