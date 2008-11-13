@@ -158,12 +158,9 @@ Class Class_String
 		If Trim(Str) = "" Or IsNull(Str) Then
 			htmlEncode = ""
 		Else
-			'str = Replace(str, "&", "&amp;")
 			str = Replace(str, """", "&quot;")
-			str = Replace(str, "'", "&apos;")
 			str = Replace(str, ">", "&gt;")
 			str = Replace(str, "<", "&lt;")
-			str = Replace(str, " ", "&nbsp;")
 			htmlEncode = Str
 		End If
 	End Function
@@ -176,48 +173,53 @@ Class Class_String
 	Function htmlDecode(ByVal str)
 		If Not IsNull(str) And str <> "" Then
 			str = Replace(str, "&quot;", """")
-			str = Replace(str, "&apos;", "'")
 			str = Replace(str, "&gt;", ">")
 			str = Replace(str, "&lt;", "<")
-			str = Replace(str, "&nbsp;", " ")
-			'str = Replace(str, "&amp;", "&")
 			htmlDecode = str
 		End If
 	End Function
 
 	'**********
-	' 函数名: textEncode
+	' 函数名: textToHtml
 	' 参  数: str as the input string
 	' 作  用: filter text code
 	'**********
-	Function textEncode(ByVal str)
+	Function textToHtml(ByVal str)
 		If Trim(str)="" Then textEncode = "" : Exit Function
 		str=replace(str,">","&gt;")
 		str=replace(str,"<","&lt;")
-		str=replace(str,chr(32),"&nbsp;")
-		str=replace(str,chr(9),"&nbsp;")
+		str=replace(str,chr(32)&chr(32)," &nbsp;")
+		str=replace(str,chr(9),"&nbsp;&nbsp;&nbsp;&nbsp;")
 		str=replace(str,chr(34),"&quot;")
-		str=replace(str,chr(39),"&apos;")
+		str=replace(str,chr(39),"&#39;")
+		str=replace(str,chr(13)&chr(10),"<br />")
 		str=replace(str,chr(13),"")
 		str=replace(str,chr(10),"<br />")
-		textEncode = str
+		textToHtml = str
 	End Function
 
 	'**********
-	' 函数名: textDecode
+	' 函数名: htmlToJs
 	' 参  数: str as the input string
-	' 作  用: Decode the text tag
+	' 作  用: html到js的转换
 	'**********
-	Function textDecode(ByVal str)
-		If Trim(str)="" Then textDecode = "" : Exit Function
-		str=replace(str,"&gt;",">")
-		str=replace(str,"&lt;","<")
-		str=replace(str,"&nbsp;",chr(32))
-		str=replace(str,"&nbsp;",chr(9))
-		str=replace(str,"&quot;",chr(34))
-		str=replace(str,"&apos;",chr(39))
-		str=replace(str,"<br />",chr(13)&chr(10))
-		textDecode = str
+	Function htmlToJs(ByVal str)
+		If Len(str)>0 Then
+			str = replace(str,"\","\\")
+			str =replace(str,vbCrlf,"\n")
+			htmlToJs = replace(str,"'","\'")
+		End If
+	End Function
+
+	'********** 
+	' 函数名: formEncode
+	' Param: str as a output string
+	' 作用: 格式化表单提交数据，转码特殊字符
+	'********** 
+	Function formEncode(ByVal str)
+		If Len(str)>0 Then
+			formEncode = Server.htmlEncode(str)
+		End If
 	End Function
 
 	'**********

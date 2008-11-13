@@ -12,88 +12,126 @@
 '	示例
 '**********
 
-'********** 
+'**********
 
 '**********
 '	构建类
 '**********
+
 Class Class_Date
-	Public TimeZone
-	
+    Public TimeZone
+
     '**********
     ' 函数名: class_Initialize
     ' 作  用: Save the session
     '**********
-	Private Sub class_initialize()
-		TimeZone = 8
+    Private Sub class_initialize()
+        TimeZone = 8
     End Sub
 
     '**********
     ' 函数名: class_Terminate
     ' 作  用: Deconstrutor
     '**********
-	Private Sub class_Terminate()
+    Private Sub class_Terminate()
     End Sub
 
-	Private Function getMistiming(sDate)
-		getMistiming = DateDiff("s","1970-1-1 00:00:00",DateAdd("h",Me.TimeZone,sDate))
-	End Function
+    Private Function getMistiming(sDate)
+        getMistiming = DateDiff("s", "1970-1-1 00:00:00", DateAdd("h", Me.TimeZone, sDate))
+    End Function
 
     '**********
     ' 函数名: toGMTdate
     ' 参  数: sDate
     ' 作  用: 获取GMT时间
     '**********
-	Function toGMTdate(sDate)
-	  Dim dWeek,dMonth
-	  Dim strZero,strZone
-	  strZero="00"
-	  If Me.TimeZone > 0 Then
-	  	strZone = "+"&Right("0"&Me.TimeZone,2)&"00"
-	  Else
-	  	strZone = "-"&Right("0"&Me.TimeZone,2)&"00"
-	  End If
-	  dWeek=Array("Sun","Mon","Tue","Wes","Thu","Fri","Sat")
-	  dMonth=Array("Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec")
-	  toGMTdate = dWeek(WeekDay(sDate)-1)&", "&Right(strZero&Day(sDate),2)&" "&dMonth(Month(sDate)-1)&" "&Year(sDate)&" "&Right(strZero&Hour(sDate),2)&":"&Right(strZero&Minute(sDate),2)&":"&Right(strZero&Second(sDate),2)&" "&strZone
-	End Function
+    Function toGMTdate(sDate)
+        Dim dWeek, dMonth
+        Dim strZero, strZone
+        strZero = "00"
+        If Me.TimeZone > 0 Then
+            strZone = "+"&Right("0"&Me.TimeZone, 2)&"00"
+        Else
+            strZone = "-"&Right("0"&Me.TimeZone, 2)&"00"
+        End If
+        dWeek = Array("Sun", "Mon", "Tue", "Wes", "Thu", "Fri", "Sat")
+        dMonth = Array("Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec")
+        toGMTdate = dWeek(Weekday(sDate) -1)&", "&Right(strZero&Day(sDate), 2)&" "&dMonth(Month(sDate) -1)&" "&Year(sDate)&" "&Right(strZero&Hour(sDate), 2)&":"&Right(strZero&Minute(sDate), 2)&":"&Right(strZero&Second(sDate), 2)&" "&strZone
+    End Function
 
     '**********
     ' 函数名: toUnixEpoch
     ' 参  数: sDate
     ' 作  用: 获取时间戳
     '**********
-	Function toUnixEpoch(sDate)
-		toUnixEpoch = DateDiff("s", "1970-1-1 00:00:00", sDate) -  getMistiming("1970-1-1 00:00:00")
-	End Function
+    Function toUnixEpoch(sDate)
+        toUnixEpoch = DateDiff("s", "1970-1-1 00:00:00", sDate) - getMistiming("1970-1-1 00:00:00")
+    End Function
 
     '**********
     ' 函数名: fromUnixEpoch
     ' 参  数: iNumber	--  时间戳
     ' 作  用: 获取当地时间
     '**********
-	Function fromUnixEpoch(iNumber)
-		fromUnixEpoch = DateAdd("s",iNumber +  getMistiming("1970-1-1 00:00:00"),"1970-1-1 00:00:00")
-	End Function
+    Function fromUnixEpoch(iNumber)
+        fromUnixEpoch = DateAdd("s", iNumber + getMistiming("1970-1-1 00:00:00"), "1970-1-1 00:00:00")
+    End Function
 
-	'**********
-	' 函数名: zodiac
-	' 参  数: bYear as birthday year
-	' 作  用: 计算所属生肖
-	'**********
-	Function zodiac(bYear)
-		If bYear > 0 Then
-			Dim zodiacList : zodiacList = Array("猴", "鸡", "狗", "猪", "鼠", "牛", "虎", "兔", "龙", "蛇", "马", "羊")
-			zodiac = zodiacList(bYear mod 12)
-		End If
-	End Function
+    '**********
+    ' 函数名: fromUnixEpoch
+    ' 参  数: sDate		--  时间
+    ' 参  数: format	--  格式化格式
+    ' 作  用: 格式化时间
+    '**********
+   Function FormatDate(sDate, format)
+		Dim str
+		If Len(sDate) = 0 Then Exit Function
+        If Len(format)>0 Then
+			str = Replace(format, "yyyy", Year(sDate))
+			str = Replace(str, "yy", Right(Year(sDate), 2))
+			str = Replace(str, "MM", doublee(Month(sDate)))
+			str = Replace(str, "dd", doublee(Day(sDate)))
+			str = Replace(str, "hh", doublee(Hour(sDate)))
+			str = Replace(str, "mm", doublee(Minute(sDate)))
+			str = Replace(str, "ss", doublee(Second(sDate)))
+			str = Replace(str, "M", Month(sDate))
+			str = Replace(str, "d", Day(sDate))
+			str = Replace(str, "h", Hour(sDate))
+			str = Replace(str, "m", Minute(sDate))
+			str = Replace(str, "s", Second(sDate))
+            FormatDate = str
+		Else
+			FormatDate = sDate
+        End If
+    End Function
 
-	'**********
-	' 函数名: Constellation
-	' 参  数: Birth as birthday
-	' 作  用: 计算所属生肖
-	'**********    
-	Function Constellation(Birth)
+    Private Function doublee(sDate)
+        If Len(sDate) = 1 Then
+            doublee = "0"&sDate
+        Else
+            doublee = sDate
+        End If
+    End Function
+
+    '**********
+    ' 函数名: zodiac
+    ' 参  数: bYear as birthday year
+    ' 作  用: 计算所属生肖
+    '**********
+    Function zodiac(bYear)
+        If bYear > 0 Then
+            Dim zodiacList
+            zodiacList = Array("猴", "鸡", "狗", "猪", "鼠", "牛", "虎", "兔", "龙", "蛇", "马", "羊")
+            zodiac = zodiacList(bYear Mod 12)
+        End If
+    End Function
+
+    '**********
+    ' 函数名: Constellation
+    ' 参  数: Birth as birthday
+    ' 作  用: 计算所属生肖
+    '**********
+    Function Constellation(Birth)
         If Year(Birth) <1951 Or Year(Birth) > 2049 Then Exit Function
         Dim BirthDay, BirthMonth
         BirthDay = Day(Birth)

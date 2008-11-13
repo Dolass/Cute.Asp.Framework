@@ -111,5 +111,4 @@ Class ReAopResult
 	Public Message
 	Public AttachObject
 End Class
-
 %>

@@ -28,7 +28,7 @@ Class Class_ValidCode
 		Dim tmpstr
 		Randomize
 		tmpstr=cstr(Int(900000*rnd)+100000)
-		Response.Write "<img id=""codeimg"" src="""&sPath&"include/helper/validcode_"&lang&".asp?s=" & tmpstr & """ style=""cursor:pointer;border:1px solid #ccc;vertical-align:middle;"" onclick=""this.src=this.src+'&t='+ Math.random()"" alt="""" /><input type=""hidden"" name=""codename"" value=""" & tmpstr & """ />"
+		Response.Write "<img id=""codeimg"" src="""&sPath&"include/helper/validcode_"&lang&".asp?s=" & tmpstr & """ style=""cursor:pointer;border:1px solid #ccc;vertical-align:middle;"" onclick=""this.src=this.src+'&t='+ Math.random()"" alt=""&#30475;&#19981;&#28165;? &#28857;&#20987;&#21047;&#26032;"" /><input type=""hidden"" name=""codename"" value=""" & tmpstr & """ />"
 	End Sub
 	
 	'**********
