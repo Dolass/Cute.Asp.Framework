@@ -142,7 +142,7 @@ Function rq(Requester,Name,iType,Default)
 			tmp = CSng(tmp)
 		End If
 	Case 1
-		tmp = sqlFilter(tmp)
+		tmp = safe(encodeJP(tmp))
 	Case 2
 		If Not IsDate(tmp) Or Len(tmp) <= 0 Then 
 			tmp = CDate(Default)
@@ -180,15 +180,11 @@ End Function
 '函数名：sqlFilter
 '作  用：过滤Sql关键字
 '**********
-Function sqlFilter(str)
+Function safe(str)
 	If str = "" Then Exit Function
-	str = Replace(str,"net user","net&nbsp;user",1,-1,1)
-	str = Replace(str,"xp_cmdshell","xp&#95;cmdshell",1,-1,1)
-	str = Replace(str,";","&#59;")
-	str = Replace(str,"\","&#92;")
-	str = Replace(str, "'", "&#39;")
+	str = Replace(str, "'", "''")
 	str = Replace(str,"--","&#45;&#45;")
-	sqlFilter = str
+	safe = str
 End Function
 
 '**********
@@ -278,6 +274,54 @@ Function returnObj()
 End Function
 
 '**********
+' 函数名: encodeJP
+' 参  数: str as the input string
+' 作  用: 编码日文
+'**********
+Function encodeJP(ByVal str)
+	If str="" Then Exit Function
+	Dim c1 : c1 = Array("ガ","ギ","グ","ア","ゲ","ゴ","ザ","ジ","ズ","ゼ","ゾ","ダ","ヂ","ヅ","デ","ド","バ","パ","ビ","ピ","ブ","プ","ベ","ペ","ボ","ポ","ヴ")
+	Dim c2 : c2 = Array("460","462","463","450","466","468","470","472","474","476","478","480","482","485","487","489","496","497","499","500","502","503","505","506","508","509","532")
+	Dim i
+	For i=0 to 26
+		str=Replace(str,c1(i),"&#12"&c2(i)&";")
+	Next
+	encodeJP = str
+End Function
+
+'**********
+' 函数名: htmlEncode
+' 参  数: str as the input string
+' 作  用: filter html code
+'**********
+Function htmlEncode(ByVal Str)
+	If Trim(Str) = "" Or IsNull(Str) Then
+		htmlEncode = ""
+	Else
+		str = Replace(str, "  ", "&nbsp; ")
+		str = Replace(str, """", "&quot;")
+		str = Replace(str, ">", "&gt;")
+		str = Replace(str, "<", "&lt;")
+		htmlEncode = Str
+	End If
+End Function
+
+'**********
+' 函数名: htmlDecode
+' 参  数: str as the input string
+' 作  用: Decode the html tag
+'**********
+Function htmlDecode(ByVal str)
+	If Not IsNull(str) And str <> "" Then
+		str = Replace(str, "&nbsp;", " ")
+		str = Replace(str, "&quot;", """")
+		str = Replace(str, "&gt;", ">")
+		str = Replace(str, "&lt;", "<")
+		htmlDecode = str
+	End If
+End Function
+
+'**********
 ' 函数名: URLDecode
 ' 作  用: URLDecode — URL decode
 '**********
@@ -307,4 +351,19 @@ Function URLDecode(ByVal vstrin)
 	Next
 	URLDecode = strreturn
 End Function
+
+'**********
+' 函数名: randStr
+' 作用: Generate a specific length random string
+'**********
+Function randStr(intLength)
+	Dim strSeed,seedLength,i
+	strSeed = "abcdefghijklmnopqrstuvwxyz1234567890"
+	seedLength = len(strSeed)
+	For i=1 to intLength
+		Randomize
+		randStr = randStr & Mid(strSeed,Round((Rnd*(seedLength-1))+1),1)
+	Next
+End Function
+
 %>
