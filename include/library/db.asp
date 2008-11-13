@@ -186,7 +186,7 @@ Class Class_Db
 			For Each iName in params
 				If InStr(iName,"#") > 0 Then
 					params.Key(iName) = Replace(iName,"#","")
-					iName = Replace(iName,"#","")
+					iName = params.Key(iName)
 					sqlCmd = sqlCmd & iName & "=" & iName & " + @" & iName & ","
 				Else
 					sqlCmd = sqlCmd & iName & "=@" & iName & ","
