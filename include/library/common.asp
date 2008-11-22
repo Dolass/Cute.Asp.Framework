@@ -126,10 +126,13 @@ Function rq(Requester,Name,iType,Default)
 		tmp = Name
 	Case 1
 		tmp = Trim(Request(Name))
+		tmp = htmlEncode(tmp)
 	Case 2
 		tmp = Trim(Request.QueryString(Name))
+		tmp = htmlEncode(tmp)
 	Case 3
 		tmp = Trim(Form(Name))
+		tmp = htmlEncode(tmp)
 	Case 4
 		tmp = Request.Cookies(Name)
 	End Select
