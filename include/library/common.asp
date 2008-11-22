@@ -369,4 +369,28 @@ Function randStr(intLength)
 	Next
 End Function
 
+'**********
+' 函数名: SetQueryString
+' 作用: 获取
+'**********
+Function SetQueryString(ByVal Name,ByVal Value)
+	Dim Str
+	Str = Request.QueryString()
+	If Request.QueryString.Count > 0 Then
+		If InStr(1,Str,Name&"=",1) = 0 Then
+			Str = Str & "&"&Name&"="&Value&""
+		Else
+			Dim Obj
+			Set Obj = New Regexp
+			Obj.IgnoreCase = False
+			Obj.Global = True
+			Obj.Pattern = "("&Name&"=)[^&]+"
+			Str = Obj.Replace(Str,"$1"&Value&"")
+			Set Obj = Nothing
+		End If
+	Else
+		Str = Str & "?" & Name & "=" & Value
+	End If
+	SetQueryString = Str
+End Function
 %>
