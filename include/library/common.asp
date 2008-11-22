@@ -373,24 +373,26 @@ End Function
 ' 函数名: SetQueryString
 ' 作用: 获取
 '**********
-Function SetQueryString(ByVal Name,ByVal Value)
-	Dim Str
-	Str = Request.QueryString()
-	If Request.QueryString.Count > 0 Then
-		If InStr(1,Str,Name&"=",1) = 0 Then
-			Str = Str & "&"&Name&"="&Value&""
+Function SetQueryString(ByVal sQuery, ByVal Name,ByVal Value)
+	Dim Obj
+	If Len(sQuery) > 0 Then
+		If InStr(1,sQuery,Name&"=",1) = 0 Then
+			If InStr(sQuery,"=") > 0 Then
+				sQuery = sQuery & "&" & Name & "=" & Value
+			Else
+				sQuery = sQuery & Name & "=" & Value
+			End If
 		Else
-			Dim Obj
 			Set Obj = New Regexp
 			Obj.IgnoreCase = False
 			Obj.Global = True
-			Obj.Pattern = "("&Name&"=)[^&]+"
-			Str = Obj.Replace(Str,"$1"&Value&"")
+			Obj.Pattern = "(" & Name & "=)[^&]+"
+			sQuery = Obj.Replace(sQuery,"$1" & Value)
 			Set Obj = Nothing
 		End If
 	Else
-		Str = Str & "?" & Name & "=" & Value
+		sQuery = sQuery & Name & "=" & Value
 	End If
-	SetQueryString = Str
+	SetQueryString = sQuery
 End Function
 %>
