@@ -371,7 +371,7 @@ End Function
 
 '**********
 ' 函数名: SetQueryString
-' 作用: 获取
+' 作用: 重置参数
 '**********
 Function SetQueryString(ByVal sQuery, ByVal Name,ByVal Value)
 	Dim Obj
