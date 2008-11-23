@@ -94,7 +94,7 @@ End Function
 Sub noBuffer()
 	Response.Buffer = True
 	Response.Expires = 0
-	Response.AddHeader "Expires",toGMTdate()
+	Response.AddHeader "Expires",-1
 	Response.AddHeader "Pragma","no-cache"
 	Response.AddHeader "Cache-Control","no-cache,must-revalidate"
 	Response.ExpiresAbsolute = Now() - 1
