@@ -42,7 +42,7 @@ Class Class_Upload
 		Mode = 0
 		Charset = "gb2312"
 		upCount = 0
-        strDate = Replace(CStr(Date()), "-", "")
+        strDate = Replace(CStr(Year(Date()) & "-" & Month(Date()) & "-" & Day(Date())), "-", "")
         lngTime = CLng(Timer() * 1000)
         Set binForm = Server.CreateObject("ADODB.Stream")
         Set binItem = Server.CreateObject("ADODB.Stream")
