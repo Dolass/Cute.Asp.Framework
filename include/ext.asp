@@ -48,14 +48,6 @@ Function isset(Obj)
 End Function
 
 '**********
-'函数名：Confirm
-'作  用：确认窗口
-'**********	
-Function clickConfirm(msgstr)
-	clickConfirm = " onclick=""javascript:return confirm('"&msgstr&"')"" "
-End Function
-
-'**********
 '函数名：locationHref
 '作  用：页面跳转
 '**********
@@ -93,6 +85,15 @@ Sub alertBack(msgstr)
 	die "<script type=""text/javascript"">alert(""" + msgstr + """);history.back(-1);</script>"
 End Sub
 
+'**********
+'函数名：AlertClose
+'参  数：msgstr	-- 弹出信息
+'作  用：消息框后关闭窗口
+'**********
+Sub alertClose(msgstr)
+	die "<script type=""text/javascript"">alert(""" + msgstr + """);window.close();</script>"
+End Sub
+
 '********** 
 ' 函数名: die
 ' Param: str as a output string
@@ -105,6 +106,7 @@ End Sub
 
 '********** 
 ' 类名: ReAopResult
+' 作用：返回信息存储工具类
 '********** 
 Class ReAopResult
 	Public Code
