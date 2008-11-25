@@ -4,7 +4,7 @@
 '	File Name	: upload.asp
 '	Version		: 0.2.0
 '	Updater		: TerranC
-'	Date		: 2008-5-17
+'	Date		: 2008-11-25
 '**********
 
 
@@ -37,7 +37,7 @@ Class Class_Upload
         MaxSize = 10485760 'д╛хон╙10mb
         FileType = "jpg/gif/jpeg/png/bmp"
         SavePath = "./upfile/"
-        AutoSave = 2
+        AutoSave = 0
         TotalSize = 0
 		Mode = 0
 		Charset = "gb2312"
