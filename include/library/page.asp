@@ -16,7 +16,7 @@
 'Tpub.page.Conn = Tpub.db.conn
 'Tpub.page.Page = Trim(Request("PageID"))
 'Tpub.page.Size = 10
-'Tpub.page.Header_b(rs,sTable,sPK,sFields,sWhere,sSort)
+'Tpub.page.Header_b(rs,sTable,sFields,sWhere,sGroup,sSort)
 'Do While Not rs.eof
 '	--------
 '	MoveNext
