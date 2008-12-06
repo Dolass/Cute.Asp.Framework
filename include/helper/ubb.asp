@@ -15,7 +15,17 @@
 '	构建类
 '**********
 Class Class_Ubb
-	Public Function Encode(ByVal ReStr,ByVal iType)
+	
+	'**********
+	'属性：0、1、2、3几个等级（1：支持文字样式；2：支持多媒体；3：支持动画脚本）
+	'**********
+	Public Mode
+
+    Private Sub Class_Initialize()
+        Mode = 0
+    End Sub
+
+	Public Function Encode(ByVal ReStr)
 		If Len(ReStr)>0 Then
 			ReStr = Replace(ReStr, " ", "&nbsp;")
 		Else
@@ -50,7 +60,7 @@ Class Class_Ubb
 		re.Pattern = "(\[email=(\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+){0,80})\])(.[^\[]*)(\[\/email\])"
 		ReStr = re.Replace(ReStr, "<a href=""mailto:$2"" target=""_blank"">$6</a>")
 
-		If iType >= 1 Then
+		If Me.Mode >= 1 Then
 			re.Pattern = "(\[b\])((.|\n){0,}?)(\[\/b\])"
 			ReStr = re.Replace(ReStr, "<strong>$2</strong>")
 			re.Pattern = "(\[i\])((.|\n){0,}?)(\[\/i\])"
@@ -71,7 +81,7 @@ Class Class_Ubb
 			ReStr = re.Replace(ReStr, "</blockquote>")
 		End If
 
-		If iType >= 2 Then
+		If Me.Mode >= 2 Then
 			re.Pattern = "\[(rm|mp|qt)=.+?\]"
 			ReStr = re.Replace(ReStr, "[media]")
 			re.Pattern = "\[\/(rm|mp|qt)=.+?\]"
@@ -95,7 +105,7 @@ Class Class_Ubb
 			ReStr = re.Replace(ReStr, "<object classid=clsid:cfcdaa03-8be4-11cf-b84b-0020afbbccfa width=""352"" height=""288""><param name=""src"" value=""$1""/><param name=""console"" value=""clip1""/><param name=""controls"" value=""imagewindow""/><param name=""autostart"" value=""false""/></object><object classid=""clsid:cfcdaa03-8be4-11cf-b84b-0020afbbccfa"" height=""32"" width=""352""><param name=""src"" value=""$1""/><param name=""controls"" value=""controlpanel""/><param name=""console"" value=""clip1""/></object>")
 		End If
 
-		If iType >= 3 Then
+		If Me.Mode >= 3 Then
 			re.Pattern = "(\[fly\])((.|\n){0,}?)(\[\/fly\])"
 			ReStr = re.Replace(ReStr, "<marquee width=""100%"" behavior=""alternate"" scrollamount=""3"">$2</marquee>")
 			re.Pattern = "(\[move\])((.|\n){0,}?)(\[\/move\])"
