@@ -22,7 +22,7 @@ Class Class_Wrap
 
 	Public Db,[String],Params,Arrays,Upload,Page,File,Debug,Cookie,Session,[Date],Cache
 
-	Public SHA1,Md5,Json,ValidCode,Export,Email,InterFace,BEDcode,DES,Xml
+	Public SHA1,Md5,Json,ValidCode,Export,Email,InterFace,BEDcode,DES,Xml,Ubb
 
 	Private Sub Class_Initialize()
 		On Error Resume Next
@@ -49,6 +49,7 @@ Class Class_Wrap
 		Set BEDcode			= New Class_BasicEncode		'简单加密解密
 		Set DES				= Class_DES()				'DSC加密解密类
 		Set Xml				= New Class_XML				'XML操作类
+		Set Ubb				= New Class_Ubb				'XML操作类
 		Err.Clear
 		On Error Goto 0
 	End Sub
@@ -78,6 +79,7 @@ Class Class_Wrap
 		Set BEDcode			= Nothing
 		Set DES				= Nothing
 		Set Xml				= Nothing
+		Set Ubb				= Nothing
 		Err.Clear
 		On Error Goto 0
 	End Sub
