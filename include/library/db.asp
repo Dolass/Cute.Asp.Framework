@@ -155,7 +155,7 @@ Class Class_Db
 		sqlCmd_a = Left(sqlCmd_a,Len(sqlCmd_a)-1)
 		sqlCmd_b = Left(sqlCmd_b,Len(sqlCmd_b)-1)
 		sqlCmd = sqlCmd & sqlCmd_a & ")  values(" & sqlCmd_b & ")"
-		sqlCmd = sqlCmd & vbCrlf & "select IsNull(SCOPE_IDENTITY(),-100)"
+		sqlCmd = sqlCmd & vbCrlf & "select Cast(IsNull(SCOPE_IDENTITY(),-100) as int)"
 		parameteres = Left(parameteres,Len(parameteres)-1)
 		oParams.Add "@stmt",sqlCmd
 		oParams.Add "@parameters",parameteres
