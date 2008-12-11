@@ -78,12 +78,16 @@ Class Class_Db
     '**********
 	Sub CloseRs(OutRs)
 		If IsObject(OutRs) Then
+			On Error Resume Next
 			OutRs.close
 			Set OutRs = Nothing
+			On Error Goto 0
 		Else
 			If IsObject(rs) Then
+				On Error Resume Next
 				rs.close
 				Set rs = Nothing
+				On Error Goto 0
 			End If
 		End If
 	End Sub
@@ -155,7 +159,7 @@ Class Class_Db
 		sqlCmd_a = Left(sqlCmd_a,Len(sqlCmd_a)-1)
 		sqlCmd_b = Left(sqlCmd_b,Len(sqlCmd_b)-1)
 		sqlCmd = sqlCmd & sqlCmd_a & ")  values(" & sqlCmd_b & ")"
-		sqlCmd = sqlCmd & vbCrlf & "select Cast(IsNull(SCOPE_IDENTITY(),-100) as int)"
+		sqlCmd = sqlCmd & vbCrlf & "select CAST(IsNull(SCOPE_IDENTITY(),-100) as int)"
 		parameteres = Left(parameteres,Len(parameteres)-1)
 		oParams.Add "@stmt",sqlCmd
 		oParams.Add "@parameters",parameteres
@@ -196,7 +200,7 @@ Class Class_Db
 		End If
 		sqlCmd = Left(sqlCmd,Len(sqlCmd)-1)
 		If Trim(Where) <> "" Then sqlCmd=sqlCmd&" Where "&Where&""
-		sqlCmd = sqlCmd & vbCrlf & "select IsNull(@@ROWCOUNT,-100)"
+		sqlCmd = sqlCmd & vbCrlf & "select CAST(IsNull(@@ROWCOUNT,-100) as int)"
 		parameteres = Left(parameteres,Len(parameteres)-1)
 		oParams.Add "@stmt",sqlCmd
 		oParams.Add "@parameters",parameteres
