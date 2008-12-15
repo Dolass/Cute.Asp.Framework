@@ -295,7 +295,7 @@ Class Class_Page
 			Randomize
 			Dim PageID : PageID = "PageID" & Int(Rnd() * 10000000)
 			echo " Ìø×ªµ½:<input type=""text"" id="""&PageID&""" name=""PageID"" onkeydown=""if(event.keyCode==13) document.getElementById('btn_"&PageID&"').click();"" size=""3"" value="""&i_pNumber&""" onclick=""this.select()"" maxlength=8 class=""p_text""> "&vbCrlf & _
-							 "<input type=""button"" value=""GO"" onclick=""location.href='"&CurrentPath&"?PageID='+document.getElementById('"&PageID&"').value+'"&str&"'"" id=""btn_"&PageID&""" class=""p_btn"">"
+							 "<input type=""button"" value=""GO"" onclick=""location.href='"&CurrentPath&"PageID='+document.getElementById('"&PageID&"').value+'"&str&"'"" id=""btn_"&PageID&""" class=""p_btn"">"
 		End Select
 	End Sub
 
