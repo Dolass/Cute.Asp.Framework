@@ -346,13 +346,13 @@ function Class_DES(){
 		this.Key = "";
 		//º”√‹
 		this.encode = function(message, mode){
-			if(typeof message != "String") return "";
+			if(typeof message != "string") return "";
 			var ciphertext = des (this.Key, message, 1, mode ? mode : 1,base64decode(this.Key));
 			return base64encode(ciphertext);
 		}
 		//Ω‚√‹
 		this.decode = function(message, mode){
-			if(typeof message != "String") return "";
+			if(typeof message != "string") return "";
 			var ciphertext = des (this.Key, base64decode(message), 0, mode ? mode : 1,base64decode(this.Key));
 			return ciphertext;
 		}
