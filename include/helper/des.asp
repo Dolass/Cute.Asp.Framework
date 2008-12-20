@@ -243,13 +243,15 @@ function Class_DES(){
 		////////////////////////////// TEST //////////////////////////////
 		function stringToHex(s)
 		{
-			var r="0x";
-			var hexes=new Array("0","1","2","3","4","5","6","7","8","9","a","b","c","d","e","f");
-			for(var i=0;i<s.length;i++)
-			{
-				r+=hexes[s.charCodeAt(i)>>4]+hexes[s.charCodeAt(i)&0xf];
-			}
-			return r;
+		  var r = "0x";
+		  var hexes = new Array ("0","1","2","3","4","5","6","7","8","9","a","b","c","d","e","f");
+		  for (var i=0; i<s.length; i++) {r += hexes [s.charCodeAt(i) >> 4] + hexes [s.charCodeAt(i) & 0xf];}
+		  return r;
+		}
+		function hexToString (h) {
+		  var r = "";
+		  for (var i= 0; i<h.length; i+=2) {r += String.fromCharCode (parseInt (h.substr (i, 2), 16));}
+		  return r;
 		}
 		var base64EncodeChars="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
 		var base64DecodeChars=new Array(
@@ -261,7 +263,7 @@ function Class_DES(){
 		15,16,17,18,19,20,21,22,23,24,25,-1,-1,-1,-1,-1,
 		-1,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,
 		41,42,43,44,45,46,47,48,49,50,51,-1,-1,-1,-1,-1);
-		function base64encode(str) {
+		this.base64encode = function(str) {
 			var out,i,len;
 			var c1,c2,c3;
 			len=str.length;
@@ -294,7 +296,7 @@ function Class_DES(){
 			}
 			return out;
 		}
-		function base64decode(str) {
+		this.base64decode = function(str) {
 			var c1,c2,c3,c4;
 			var i,len,out;
 			len=str.length;
@@ -345,15 +347,14 @@ function Class_DES(){
 
 		this.Key = "";
 		//¼ÓÃÜ
-		this.encode = function(message, mode){
-			if(typeof message != "string") return "";
-			var ciphertext = des (this.Key, message, 1, mode ? mode : 1,base64decode(this.Key));
-			return base64encode(ciphertext);
+		this.encode = function(message, mode,iv){
+			var ciphertext = des (this.Key, message, 1, mode != undefined ? mode : 0, iv);
+			return stringToHex(ciphertext).substr(2);
 		}
 		//½âÃÜ
-		this.decode = function(message, mode){
-			if(typeof message != "string") return "";
-			var ciphertext = des (this.Key, base64decode(message), 0, mode ? mode : 1,base64decode(this.Key));
+		this.decode = function(message, mode, iv){
+			if(message != "") message = hexToString(message);
+			var ciphertext = des (this.Key, message, 0, mode != undefined ? mode : 0, iv);
 			return ciphertext;
 		}
 	}
