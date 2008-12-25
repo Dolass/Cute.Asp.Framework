@@ -198,6 +198,7 @@ Class Class_Page
 		If str <> "" Then
 			CurrentPath = regExpReplace(CurrentPath,"&?"&str,"",false)
 			str = str & "&"
+			die CurrentPath
 		End If
 		echo "<span class=""pageIntroA"">"
 		If i_rCount<>"" Then 
@@ -234,7 +235,7 @@ Class Class_Page
 		If i_pCount <= 1 Then Exit Function
 		If str <> "" Then
 			CurrentPath = regExpReplace(CurrentPath,"&?"&str,"",false)
-			CurrentPath = Replace(CurrentPath,"?&","")
+			'CurrentPath = Replace(CurrentPath,"?&","")
 			str = str & "&"
 		End If
 		echo "<span class=""pageIntroB"">"
