@@ -1,6 +1,8 @@
 <%
 'Option Explicit
 Response.Buffer = True
+Session.CodePage = 936
+Response.Charset = "gb2312"
 Dim StartTime : StartTime = timer()
 %>
 <!--#include file="include/ext.asp"-->
