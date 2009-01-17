@@ -82,7 +82,7 @@ End Sub
 '作  用：消息框
 '**********
 Sub alertBack(msgstr)
-	die "<script type=""text/javascript"">alert(""" + msgstr + """);history.back(-1);</script>"
+	die "<script type=""text/javascript"">alert(""" & msgstr & """);history.back(-1);</script>"
 End Sub
 
 '**********
@@ -91,7 +91,7 @@ End Sub
 '作  用：消息框后关闭窗口
 '**********
 Sub alertClose(msgstr)
-	die "<script type=""text/javascript"">alert(""" + msgstr + """);window.close();</script>"
+	die "<script type=""text/javascript"">alert(""" & msgstr & """);window.close();</script>"
 End Sub
 
 '********** 
