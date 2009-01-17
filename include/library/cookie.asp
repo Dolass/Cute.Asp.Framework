@@ -48,11 +48,11 @@ Class Class_Cookie
         If Not (IsNull(Options) Or IsEmpty(Options) Or Options = "") Then
             If IsArray(Options) Then
                 Dim l : l = UBound(Options)
-                Response.Cookies(Me.Mark & Key).Expire = Options(0)
+                Response.Cookies(Me.Mark & Key).Expires = Options(0)
                 If l = 1 Then Response.Cookies(Me.Mark & Key).Path = Options(1)
                 If l = 2 Then Response.Cookies(Me.Mark & Key).Domain = Options(2)
             Else
-                Response.Cookies(Me.Mark & Key).Expire = Options
+                Response.Cookies(Me.Mark & Key).Expires = Options
             End If
         End If
     End Sub
