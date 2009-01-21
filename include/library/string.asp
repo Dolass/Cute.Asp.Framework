@@ -38,7 +38,7 @@ Class Class_String
 			Length = 0
 			P_len = Len(Trim(Str))
 			For x = 1 To P_len
-				If Asc(Mid(Str, x, 1))<0 Then
+				If Asc(Mid(Str, x, 1))<0 Or Asc(Mid(Str, x, 1)) > 255 Then
 					Length = Int(Length) + 2
 				Else
 					Length = Int(Length) + 1
