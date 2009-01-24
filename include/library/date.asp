@@ -213,6 +213,5 @@ Class Class_Date
                 Constellation = ""
         End Select
     End Function
-
 End Class
 %>
