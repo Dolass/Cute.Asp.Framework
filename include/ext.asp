@@ -39,6 +39,11 @@ Function isset(Obj)
 			isset = false
 			Exit Function
 		End If
+	ElseIf IsArray(Obj) Then
+		If UBound(Obj) = -1 Then
+			isset = false
+			Exit Function
+		End If
 	Else
 		If Obj = "" Then
 			isset = false

@@ -251,7 +251,7 @@ Function getIP()
 End Function
 
 '**********
-' 函数名: getSelfName
+' 函数名: basename
 ' 作  用: 获取当前访问文件名
 '**********
 Function getSelfName()
