@@ -1,6 +1,7 @@
 <!--#include file="config.inc.asp"-->
-<!--#include file="include/helper/des.asp"-->
-<!--#include file="include/helper/md5.asp"-->
+<!--#include file="include/helper/json.asp"-->
 <%
-echo IsDate("00:00:50")
+Tpub.db.Open
+Tpub.db.Exec rs,"select Top 10 * from CommendSetup_User"
+echo Tpub.Json.GetJson("data",rs)
 %>

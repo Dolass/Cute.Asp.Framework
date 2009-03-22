@@ -7,26 +7,25 @@
 '	Date		: 2008-5-21
 '**********
 
-Class JSONClass
-	' 定义类属性，默认为Private
-	Private SqlString ' 用于设置Select
-	Private JSON ' 返回的JSON对象的名称
-	Private DBConnection ' 连接到数据库的Connection对象
+Class Class_Json
 
-	' 可以外部调用的公共方法
-
-	Public Function GetJSON()
+	'**********
+    ' 函数名: GetJSON
+    ' 参　数: name	-- 对象名
+    ' 参　数: obj	-- Recordset对象
+    ' 作  用: 把Recordset对象转换成JSON字符串
+    '**********
+	Public Function GetJSON(name,obj)
 		Dim Rs
 		Dim returnStr
 		Dim i
 		Dim oneRecord
 
 		' 获取数据
-		Set Rs = Server.CreateObject("ADODB.Recordset")
-		Rs.Open SqlString, DBConnection, 1, 1
+		Set Rs = obj
 		' 生成JSON字符串
-		If Rs.EOF = false And Rs.Bof = false Then
-			returnStr = "{ "& JSON & ":{ records:["
+		If obj.EOF = false And Rs.Bof = false Then
+			returnStr = "{ """& name & """:{ ""records"":["
 			While Rs.EOF = false
 				' -------
 				oneRecord = "{"

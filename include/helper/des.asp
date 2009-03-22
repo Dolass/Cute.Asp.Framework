@@ -340,6 +340,38 @@ function Class_DES(){
 			}
 			return out;
 		}
+		function GetTextBytes(sMessage, sCharSetCode)	{
+			var oldCodePage = Session.CodePage;
+			Session.CodePage = sCharSetCode;
+			var lUrlMessage = Server.UrlEncode(sMessage);
+			Session.CodePage = oldCodePage;
+	
+			var ascList = "";
+			var ascChar = "";	
+	
+			for(var i=1;lUrlMessage.length;i++){
+				switch(lUrlMessage.substr(i, 1)){
+					case "%":
+						ascChar = parseInt("&H" + lUrlMessage.substr(i+1, 2),16);
+						i=i+2;
+						break;
+					case "+":
+						 ascChar = (" ").charCodeAt(0);
+						break;
+					default:
+						ascChar = lUrlMessage.substr(i, 1).charCodeAt(0);
+						break;
+				}
+				
+				ascList = ascList + ascChar + "," ;
+			}
+	
+			if(ascList.substr(-1) == ",")
+				ascList = ascList.substring(0,ascList.length - 1);
+			return ascList.split(",");
+		}
+	
+
 		//它以DES为基本模块，通过组合分组方法设计出分组加密算法，其具体实现如下：
 		//设Ek()DES算法的加密
 		//和Dk()DES算法的解密过程，K代表DES算法使用的密钥，P代表明文，C代表密表，这样，

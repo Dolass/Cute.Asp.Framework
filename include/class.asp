@@ -41,7 +41,7 @@ Class Class_Wrap
 
 		Set SHA1			= Class_SHA1()				'SHA1编码
 		Set Md5				= New Class_Md5				'Md5加密
-		Set Json			= Class_Json()				'Json操作类
+		Set Json			= New Class_Json			'Json操作类
 		Set ValidCode		= New Class_ValidCode		'验证码
 		Set Export			= New Class_Export			'Export Data
 		Set Email			= New Class_Email			'Email发送类
