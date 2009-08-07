@@ -136,82 +136,84 @@ Class Class_Date
         Dim BirthDay, BirthMonth
         BirthDay = Day(Birth)
         BirthMonth = Month(Birth)
+		Dim tmp : tmp = ""
         Select Case BirthMonth
             Case 1
                 If BirthDay>= 21 Then
-                    Constellation = Constellation & "Ë®Æ¿"
+                    tmp = tmp & "Ë®Æ¿"
                 Else
-                    Constellation = Constellation & "Ä§ôÉ"
+                    tmp = tmp & "Ä§ôÉ"
                 End If
             Case 2
                 If BirthDay>= 20 Then
-                    Constellation = Constellation & "Ë«Óã"
+                    tmp = tmp & "Ë«Óã"
                 Else
-                    Constellation = Constellation & "Ë®Æ¿"
+                    tmp = tmp & "Ë®Æ¿"
                 End If
             Case 3
                 If BirthDay>= 21 Then
-                    Constellation = Constellation & "°×Ñò"
+                    tmp = tmp & "°×Ñò"
                 Else
-                    Constellation = Constellation & "Ë«Óã"
+                    tmp = tmp & "Ë«Óã"
                 End If
             Case 4
                 If BirthDay>= 21 Then
-                    Constellation = Constellation & "½ðÅ£"
+                    tmp = tmp & "½ðÅ£"
                 Else
-                    Constellation = Constellation & "°×Ñò"
+                    tmp = tmp & "°×Ñò"
                 End If
             Case 5
                 If BirthDay>= 22 Then
-                    Constellation = Constellation & "Ë«×Ó"
+                    tmp = tmp & "Ë«×Ó"
                 Else
-                    Constellation = Constellation & "½ðÅ£"
+                    tmp = tmp & "½ðÅ£"
                 End If
             Case 6
                 If BirthDay>= 22 Then
-                    Constellation = Constellation & "¾ÞÐ·"
+                    tmp = tmp & "¾ÞÐ·"
                 Else
-                    Constellation = Constellation & "Ë«×Ó"
+                    tmp = tmp & "Ë«×Ó"
                 End If
             Case 7
                 If BirthDay>= 23 Then
-                    Constellation = Constellation & "Ê¨×Ó"
+                    tmp = tmp & "Ê¨×Ó"
                 Else
-                    Constellation = Constellation & "¾ÞÐ·"
+                    tmp = tmp & "¾ÞÐ·"
                 End If
             Case 8
                 If BirthDay>= 24 Then
-                    Constellation = Constellation & "´¦Å®"
+                    tmp = tmp & "´¦Å®"
                 Else
-                    Constellation = Constellation & "Ê¨×Ó"
+                    tmp = tmp & "Ê¨×Ó"
                 End If
             Case 9
                 If BirthDay>= 24 Then
-                    Constellation = Constellation & "Ìì³Ó"
+                    tmp = tmp & "Ìì³Ó"
                 Else
-                    Constellation = Constellation & "´¦Å®"
+                    tmp = tmp & "´¦Å®"
                 End If
             Case 10
                 If BirthDay>= 24 Then
-                    Constellation = Constellation & "ÌìÐ«"
+                    tmp = tmp & "ÌìÐ«"
                 Else
-                    Constellation = Constellation & "Ìì³Ó"
+                    tmp = tmp & "Ìì³Ó"
                 End If
             Case 11
                 If BirthDay>= 23 Then
-                    Constellation = Constellation & "ÉäÊÖ"
+                    tmp = tmp & "ÉäÊÖ"
                 Else
-                    Constellation = Constellation & "ÌìÐ«"
+                    tmp = tmp & "ÌìÐ«"
                 End If
             Case 12
                 If BirthDay>= 22 Then
-                    Constellation = Constellation & "Ä§ôÉ"
+                    tmp = tmp & "Ä§ôÉ"
                 Else
-                    Constellation = Constellation & "ÉäÊÖ"
+                    tmp = tmp & "ÉäÊÖ"
                 End If
             Case Else
-                Constellation = ""
+                tmp = ""
         End Select
+		Constellation = tmp
     End Function
 End Class
 %>
