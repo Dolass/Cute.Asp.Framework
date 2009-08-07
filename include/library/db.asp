@@ -46,7 +46,7 @@ Class Class_Db
 			SqlLocalPath = Replace(Request.ServerVariables("PATH_TRANSLATED"),Replace(Request.ServerVariables("PATH_INFO"),"/","\"),"")
 			ConnStr = "Provider=Microsoft.jet.OLEDB.4.0;Data Source=" & SqlLocalPath & Database
 		ElseIf Me.ConnectionType = "MSSQL" Then
-			ConnStr = "Provider=SQLOLEDB.2;DATA SOURCE=" & Me.ServerIp & ";UID="&Username&";PWD="&Password&";Database="&Database&""
+			ConnStr = "Provider=SQLOLEDB.1;DATA SOURCE=" & Me.ServerIp & ";UID="&Username&";PWD="&Password&";Database="&Database&""
 		End If
 		Set Conn = CreateObject("ADODB.Connection")
 		Conn.Open ConnStr
@@ -117,24 +117,22 @@ Class Class_Db
     ' 参  数: source as sql string or recordset object
     ' 作  用: 将一条记录转为一个字典对象
     '**********
-	Function GetRowObject(source)
-		Dim Params, i, rs
+	Sub GetRowObject(obj,source)
+		Dim i, rs
 		If TypeName(source) <> "Recordset" Then
 			Me.Exec rs,source
 		End If
 		If rs.eof Then 
-			Set GetRowObject = Nothing
-			Exit Function
+			Set obj = Nothing
+			Exit Sub
 		End If
-		Set Params = Server.CreateObject("Scripting.Dictionary")
-		Params.CompareMode = 1
+		Set obj = Server.CreateObject("Scripting.Dictionary")
+		obj.CompareMode = 1
 		For i=0 To rs.fields.count-1
-			Params.Add rs.Fields(i).Name,rs(i).Value
+			obj.Add rs.Fields(i).Name,rs(i).Value
 		Next
 		Me.closeRs rs
-		Set GetRowObject = Params
-		Set Params = Nothing
-	End Function
+	End Sub
 
     '**********
     ' 方法名: Insert
@@ -270,6 +268,7 @@ Class Class_Db
 		Dim cmd : Set cmd = Server.CreateObject("ADODB.Command")
 		Dim iName : iName = ""
 		Dim RSReturn : Set RSReturn = Nothing
+		DIM RSStream	: SET RSStream	= Server.CreateObject("ADODB.Stream")
 		Dim ReturnValue : ReturnValue = ""
 		
 		cmd.ActiveConnection = Me.conn
@@ -301,7 +300,11 @@ Class Class_Db
 				Set ExecuteSqlCommand = cmd.Execute()
 			Case 3
 				Set RSReturn = cmd.Execute()
-				ExecuteSqlCommand = Array(RSReturn, cmd("@ReturnValue"))
+				Call RSReturn.Save(RSStream,1)
+				RSReturn.Close
+				Call RSReturn.Open(RSStream)
+
+				ExecuteSqlCommand = Array(RSReturn, cmd("@ReturnValue").Value)
 				' 默认方式，不返回任何参数或对象
 			Case Else
 				Call cmd.Execute(ExecuteSqlCommand, , 128)
