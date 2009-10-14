@@ -46,7 +46,7 @@ Class Class_Db
 			SqlLocalPath = Replace(Request.ServerVariables("PATH_TRANSLATED"),Replace(Request.ServerVariables("PATH_INFO"),"/","\"),"")
 			ConnStr = "Provider=Microsoft.jet.OLEDB.4.0;Data Source=" & SqlLocalPath & Database
 		ElseIf Me.ConnectionType = "MSSQL" Then
-			ConnStr = "Provider=SQLOLEDB.1;DATA SOURCE=" & Me.ServerIp & ";UID="&Username&";PWD="&Password&";Database="&Database&""
+			ConnStr = "Provider=SQLOLEDB.1;DATA SOURCE=" & Me.ServerIp & ";UID="&Username&";PWD="&Password&";Database="&Database&";Pooling=true; MAX Pool Size=512;Min Pool Size=50;Connection Lifetime=30"
 		End If
 		Set Conn = CreateObject("ADODB.Connection")
 		Conn.Open ConnStr
@@ -275,17 +275,21 @@ Class Class_Db
 		cmd.CommandText = commandName
 		cmd.CommandType = 4
 		cmd.NamedParameters = True
+		cmd.Prepared = True
 	
 		If returnMode = 1 Or returnMode = 3 Then
 			cmd.Parameters.Append cmd.CreateParameter("@ReturnValue" , 2 , 4)
 		End If
-	
 		If Not IsNull(params) Then
 			For Each iName in params
 				If iName <> "@stmt" And iName <> "@statement" And iName <> "@parameters" Then
-					cmd.Parameters.Append cmd.CreateParameter(iName , 200 , 1 , 8000 , params(iName)&"")
+					If Len(params(iName)) < 4000 Or IsNumeric(params(iName)) Then
+						cmd.Parameters.Append cmd.CreateParameter(iName , 202 , 1 , 4000 , params(iName)&"")
+					Else
+						cmd.Parameters.Append cmd.CreateParameter(iName , 203 , 1 , Len(params(iName)) + 2 , params(iName)&"")
+					End If
 				Else
-					cmd.Parameters.Append cmd.CreateParameter(iName , 203 , 1 , 4000 , params(iName))
+					cmd.Parameters.Append cmd.CreateParameter(iName , 202 , 1 , 4000 , params(iName))
 				End If
 			Next
 		End If

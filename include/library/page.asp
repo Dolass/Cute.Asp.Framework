@@ -97,18 +97,26 @@ Class Class_Page
 	End Property
 
 	'**********分页模板Top（1）******************
-	'Call Header_a(Obj,SQL语句)
+	'Call Header_a(Obj,数据表名,主键,查询字段,查询条件,排序)
 	'**********
-	Sub Header_a(OutRs,ByVal sql)
+	Sub Header_a(OutRs,ByVal sTable,ByVal sFields,ByVal sWhere,ByVal sGroup,ByVal sSort)
+		s_Sql  = "select count(1) from "&sTable
+		If sWhere <> "" Then s_Sql = s_Sql & " where "&sWhere
+		If sGroup <> "" Then s_Sql = s_Sql & " group by "&sGroup
+		i_rCount = i_conn.Execute(s_Sql)(0)
+		i_pCount = Abs(Int(-(i_rCount / i_pSize)))
+		If i_pNumber > i_pCount Then i_pNumber = i_pCount
+
+		s_Sql = "select top "&i_pSize * Abs(i_pNumber)&" "&sFields&" from "&sTable
+		If sWhere <> "" Then s_Sql = s_Sql & " where "&sWhere
+		If sGroup <> "" Then s_Sql = s_Sql & " group by "&sGroup
+		If sSort <> "" Then s_Sql = s_Sql & " order by "&sSort
+
 		Set OutRs = Server.CreateObject("ADODB.Recordset")
-		OutRs.open sql,i_conn,1,1
+		OutRs.MaxRecords = i_pSize * Abs(i_pNumber)
+		OutRs.open s_Sql,i_conn,1,1
 		If Not OutRs.eof Then
-			OutRs.PageSize = i_pSize
-			i_rCount = OutRs.RecordCount
-			i_pCount = Abs(Int(-(i_rCount / i_pSize)))
-			If i_pNumber > i_pCount Then i_pNumber = i_pCount
-			OutRs.AbsolutePage = i_pNumber
-			'OutRs.Move i_pSize * (Abs(i_pNumber) - 1)
+			OutRs.Move i_pSize * (Abs(i_pNumber) - 1)
 		End If
 	End Sub
 	
@@ -130,7 +138,7 @@ Class Class_Page
 			Else
 				Dim sqlParams, sqlCmd 
 				sqlParams = "@TableName VARCHAR(350),@Fields VARCHAR(4000),@sqlWhere VARCHAR(4000)='',@Group VARCHAR(500)='',@OrderField VARCHAR(500)='',@PageSize INT,@CurrentPage INT=1"
-				sqlCmd = "DECLARE @SortColumn VARCHAR(200) DECLARE @Operator CHAR(2) DECLARE @SortTable VARCHAR(200) DECLARE @SortName VARCHAR(200) Declare @totalRecord int DECLARE @totalPage INT Declare @sql nvarchar(4000) IF @Fields='' SET @Fields='*' IF @sqlWhere='' SET @sqlWhere=' WHERE 1=1' ELSE SET @sqlWhere=' WHERE ('+@sqlWhere+')' IF @Group <>'' SET @Group=' GROUP BY '+@Group IF @OrderField<>'' BEGIN DECLARE @pos1 INT,@pos2 INT SET @OrderField=REPLACE(REPLACE(@OrderField,' asc',' ASC'),' desc',' DESC') IF CHARINDEX(' DESC',@OrderField) > 0 IF CHARINDEX(' ASC',@OrderField) > 0 BEGIN IF CHARINDEX(' DESC',@OrderField) < CHARINDEX(' ASC',@OrderField) SET @Operator='<=' ELSE SET @Operator='>=' END ELSE SET @Operator='<=' ELSE SET @Operator='>=' SET @SortColumn=REPLACE(REPLACE(@OrderField,' ASC',''),' DESC','') SET @pos1=CHARINDEX(',',@SortColumn) IF @pos1 > 0 SET @SortColumn=SUBSTRING(@SortColumn,1,@pos1-1) SET @pos2=CHARINDEX('.',@SortColumn) IF @pos2 > 0 BEGIN SET @SortTable=SUBSTRING(@SortColumn,1,@pos2-1) IF @pos1 > 0  SET @SortName=SUBSTRING(@SortColumn,@pos2+1,@pos1-@pos2-1) ELSE SET @SortName=SUBSTRING(@SortColumn,@pos2+1,LEN(@SortColumn)-@pos2) END ELSE BEGIN SET @SortTable=@TableName SET @SortName=@SortColumn END END DECLARE @type varchar(50) DECLARE @prec int SELECT @type=t.name,@prec=c.prec FROM sysobjects o  JOIN syscolumns c on o.id=c.id JOIN systypes t on c.xusertype=t.xusertype WHERE o.name=@SortTable AND c.name=@SortName IF CHARINDEX('char', @type) > 0 SET @type=@type+'('+CAST(@prec AS varchar)+')' DECLARE @TopRows INT SET @TopRows=@PageSize * (@CurrentPage-1)+1 if (@SqlWhere='' or @sqlWhere=NULL) set @sql='select @totalRecord=count(1) from '+@TableName+@Group else set @sql='select @totalRecord=count(1) from '+@TableName+@sqlWhere+@Group EXEC sp_executesql @sql,N'@totalRecord int OUTPUT',@totalRecord OUTPUT SELECT @totalPage=CEILING((@totalRecord+0.0)/@PageSize) SELECT @totalRecord AS RecordCount,@totalPage AS PageCount EXEC(' DECLARE @SortColumnBegin '+@type+' SET ROWCOUNT '+@TopRows+' SELECT @SortColumnBegin='+@SortColumn+' FROM '+@TableName+' '+@sqlWhere+' '+@Group+' ORDER BY '+@OrderField+' SET ROWCOUNT '+@PageSize+' SELECT '+@Fields+' FROM '+@TableName+' '+@sqlWhere+' AND '+@SortColumn+''+@Operator+'@SortColumnBegin '+@Group+' ORDER BY '+@OrderField)"
+				sqlCmd = "DECLARE @SortColumn VARCHAR(200) DECLARE @Operator CHAR(2) DECLARE @SortTable VARCHAR(200) DECLARE @SortName VARCHAR(200) Declare @totalRecord int DECLARE @totalPage INT Declare @sql nvarchar(4000) IF @Fields='' SET @Fields='*' IF @sqlWhere='' SET @sqlWhere=' WHERE 1=1' ELSE SET @sqlWhere=' WHERE ('+@sqlWhere+')' IF @Group <>'' SET @Group=' GROUP BY '+@Group IF @OrderField<>'' BEGIN DECLARE @pos1 INT,@pos2 INT SET @OrderField=REPLACE(REPLACE(@OrderField,' asc',' ASC'),' desc',' DESC') IF CHARINDEX(' DESC',@OrderField) > 0 IF CHARINDEX(' ASC',@OrderField) > 0 BEGIN IF CHARINDEX(' DESC',@OrderField) < CHARINDEX(' ASC',@OrderField) SET @Operator='<=' ELSE SET @Operator='>=' END ELSE SET @Operator='<=' ELSE SET @Operator='>=' SET @SortColumn=REPLACE(REPLACE(@OrderField,' ASC',''),' DESC','') SET @pos1=CHARINDEX(',',@SortColumn) IF @pos1 > 0 SET @SortColumn=SUBSTRING(@SortColumn,1,@pos1-1) SET @pos2=CHARINDEX('.',@SortColumn) IF @pos2 > 0 BEGIN SET @SortTable=SUBSTRING(@SortColumn,1,@pos2-1) IF @pos1 > 0  SET @SortName=SUBSTRING(@SortColumn,@pos2+1,@pos1-@pos2-1) ELSE SET @SortName=SUBSTRING(@SortColumn,@pos2+1,LEN(@SortColumn)-@pos2) END ELSE BEGIN SET @SortTable=@TableName SET @SortName=@SortColumn END END DECLARE @type varchar(50) DECLARE @prec int SELECT @type=t.name,@prec=c.prec FROM sysobjects o with(nolock)  JOIN syscolumns c with(nolock) on o.id=c.id JOIN systypes t with(nolock) on c.xusertype=t.xusertype WHERE o.name=@SortTable AND c.name=@SortName IF CHARINDEX('char', @type) > 0 SET @type=@type+'('+CAST(@prec AS varchar)+')' DECLARE @TopRows INT SET @TopRows=@PageSize * (@CurrentPage-1)+1 if (@SqlWhere='' or @sqlWhere=NULL) set @sql='select @totalRecord=count(1) from '+@TableName+@Group else set @sql='select @totalRecord=count(1) from '+@TableName+@sqlWhere+@Group EXEC sp_executesql @sql,N'@totalRecord int OUTPUT',@totalRecord OUTPUT SELECT @totalPage=CEILING((@totalRecord+0.0)/@PageSize) SELECT @totalRecord AS RecordCount,@totalPage AS PageCount EXEC(' DECLARE @SortColumnBegin '+@type+' SET ROWCOUNT '+@TopRows+' SELECT @SortColumnBegin='+@SortColumn+' FROM '+@TableName+' '+@sqlWhere+' '+@Group+' ORDER BY '+@OrderField+' SET ROWCOUNT '+@PageSize+' SELECT '+@Fields+' FROM '+@TableName+' '+@sqlWhere+' AND '+@SortColumn+''+@Operator+'@SortColumnBegin '+@Group+' ORDER BY '+@OrderField)"
 				.CommandText = "sp_executesql"
 				.Parameters.Append .CreateParameter("@stmt",203,,8000,sqlCmd)
 				.Parameters.Append .CreateParameter("@parameters",203,,8000,sqlParams)
@@ -159,7 +167,7 @@ Class Class_Page
 		Call SetSqlString(sTable,sFields,sWhere,sGroup,sSort)
 		Dim Cmd, sql,StrOrder, bFlag
 		sSort = Trim(sSort)
-		Call i_conn.Execute("select Top 1 1 from sysobjects where id = object_id(N'["&Me.PageProcedure&"]') and OBJECTPROPERTY(id, N'IsProcedure') = 1",bFlag)
+		Call i_conn.Execute("select Top 1 1 from sysobjects with(nolock) where id = object_id(N'["&Me.PageProcedure&"]') and OBJECTPROPERTY(id, N'IsProcedure') = 1",bFlag)
 		Set Cmd = Server.CreateObject("ADODB.Command")
 		With Cmd
 			.ActiveConnection = i_conn
@@ -202,13 +210,13 @@ Class Class_Page
 		End If
 		echo "<span class=""pageIntroA"">"
 		If i_rCount<>"" Then 
-			echo "总数:<kbd class=""p_total"">"&i_rCount&"</kbd> "&vbCrlf
+			echo "总数:<kbd class=""p_total"">"&i_rCount&"</kbd>/<kbd class=""p_ptotal"">"&i_pCount&"</kbd>页 "&vbCrlf
 		End If
 		echo "每页:<kbd class=""p_size"">"&i_pSize&"</kbd> "&vbCrlf
 		echo "</span>"
 		echo "<span class=""pageContorlA"">"
 		If i_pNumber<=1 Then
-			echo  "<a href=""#;"" class=""p_disabled"" disabled title=""已经是第一页了"">首页</a> <a href=""#;"" class=""p_disabled"" disabled>上一页</a> "
+			echo  "<a href=""javascript:void(0)"" class=""p_disabled"" disabled title=""已经是第一页了"">首页</a> <a href=""#;"" class=""p_disabled"" disabled>上一页</a> "
 		Else
 			echo "<a href="""&CurrentPath&str&"PageID=1"" class=""p_start"" title=""第一页"">首页</a> <a href="""&CurrentPath&str&"PageID="&i_pNumber-1&""" class=""p_pre"">上一页</a> "
 		End If
@@ -216,7 +224,7 @@ Class Class_Page
 			echo "<a href="""&CurrentPath&str&"PageID="&i_pNumber+1&""" class=""p_next"">下一页</a>  <a href="""&CurrentPath&str&"PageID=999999999"" class=""p_end"">尾页</a> "
 		Else
 			If i_pNumber>=i_pCount Then
-				echo "<a href=""#;"" class=""p_disabled"" disabled>下一页</a> <a href=""#;"" class=""p_disabled"" disabled title=""已经是最后一页了"">尾页</a>"
+				echo "<a href=""javascript:void(0)"" class=""p_disabled"" disabled>下一页</a> <a href=""#;"" class=""p_disabled"" disabled title=""已经是最后一页了"">尾页</a>"
 			Else
 				echo "<a href="""&CurrentPath&str&"PageID="&i_pNumber+1&""" class=""p_next"">下一页</a> <a href="""&CurrentPath&str&"PageID="&i_pCount&""" class=""p_end"" title=""最后一页"">尾页</a>"
 			End If
@@ -240,13 +248,13 @@ Class Class_Page
 		End If
 		echo "<span class=""pageIntroB"">"
 		If i_rCount <> "" Then
-			echo "总数:<kbd class=""p_total"">"&i_rCount&"</kbd>"
+			echo "总数:<kbd class=""p_total"">"&i_rCount&"</kbd>/<kbd class=""p_ptotal"">"&i_pCount&"</kbd>页 "
 		End If
 		echo " 每页:<kbd class=""p_size"">"&i_pSize&"</kbd>"
 		echo "</span>"
 		echo "<span class=""pageContorlB"">"
 		If i_pNumber = 1 Then 
-			echo " <a href=""#;"" class=""p_disabled"" disabled title=""已经是第一页了"">上一页</a>"
+			echo " <a href=""javascript:void(0)"" class=""p_disabled"" disabled title=""已经是第一页了"">上一页</a>"
 		Else
 			echo " <a href="""&CurrentPath&"PageID="&i_pNumber-1&""&str&""" class=""p_pre"">上一页</a> "
 		End If
@@ -270,7 +278,7 @@ Class Class_Page
 			echo " <a href="""&CurrentPath&"PageID="&i_pCount&""&str&""" class=""p_end"" title=""最后一页"">"&i_pCount&"</a> "
 		End If
 		If i_pNumber = i_pCount Then 
-			echo " <a href=""#;"" class=""p_disabled"" disabled title=""已经是最后一页了"">下一页</a> "
+			echo " <a href=""javascript:void(0)"" class=""p_disabled"" disabled title=""已经是最后一页了"">下一页</a> "
 		Else
 			echo " <a href="""&CurrentPath&"PageID="&i_pNumber+1&""&str&""" class=""p_next"">下一页</a> "
 		End If

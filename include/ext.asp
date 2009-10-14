@@ -39,15 +39,12 @@ Function isset(Obj)
 			isset = false
 			Exit Function
 		End If
-	ElseIf IsArray(Obj) Then
-		If UBound(Obj) = -1 Then
-			isset = false
-			Exit Function
-		End If
 	Else
-		If Obj = "" Then
-			isset = false
-			Exit Function
+		If Not IsArray(Obj) Then
+			If Obj = "" Then
+				isset = false
+				Exit Function
+			End If
 		End If
 	End If
 End Function
@@ -57,6 +54,9 @@ End Function
 '作  用：页面跳转
 '**********
 Sub locationHref(url)
+	On Error Resume Next
+	Tpub.db.closeRs rs
+	Set Tpub = Nothing
 	Response.Redirect url
 	die("")
 End Sub
@@ -66,6 +66,9 @@ End Sub
 '作  用：返回上页
 '**********
 Sub locationReferer()
+	On Error Resume Next
+	Tpub.db.closeRs rs
+	Set Tpub = Nothing
 	locationHref(Request.ServerVariables("HTTP_REFERER"))
 	die("")
 End Sub
@@ -75,6 +78,9 @@ End Sub
 '作  用：消息框
 '**********
 Sub alertRedirect(msgstr,url)
+	On Error Resume Next
+	Tpub.db.closeRs rs
+	Set Tpub = Nothing
 	die "<script type=""text/javascript"">"&vbCr& _
 			"alert("""&msgstr&""");"&vbCr& _
 			"location.replace("""&url&""");"&vbCr& _
@@ -87,7 +93,10 @@ End Sub
 '作  用：消息框
 '**********
 Sub alertBack(msgstr)
-	die "<script type=""text/javascript"">alert(""" & msgstr & """);history.back(-1);</script>"
+	On Error Resume Next
+	Tpub.db.closeRs rs
+	Set Tpub = Nothing
+	die "<script type=""text/javascript"">alert(""" & msgstr & """);history.back();</script>"
 End Sub
 
 '**********
@@ -96,6 +105,9 @@ End Sub
 '作  用：消息框后关闭窗口
 '**********
 Sub alertClose(msgstr)
+	On Error Resume Next
+	Tpub.db.closeRs rs
+	Set Tpub = Nothing
 	die "<script type=""text/javascript"">alert(""" & msgstr & """);window.close();</script>"
 End Sub
 
@@ -106,6 +118,9 @@ End Sub
 '********** 
 Sub die(str)
 	echo(str)
+	On Error Resume Next
+	Tpub.db.closeRs rs
+	Set Tpub = Nothing
 	Response.End()
 End Sub
 
@@ -118,4 +133,16 @@ Class ReAopResult
 	Public Message
 	Public AttachObject
 End Class
+
+'********** 
+' 类名: IIf
+' 作用：根据判断结果赋值
+'********** 
+Function IIf(Condition, ValueIfTrue, ValueIfFalse)
+	If Condition Then
+		IIf = ValueIfTrue
+	Else
+		IIf = ValueIfFalse
+	End If
+End Function
 %>

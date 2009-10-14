@@ -38,14 +38,16 @@ Class Class_Interface
 	'参  数：RefererUrl	---- 返回页面
 	'		 PostUrl	---- 获取地址
 	'		 PostData	---- 发送参数
-	'		 DateType	---- 编码类型
+	'		 DataType	---- 编码类型
     '作  用：登录
     '**********
-    Function PostHttpPage(RefererUrl, PostUrl, PostData, DateType)
+    Function PostHttpPage(RefererUrl, PostUrl, PostData, DataType)
         Dim xmlHttp, RetStr
+		If PostUrl = "" Then Exit Function
         On Error Resume Next
-        Set xmlHttp = Server.CreateObject("Msxml2.XMLHTTP")
+        Set xmlHttp = Server.CreateObject("Msxml2.ServerXMLHTTP")
 		With XmlHttp
+			.SetTimeouts 10000, 10000, 10000, 10000
 			.Open "POST", PostUrl, false
 			.setRequestHeader "Content-Length", Len(PostData)
 			.setRequestHeader "Content-Type", "application/x-www-form-urlencoded"
@@ -58,7 +60,7 @@ Class Class_Interface
             Exit Function
         End If
 		On Error Goto 0
-        PostHttpPage = bytesToBSTR(xmlHttp.responseBody, DateType)
+        PostHttpPage = bytesToBSTR(xmlHttp.responseBody, DataType)
         Set xmlHttp = Nothing
     End Function
 
@@ -70,15 +72,18 @@ Class Class_Interface
     '参  数：Referer ------ 远程调用文件（对付防采集的，用内容页地址，没有防的留空）
     '**********
     Function SaveRemoteFile(LocalFileName, RemoteFileUrl, Referer)
+		SaveRemoteFile = False
+		If RemoteFileUrl = "" Then Exit Function
+		SaveRemoteFile = True
         Dim Ads, Retrieval, GetRemoteData
         On Error Resume Next
-        Set Retrieval = Server.CreateObject("Msxml2.ServerXMLHTTP")
+        Set Retrieval = Server.CreateObject("Msxml2.XMLHTTP")
         With Retrieval
-			.SetTimeouts 15000, 15000, 15000, 15000
+			'.SetTimeouts 10000, 10000, 10000, 10000
             .Open "Get", RemoteFileUrl, False, "", ""
             .Send
             If .Readystate<>4 Or .Status > 300 Then
-                SaveRemoteFile = "$False$"
+                SaveRemoteFile = False
                 Exit Function
             End If
             GetRemoteData = .ResponseBody
@@ -94,7 +99,7 @@ Class Class_Interface
             .Close()
         End With
         If Err.Number<>0 Then
-            SaveRemoteFile = Err.Description
+            SaveRemoteFile = False
 			On Error Goto 0
             Exit Function
         End If
@@ -107,22 +112,24 @@ Class Class_Interface
     '参  数：HttpUrl ------网页地址,Cset 编码
     '**********
     Function GetHttpPage(URL, Cset, iUserName , iPassword)
-        Dim Http
-        If IsNull(URL) = True Or Len(URL)<18 Or URL = "$False$" Then
+        Dim xmlHttp
+        If URL = "" Or Len(URL)<18 Or URL = "$False$" Then
             GetHttpPage = "$False$"
             Exit Function
         End If
-        Set Http = Server.CreateObject("Msxml2.ServerXMLHTTP")
-		Http.SetTimeouts 15000, 15000, 15000, 15000
-        Http.Open "GET", URL, False, iUserName, iPassword
-        Http.Send()
-        If Http.Readystate<>4 Then
-            Set Http = Nothing
+        Set xmlHttp = Server.CreateObject("Msxml2.ServerXMLHTTP")
+		With xmlHttp
+			.SetTimeouts 10000, 10000, 10000, 10000
+			.Open "GET", URL, False, iUserName, iPassword
+			.Send()
+		End With
+        If xmlHttp.Readystate<>4 Then
+            Set xmlHttp = Nothing
             GetHttpPage = "$False$"
             Exit Function
         End If
-        GetHTTPPage = bytesToBSTR(Http.responseBody, Cset)
-        Set Http = Nothing
+        GetHTTPPage = bytesToBSTR(xmlHttp.responseBody, Cset)
+        Set xmlHttp = Nothing
     End Function
 
     '**********

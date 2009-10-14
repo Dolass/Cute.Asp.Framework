@@ -78,7 +78,7 @@ Class Class_Date
     End Function
 
     '**********
-    ' 函数名: FormatDate
+    ' 函数名: fromUnixEpoch
     ' 参  数: sDate		--  时间
     ' 参  数: format	--  格式化格式
     ' 作  用: 格式化时间
@@ -215,5 +215,6 @@ Class Class_Date
         End Select
 		Constellation = tmp
     End Function
+
 End Class
 %>

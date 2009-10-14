@@ -63,19 +63,21 @@ Class Class_File
     'FormatFileSize
     '作  用：格式化文件的大小
     '**********
-    Function FormatFileSize(fs)
-        Dim kUnit, mUnit, gUnit
-        kUnit = "&nbsp;KB"
-        mUnit = "&nbsp;MB"
-        gUnit = "&nbsp;GB"
+    Function FormatFileSize(fs,float)
+        Dim bUnit,kUnit, mUnit, gUnit
+        bUnit = "B"
+        kUnit = "KB"
+        mUnit = "MB"
+        gUnit = "GB"
+		If Not IsNumeric(float) Then float = 0
         If fs>1073741824 Then
-            fs = FormatNumber(fs / 1073741824, 2, true)&gUnit
+            fs = FormatNumber(fs / 1073741824, float, true)&gUnit
         ElseIf fs>1048576 Then
-            fs = FormatNumber(fs / 1048576, 1, true)&mUnit
+            fs = FormatNumber(fs / 1048576, float, true)&mUnit
         ElseIf fs>1024 Then
-            fs = FormatNumber(fs / 1024, 1, true)&kUnit
+            fs = FormatNumber(fs / 1024, float, true)&kUnit
         Else
-            fs = FormatNumber(fs, 0, true)
+            fs = FormatNumber(fs, float, true)&bUnit
         End If
         FormatFileSize = fs
     End Function
@@ -141,7 +143,7 @@ Class Class_File
 
     '**********
     '函数名：IsFileExists
-    '作  用：检查某一目录是否存在
+    '作  用：检查某一文件是否存在
     '参  数：FilePath	----目录
     '**********
     Function IsFileExists(FilePath)
@@ -298,9 +300,16 @@ Class Class_File
         Set S = Server.CreateObject(Me.Stream)
         FileName = Server.MapPath(sFilePath)
         With S
+			If VarType(sPageContent) = 8209 Then
+				.Type = 1
+			End If
             .Open
-            .Charset = Charset
-            .WriteText sPageContent
+			If VarType(sPageContent) = 8209 Then
+				.Write sPageContent
+			Else
+			    .Charset = Charset
+				.WriteText sPageContent
+			End If
             .SaveToFile FileName, 2
             .Close
         End With

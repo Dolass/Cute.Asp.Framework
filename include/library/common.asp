@@ -7,6 +7,8 @@
 '	Date		: 2008-4-3
 '**********
 
+Public FilterWord	'过滤字符
+
 '**********
 '函数名：showErr
 '参  数：message	-- 错误信息
@@ -94,9 +96,9 @@ End Function
 Sub noBuffer()
 	Response.Buffer = True
 	Response.Expires = 0
-	Response.AddHeader "Expires",-1
+	Response.AddHeader "Expires",0
 	Response.AddHeader "Pragma","no-cache"
-	Response.AddHeader "Cache-Control","no-cache,must-revalidate"
+	Response.AddHeader "Cache-Control","no-cache,private, post-check=0, pre-check=0, max-age=0"
 	Response.ExpiresAbsolute = Now() - 1
 	Response.CacheControl = "no-cache"
 End Sub
@@ -109,20 +111,6 @@ End Sub
 Function rand(min, max)
     Randomize
     rand = Int((max - min + 1) * Rnd + min)
-End Function
-
-'**********
-' 函数名: randStr
-' 作用: Generate a specific length random string
-'**********
-Function randStr(intLength)
-	Dim strSeed,seedLength,i
-	strSeed = "abcdefghijklmnopqrstuvwxyz1234567890"
-	seedLength = len(strSeed)
-	For i=1 to intLength
-		Randomize
-		randStr = randStr & Mid(strSeed,Round((Rnd*(seedLength-1))+1),1)
-	Next
 End Function
 
 '**********
@@ -149,6 +137,7 @@ Function rq(Requester,Name,iType,Default)
 		tmp = htmlEncode(tmp)
 	Case 4
 		tmp = Request.Cookies(Name)
+		tmp = htmlEncode(tmp)
 	End Select
 	If tmp = "" Then tmp = Default
 	Select Case iType
@@ -201,6 +190,12 @@ Function safe(str)
 	If str = "" Then Exit Function
 	str = Replace(str, "'", "''")
 	str = Replace(str,"--","&#45;&#45;")
+	If IsArray(FilterWord) Then
+		Dim item
+		For Each item In FilterWord
+			str = Replace(str,item,"**",1,-1,1)
+		Next
+	End If
 	safe = str
 End Function
 
@@ -265,7 +260,7 @@ Function getIP()
 End Function
 
 '**********
-' 函数名: basename
+' 函数名: getSelfName
 ' 作  用: 获取当前访问文件名
 '**********
 Function getSelfName()
@@ -288,6 +283,54 @@ Function returnObj()
 		Set returnObj = New AopResult
 	End If
 	On Error Goto 0
+End Function
+
+'**********
+' 函数名: encodeJP
+' 参  数: str as the input string
+' 作  用: 编码日文
+'**********
+Function encodeJP(ByVal str)
+	If str="" Then Exit Function
+	Dim c1 : c1 = Array("ガ","ギ","グ","ア","ゲ","ゴ","ザ","ジ","ズ","ゼ","ゾ","ダ","ヂ","ヅ","デ","ド","バ","パ","ビ","ピ","ブ","プ","ベ","ペ","ボ","ポ","ヴ")
+	Dim c2 : c2 = Array("460","462","463","450","466","468","470","472","474","476","478","480","482","485","487","489","496","497","499","500","502","503","505","506","508","509","532")
+	Dim i
+	For i=0 to 26
+		str=Replace(str,c1(i),"&#12"&c2(i)&";")
+	Next
+	encodeJP = str
+End Function
+
+'**********
+' 函数名: htmlEncode
+' 参  数: str as the input string
+' 作  用: filter html code
+'**********
+Function htmlEncode(ByVal Str)
+	If Trim(Str) = "" Or IsNull(Str) Then
+		htmlEncode = ""
+	Else
+		str = Replace(str, "  ", "&nbsp; ")
+		str = Replace(str, """", "&quot;")
+		str = Replace(str, ">", "&gt;")
+		str = Replace(str, "<", "&lt;")
+		htmlEncode = Str
+	End If
+End Function
+
+'**********
+' 函数名: htmlDecode
+' 参  数: str as the input string
+' 作  用: Decode the html tag
+'**********
+Function htmlDecode(ByVal str)
+	If Not IsNull(str) And str <> "" Then
+		str = Replace(str, "&nbsp;", " ",1,-1,1)
+		str = Replace(str, "&quot;", """",1,-1,1)
+		str = Replace(str, "&gt;", ">",1,-1,1)
+		str = Replace(str, "&lt;", "<",1,-1,1)
+		htmlDecode = str
+	End If
 End Function
 
 '**********
@@ -321,6 +364,21 @@ Function URLDecode(ByVal vstrin)
 	URLDecode = strreturn
 End Function
 
+
+'**********
+' 函数名: randStr
+' 作用: Generate a specific length random string
+'**********
+Function randStr(intLength)
+	Dim strSeed,seedLength,i
+	strSeed = "abcdefghijklmnopqrstuvwxyz1234567890"
+	seedLength = len(strSeed)
+	For i=1 to intLength
+		Randomize
+		randStr = randStr & Mid(strSeed,Round((Rnd*(seedLength-1))+1),1)
+	Next
+End Function
+
 '**********
 ' 函数名: SetQueryString
 ' 作用: 重置参数
@@ -329,7 +387,7 @@ Function SetQueryString(ByVal sQuery, ByVal Name,ByVal Value)
 	Dim Obj
 	If Len(sQuery) > 0 Then
 		If InStr(1,sQuery,Name&"=",1) = 0 Then
-			If InStr(sQuery,"=") > 0 Then
+			If InStr(sQuery,"=") > 0 And Right(sQuery,1) <> "&" Then
 				sQuery = sQuery & "&" & Name & "=" & Value
 			Else
 				sQuery = sQuery & Name & "=" & Value
@@ -338,7 +396,7 @@ Function SetQueryString(ByVal sQuery, ByVal Name,ByVal Value)
 			Set Obj = New Regexp
 			Obj.IgnoreCase = False
 			Obj.Global = True
-			Obj.Pattern = "(" & Name & "=)[^&]+"
+			Obj.Pattern = "(&?" & Name & "=)[^&]+"
 			sQuery = Obj.Replace(sQuery,"$1" & Value)
 			Set Obj = Nothing
 		End If
@@ -346,5 +404,17 @@ Function SetQueryString(ByVal sQuery, ByVal Name,ByVal Value)
 		sQuery = sQuery & Name & "=" & Value
 	End If
 	SetQueryString = sQuery
+End Function
+
+
+'**********
+' 函数名: GetGUID
+' 作用: 生成GUID
+'**********
+Function GetGUID()
+	On Error Resume Next
+	GetGUID = Mid(Server.CreateObject("Scriptlet.TypeLib").Guid,2,36)
+	Err.Clear
+	On Error Goto 0
 End Function
 %>

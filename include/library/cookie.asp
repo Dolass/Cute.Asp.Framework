@@ -45,14 +45,14 @@ Class Class_Cookie
     '**********
 	Sub [set](Key, Value, Options)
         Response.Cookies(Me.Mark & Key) = Value
-        If Not (IsNull(Options) Or IsEmpty(Options) Or Options = "") Then
+        If Not (IsNull(Options) Or IsEmpty(Options)) Then
             If IsArray(Options) Then
                 Dim l : l = UBound(Options)
-                Response.Cookies(Me.Mark & Key).Expires = Options(0)
-                If l = 1 Then Response.Cookies(Me.Mark & Key).Path = Options(1)
+				If l > 0 Then Response.Cookies(Me.Mark & Key).Expires = Options(0)
+                If l > 1 Then Response.Cookies(Me.Mark & Key).Path = Options(1)
                 If l = 2 Then Response.Cookies(Me.Mark & Key).Domain = Options(2)
             Else
-                Response.Cookies(Me.Mark & Key).Expires = Options
+                If Options <> "" Then Response.Cookies(Me.Mark & Key).Expires = Options
             End If
         End If
     End Sub
