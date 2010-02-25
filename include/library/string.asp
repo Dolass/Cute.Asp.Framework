@@ -202,5 +202,32 @@ Class Class_String
 			Set Obj = Nothing
 		End If
 	End Function
+
+	'**********
+	' 函数名: Trim
+	'**********
+	Function [Trim](ByVal str)	'内容
+		If Len(str) > 0 Then
+			[Trim] = Me.regExpReplace(str,"(^\s*)|(\s*$)","",False)
+		End If
+	End Function
+
+	'**********
+	' 函数名: RTrim
+	'**********
+	Function [RTrim](ByVal str)	'内容
+		If Len(str) > 0 Then
+			[RTrim] = Me.regExpReplace(str,"\s*$","",False)
+		End If
+	End Function
+
+	'**********
+	' 函数名: LTrim
+	'**********
+	Function [LTrim](ByVal str)	'内容
+		If Len(str) > 0 Then
+			[LTrim] = Me.regExpReplace(str,"^\s*","",False)
+		End If
+	End Function
 End Class
 %>

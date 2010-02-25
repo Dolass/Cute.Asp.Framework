@@ -206,13 +206,14 @@ Class Class_Array
 	' 作  用: search — 查询元素，不存在则返回False
 	'**********
 	Function search(ByVal arr, ByVal Value)
-		Dim a_tmp
-		a_tmp = Filter(arr,Value)
-		If UBound(a_tmp) = -1 Then
-			search = False
-			Exit Function
-		End If
-		search = a_tmp(0)
+		Dim i
+		For i = 0 To UBound(arr)
+			If arr(i) = Value Then
+				search = i
+				Exit Function
+			End If
+		Next
+		search = -1
 	End Function
 	
 	'**********

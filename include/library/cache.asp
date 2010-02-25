@@ -72,8 +72,8 @@ Class Class_Cache
 	Sub [set](Key, Value, Expire)
         Expires = Expire
         Lock
-		Application(Mark & "_" & Key) = Value
-        Application(Mark & "_" & Key & "_Expires") = Expires
+		Application(Mark & Key) = Value
+        Application(Mark & Key & "_Expires") = Expires
         unLock
     End Sub
 
@@ -83,14 +83,14 @@ Class Class_Cache
     '**********
 	Function [get](Key)
         Dim Expire
-        Expire = Application(Mark & "_" & Key & "_Expires")
+        Expire = Application(Mark & Key & "_Expires")
         If IsNull(Expire) Or IsEmpty(Expire) Then
             [get] = ""
         Else
             If IsDate(Expire) And CDate(Expire) > Now Then
-                [get] = Application(Mark & "_" & Key)
+                [get] = Application(Mark & Key)
             Else
-                Call Remove(Mark & "_" & Key)
+                Call Remove(Mark & Key)
                 Value = ""
             End If
         End If
@@ -102,8 +102,8 @@ Class Class_Cache
     '**********
 	Sub Remove(Key)
         Lock
-        Application.Contents.Remove(Mark & "_" & Key)
-        Application.Contents.Remove(Mark & "_" & Key & "_Expires")
+        Application.Contents.Remove(Mark & Key)
+        Application.Contents.Remove(Mark & Key & "_Expires")
         unLock
     End Sub
 

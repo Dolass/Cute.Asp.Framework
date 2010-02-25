@@ -36,17 +36,6 @@ Class Class_Page
 		i_pNumber = 1
 		i_pCount = 0
 		i_rCount = 0
-		Dim port : port = LCase(Request.ServerVariables("Server_Port"))
-		Dim page : page = LCase(Request.ServerVariables("Script_Name"))
-		Dim url
-		If CStr(port) = "80" Then 
-			CurrentPath = "http://" & Request.ServerVariables("server_name") & page 
-		Else
-			CurrentPath = "http://" & Request.ServerVariables("server_name") & ":" & port & page
-		End If
-		CurrentPath = CurrentPath & "?" & regExpReplace(Request.QueryString(),"&?pageid=\d+[^\&]*","",false)
-		CurrentPath = regExpReplace(CurrentPath,"(^http\:\/\/.+[^&\?]+)$","$1&",false)
-		CurrentPath = Replace(CurrentPath,"?&","?")
 		PageProcedure = "PagingLarge"
 	End Sub
 	
@@ -172,7 +161,7 @@ Class Class_Page
 		With Cmd
 			.ActiveConnection = i_conn
 			.CommandType = 4
-			If bFlag > 0 Then
+			If bFlag <> 0 Then
 				.CommandText = Me.PageProcedure
 			Else
 				Dim sqlParams, sqlCmd 
@@ -203,11 +192,6 @@ Class Class_Page
 	'**********
 	Function Footer_a(ByVal str,ByVal p_Type)
 		If i_pCount <= 1 Then Exit Function
-		If str <> "" Then
-			CurrentPath = regExpReplace(CurrentPath,"&?"&str,"",false)
-			str = str & "&"
-			die CurrentPath
-		End If
 		echo "<span class=""pageIntroA"">"
 		If i_rCount<>"" Then 
 			echo "总数:<kbd class=""p_total"">"&i_rCount&"</kbd>/<kbd class=""p_ptotal"">"&i_pCount&"</kbd>页 "&vbCrlf
@@ -218,15 +202,15 @@ Class Class_Page
 		If i_pNumber<=1 Then
 			echo  "<a href=""javascript:void(0)"" class=""p_disabled"" disabled title=""已经是第一页了"">首页</a> <a href=""#;"" class=""p_disabled"" disabled>上一页</a> "
 		Else
-			echo "<a href="""&CurrentPath&str&"PageID=1"" class=""p_start"" title=""第一页"">首页</a> <a href="""&CurrentPath&str&"PageID="&i_pNumber-1&""" class=""p_pre"">上一页</a> "
+			echo "<a href=""?"&SetQueryString(Replace(Request.QueryString(),str,"",1,-1,1),"PageID",1)&str&""" class=""p_start"" title=""第一页"">首页</a> <a href=""?"&SetQueryString(Replace(Request.QueryString(),str,"",1,-1,1),"PageID",i_pNumber-1)&str&""" class=""p_pre"">上一页</a> "
 		End If
 		If i_pCount="" Then
-			echo "<a href="""&CurrentPath&str&"PageID="&i_pNumber+1&""" class=""p_next"">下一页</a>  <a href="""&CurrentPath&str&"PageID=999999999"" class=""p_end"">尾页</a> "
+			echo "<a href=""?"&SetQueryString(Replace(Request.QueryString(),str,"",1,-1,1),"PageID",i_pNumber+1)&str&""" class=""p_next"">下一页</a>  <a href=""?"&SetQueryString(Replace(Request.QueryString(),str,"",1,-1,1),"PageID",9999999)&str&""" class=""p_end"">尾页</a> "
 		Else
 			If i_pNumber>=i_pCount Then
 				echo "<a href=""javascript:void(0)"" class=""p_disabled"" disabled>下一页</a> <a href=""#;"" class=""p_disabled"" disabled title=""已经是最后一页了"">尾页</a>"
 			Else
-				echo "<a href="""&CurrentPath&str&"PageID="&i_pNumber+1&""" class=""p_next"">下一页</a> <a href="""&CurrentPath&str&"PageID="&i_pCount&""" class=""p_end"" title=""最后一页"">尾页</a>"
+				echo "<a href=""?"&SetQueryString(Replace(Request.QueryString(),str,"",1,-1,1),"PageID",i_pNumber+1)&str&""" class=""p_next"">下一页</a> <a href=""?"&SetQueryString(Replace(Request.QueryString(),str,"",1,-1,1),"PageID",i_pCount)&str&""" class=""p_end"" title=""最后一页"">尾页</a>"
 			End If
 		End If
 		Call CommonFooterContorl(str,p_Type)
@@ -241,11 +225,6 @@ Class Class_Page
 		Dim i, m
 		m = 9
 		If i_pCount <= 1 Then Exit Function
-		If str <> "" Then
-			CurrentPath = regExpReplace(CurrentPath,"&?"&str,"",false)
-			'CurrentPath = Replace(CurrentPath,"?&","")
-			str = str & "&"
-		End If
 		echo "<span class=""pageIntroB"">"
 		If i_rCount <> "" Then
 			echo "总数:<kbd class=""p_total"">"&i_rCount&"</kbd>/<kbd class=""p_ptotal"">"&i_pCount&"</kbd>页 "
@@ -256,10 +235,10 @@ Class Class_Page
 		If i_pNumber = 1 Then 
 			echo " <a href=""javascript:void(0)"" class=""p_disabled"" disabled title=""已经是第一页了"">上一页</a>"
 		Else
-			echo " <a href="""&CurrentPath&"PageID="&i_pNumber-1&""&str&""" class=""p_pre"">上一页</a> "
+			echo " <a href=""?"&SetQueryString(Replace(Request.QueryString(),str,"",1,-1,1),"PageID",i_pNumber-1)&str&""" class=""p_pre"">上一页</a> "
 		End If
 		If i_pNumber > m - 4 Then 
-			echo " <a href="""&CurrentPath&"PageID=1"&str&""" class=""p_start"" title=""第一页"">1</a> "
+			echo " <a href=""?"&SetQueryString(Replace(Request.QueryString(),str,"",1,-1,1),"PageID",1)&str&""" class=""p_start"" title=""第一页"">1</a> "
 			If i_pNumber > m - 3 Then echo " ... "
 		End If
 		For i = i_pNumber - m + 5 to i_pNumber + m - 1
@@ -267,7 +246,7 @@ Class Class_Page
 				If i = i_pNumber Then
 					echo " <strong class=""p_cur"">"&i&"</strong> "
 				Else
-					echo " <a href="""&CurrentPath&"PageID="&i&""&str&""" class=""p_page"">"&i&"</a> "
+					echo " <a href=""?"&SetQueryString(Replace(Request.QueryString(),str,"",1,-1,1),"PageID",i)&str&""" class=""p_page"">"&i&"</a> "
 				End If
 			End If
 			If i_pNumber < m - 3 And i > m - 1 Then Exit For
@@ -275,12 +254,12 @@ Class Class_Page
 		Next
 		If i_pNumber < i_pCount - m + 5 Then
 			If i_pNumber < i_pCount - m + 4 Then echo " ... "
-			echo " <a href="""&CurrentPath&"PageID="&i_pCount&""&str&""" class=""p_end"" title=""最后一页"">"&i_pCount&"</a> "
+			echo " <a href=""?"&SetQueryString(Replace(Request.QueryString(),str,"",1,-1,1),"PageID",i_pCount)&str&""" class=""p_end"" title=""最后一页"">"&i_pCount&"</a> "
 		End If
 		If i_pNumber = i_pCount Then 
 			echo " <a href=""javascript:void(0)"" class=""p_disabled"" disabled title=""已经是最后一页了"">下一页</a> "
 		Else
-			echo " <a href="""&CurrentPath&"PageID="&i_pNumber+1&""&str&""" class=""p_next"">下一页</a> "
+			echo " <a href=""?"&SetQueryString(Replace(Request.QueryString(),str,"",1,-1,1),"PageID",i_pNumber+1)&str&""" class=""p_next"">下一页</a> "
 		End If
 		Call CommonFooterContorl(str,p_Type)
 		echo "</span>"
@@ -290,9 +269,11 @@ Class Class_Page
 	'CommonFooterContorl(后续参数,表现类型)
 	'**********
 	Private Sub CommonFooterContorl(str,p_Type)
+		Dim sQueryString
+		sQueryString = SetQueryString(Replace(Request.QueryString(),str,"",1,-1,1),"PageID","")
 		Select Case p_Type
 		Case "select"
-			echo "&nbsp;跳转到:<select name=""PageID"" onchange=""location.href='"&CurrentPath&"?PageID='+this.options[this.selectedIndex].value+'"&str&"'"" class=""p_select"">"&vbCrlf
+			echo "&nbsp;跳转到:<select name=""PageID"" onchange=""location.href='?"&sQueryString&IIf(sQueryString,"","","&")&"PageID='+this.options[this.selectedIndex].value+'"&str&"'"" class=""p_select"">"&vbCrlf
 			Dim i
 			For i=1 to i_pCount
 				echo "<option value="""&i&""""
@@ -304,7 +285,7 @@ Class Class_Page
 			Randomize
 			Dim PageID : PageID = "PageID" & Int(Rnd() * 10000000)
 			echo " 跳转到:<input type=""text"" id="""&PageID&""" name=""PageID"" onkeydown=""if(event.keyCode==13) document.getElementById('btn_"&PageID&"').click();"" size=""3"" value="""&i_pNumber&""" onclick=""this.select()"" maxlength=8 class=""p_text""> "&vbCrlf & _
-							 "<input type=""button"" value=""GO"" onclick=""location.href='"&CurrentPath&"PageID='+document.getElementById('"&PageID&"').value+'"&str&"'"" id=""btn_"&PageID&""" class=""p_btn"">"
+			"<input type=""button"" value=""GO"" onclick=""location.href='?"&sQueryString&IIf(sQueryString,"","","&")&"PageID='+document.getElementById('"&PageID&"').value+'"&str&"'"" id=""btn_"&PageID&""" class=""p_btn"">"
 		End Select
 	End Sub
 
@@ -332,5 +313,55 @@ Class Class_Page
 	Private Sub echo(str)
 		Response.Write str
 	End Sub
+
+	'**********
+	' 函数名: SetQueryString
+	' 作用: 重置参数
+	'**********
+	Private Function SetQueryString(ByVal sQuery, ByVal Name,ByVal Value)
+		Dim Obj,i
+		If Not IsArray(Name) Then Name = Array(Name)
+		If Not IsArray(Value) Then Value = Array(Value)
+		For i = 0 To UBound(Name)
+			If Len(sQuery) > 0 Then
+				If InStr(1,sQuery,Name(i)&"=",1) = 0 Then
+					If Value(i) <> "" Then
+						If InStr(sQuery,"=") > 0 And Right(sQuery,1) <> "&" Then
+							sQuery = sQuery & "&" & Name(i) & "=" & Value(i)
+						Else
+							sQuery = sQuery & Name(i) & "=" & Value(i)
+						End If
+					End If
+				Else
+					Set Obj = New Regexp
+					Obj.IgnoreCase = True
+					Obj.Global = True
+					Obj.Pattern = "(&?" & Name(i) & "=)[^&]*"
+					If Value(i) = "" Then
+						sQuery = Obj.Replace(sQuery,"")
+					Else
+						sQuery = Obj.Replace(sQuery,"$1" & Value(i))
+					End If
+					Set Obj = Nothing
+				End If
+			Else
+				If Value(i) <> "" Then sQuery = sQuery & Name(i) & "=" & Value(i)
+			End If
+		Next
+		SetQueryString = sQuery
+	End Function
+
+	'********** 
+	' 函数名: IIf
+	' Param: str as a output string
+	' 作用: 根据值判断结果
+	'********** 
+	Private Function IIf(var,value,return1,return2)
+		If var = value Then
+			IIf = return1
+		Else
+			IIf = return2
+		End If
+	End Function
 End Class
 %>

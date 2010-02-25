@@ -21,8 +21,8 @@ Tpub.db.UserName = "sa"
 Tpub.db.Password = "sa"
 
 On Error Resume Next
-Tpub.Cookie.Mark = "terranc_"		'设置Cookie名称前缀
-Tpub.Cache.Mark = "terranc_"		'设置缓存名称前缀
+Tpub.Cookie.Mark = "cute_"		'设置Cookie名称前缀
+Tpub.Cache.Mark = "cute_"		'设置缓存名称前缀
 Tpub.Ubb.Mode = 0				'使用基本UBB
 Tpub.Date.TimeZone = 8			'设置所在时区
 On Error Goto 0
