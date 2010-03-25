@@ -1,0 +1,398 @@
+<?XML version="1.0" encoding="GB2312" ?>
+<scriptlet>
+<registration
+description="Class_Arrays"
+progid="Public.Arrays"
+version="1.00"
+classid="{8D9CC880-D79F-11d2-B7C8-00C0DFE39737}">
+</registration>
+<public>
+	<method name="max">
+		<parameter name="arr" />
+	</method>
+	<method name="min">
+		<parameter name="arr" />
+	</method>
+	<method name="shift">
+		<parameter name="arr" />
+	</method>
+	<method name="push">
+		<parameter name="arr" />
+		<parameter name="var" />
+	</method>
+	<method name="pop">
+		<parameter name="arr" />	
+	</method>
+	<method name="strip">
+		<parameter name="str" />
+	</method>
+	<method name="walk">
+		<parameter name="arr" />
+		<parameter name="callback" />
+	</method>
+	<method name="splice">
+		<parameter name="arr" />
+		<parameter name="start" />
+		<parameter name="final" />
+	</method>
+	<method name="fill">
+		<parameter name="arr" />
+		<parameter name="index" />
+		<parameter name="value" />
+	</method>
+	<method name="unique">
+		<parameter name="arr" />
+	</method>
+	<method name="reverse">
+		<parameter name="arr" />
+	</method>
+	<method name="search">
+		<parameter name="arr" />
+		<parameter name="value" />
+	</method>
+	<method name="rand">
+		<parameter name="arr" />
+		<parameter name="num" />
+	</method>
+	<method name="sort">
+		<parameter name="arr" />
+	</method>
+	<method name="rsort">
+		<parameter name="arr" />
+	</method>
+	<method name="shuffle">
+		<parameter name="arr" />
+	</method>
+	<method name="convComma">
+		<parameter name="str" />
+	</method>
+	<method name="toString">
+		<parameter name="arr" />
+	</method>
+	<method name="toArray">
+		<parameter name="str" />
+	</method>
+</public>
+<implements type="ASP"/>
+<script language="VBScript">
+<![CDATA[ 
+'**********
+' 函数名: max
+' 参  数: arr as a Array
+' 作  用: max — 取出最大值
+'**********
+Function max(ByVal arr)
+	Dim tmp
+	tmp = Me.rsort(arr)
+	max = tmp(0)
+End Function
+
+'**********
+' 函数名: min
+' 参  数: arr as a Array
+' 作  用: min — 取出最小值
+'**********
+Function min(ByVal arr)
+	Dim tmp
+	tmp = Me.sort(arr)
+	min = tmp(0)
+End Function
+
+'**********
+' 函数名: unshift
+' 参  数: arr as an Array
+' 作  用: unshift — 从前压入元素
+'**********
+Function unshift(ByVal arr, ByVal var)
+	Dim i, tmp
+	tmp = Me.toString(arr)
+	tmp = var & "," & tmp
+	tmp = Me.toArray(tmp)
+	unshift = tmp
+End Function
+
+'**********
+' 函数名: shift
+' 参  数: arr as an Array
+' 作  用: shift — 从前删除元素
+'**********
+Function shift(ByVal arr)
+	Dim i, tmp
+	tmp = ""
+	For i = 0 To UBound(arr)
+		If i<>0 Then tmp = tmp & arr(i) & ","
+	Next
+	tmp = Me.strip(tmp)
+	shift = tmp
+End Function
+
+'**********
+' 函数名: push
+' 参  数: arr as an Array
+' 参  数: var as a variable added to an array
+' 作  用: push — 从后压入元素
+'**********
+Function push(ByVal arr, ByVal var)
+	Dim tmp : tmp = Me.toString(arr)
+	tmp = tmp & "," & Me.convComma(var)
+	tmp = Me.toArray(tmp)
+	push = tmp
+End Function
+
+'**********
+' 函数名: pop
+' 参  数: arr as an array
+' 作  用: pop — 从后删除元素
+'**********
+Function pop(ByVal arr)
+	Dim i, tmp
+	For i = 0 To UBound(arr)
+		If i<>UBound(arr) Then tmp = tmp & arr(i) & ","
+	Next
+	tmp = Me.strip(tmp)
+	pop = tmp
+End Function
+
+'**********
+' 函数名: strip
+' 参  数: str as a string such as "1,2,3,"
+' 作  用: Strip "," of string
+'**********
+Function strip(ByVal Str)
+	If IsArray(Str) Then Str = Me.toString(Str)
+	If Left(Str, 1) = "," Then Str = Right(Str, Len(Str) -1)
+	If Right(Str, 1) = "," Then Str = Left(Str, Len(Str) -1)
+	Str = Me.toArray(Str)
+	strip = Str
+End Function
+
+'**********
+' 函数名: walk
+' 参  数: arr as an Array
+' 参  数: callback as callback function
+' 作  用: walk — 对数组内元素执行函数后返回新数组
+'**********
+Function walk(ByVal arr, ByVal callback)
+	Dim e : e = ""
+	Dim tmp : tmp = ""
+	For Each e in arr
+		If IsArray(e) Then
+			Execute("tmp=tmp&" & callback & "(""" & Me.toString(e) & """)" & "&"",""")
+		Else
+			Execute("tmp=tmp&" & callback & "(""" & e & """)" & "&"",""")
+		End If
+	Next
+	tmp = Me.strip(tmp)
+	walk = tmp
+End Function
+
+'**********
+' 函数名: splice
+' 参  数: arr as an array
+' 参  数: start as start index
+' 参  数: final as end index
+' 作  用: splice — 从一个数组中移除一个或多个元素
+'**********
+Function splice(ByVal arr, ByVal start, ByVal final)
+	Dim i, temp, tmp
+	If start > final Then
+		temp = start
+		start = final
+		final = temp
+	End If
+	For i = 0 To UBound(arr)
+		If i < start Or i > final Then tmp = tmp & arr(i) & ","
+	Next
+	tmp = Me.strip(tmp)
+	splice = tmp
+End Function
+
+'**********
+' 函数名: fill
+' 参  数: arr as a Array
+' 参  数: index as index to insert into an array
+' 参  数: value as element to insert into an array
+' 作  用: fill — 插入元素
+'**********
+Function fill(ByVal arr, ByVal index, ByVal Value)
+	Dim i, tmp
+	For i = 0 To UBound(arr)
+		If i <> index Then
+			tmp = tmp & arr(i) & ","
+		Else
+			tmp = tmp & Value & "," & arr(i) & ","
+		End If
+	Next
+	tmp = Me.strip(tmp)
+	fill = tmp
+End Function
+
+'**********
+' 函数名: unique
+' 参  数: arr as a Array
+' 作  用: unique — 移除重复的元素
+'**********
+Function unique(ByVal arr)
+	Dim tmp, e
+	For Each e in arr
+		If InStr(1, tmp, e) = 0 Then
+			tmp = tmp & e & ","
+		End If
+	Next
+	tmp = Me.strip(tmp)
+	unique = tmp
+End Function
+
+'**********
+' 函数名: reverse
+' 参  数: arr as a Array
+' 作  用: reverse — 反向
+'**********
+Function reverse(ByVal arr)
+	Dim tmp, e
+	For Each e in arr
+		tmp = tmp & e & ","
+	Next
+	tmp = StrReverse(tmp)
+	tmp = Me.strip(tmp)
+	reverse = tmp
+End Function
+
+'**********
+' 函数名: search
+' 参  数: arr as a Array
+' 参  数: value as searching value
+' 作  用: search — 查询元素，不存在则返回False
+'**********
+Function search(ByVal arr, ByVal Value)
+	Dim i
+	For i = 0 To UBound(arr)
+		If arr(i) = Value Then
+			search = i
+			Exit Function
+		End If
+	Next
+	search = -1
+End Function
+
+'**********
+' 函数名: rand
+' 参  数: arr as a Array
+' 参  数: num as specifies how many entries you want to pick
+' 作  用: rand — 乱序
+'**********
+Function rand(ByVal arr, ByVal num)
+	Dim tmpi, tmp, i
+	For i = 0 To num -1
+		Randomize
+		tmpi = Int((UBound(arr) + 1) * Rnd)
+		tmp = tmp & arr(tmpi) & ","
+	Next
+	tmp = Me.strip(tmp)
+	rand = tmp
+End Function
+
+'**********
+' 函数名: sort
+' 参  数: arr as a Array
+' 作  用: sort — 顺序
+'**********
+Function sort(ByVal arr)
+	Dim tmp, i, j
+	ReDim tmpA(UBound(arr))
+	For i = 0 To UBound(tmpA)
+		tmpA(i) = CDbl(arr(i))
+	Next
+	For i = 0 To UBound(tmpA)
+		For j = i + 1 To UBound(tmpA)
+			If tmpA(i) > tmpA(j) Then
+				tmp = tmpA(i)
+				tmpA(i) = tmpA(j)
+				tmpA(j) = tmp
+			End If
+		Next
+	Next
+	sort = tmpA
+End Function
+
+'**********
+' 函数名: rsort
+' 参  数: arr as a Array
+' 作  用: rsort — 倒序
+'**********
+Function rsort(ByVal arr)
+	Dim tmp, i, j
+	ReDim tmpA(UBound(arr))
+	For i = 0 To UBound(tmpA)
+		tmpA(i) = CDbl(arr(i))
+	Next
+	For i = 0 To UBound(tmpA)
+		For j = i + 1 To UBound(tmpA)
+			If tmpA(i) < tmpA(j) Then
+				tmp = tmpA(i)
+				tmpA(i) = tmpA(j)
+				tmpA(j) = tmp
+			End If
+		Next
+	Next
+	rsort = tmpA
+End Function
+
+'**********
+' 函数名: shuffle
+' 参  数: arr as a Array
+' 作  用: shuffle — 随机排序
+'**********
+Function shuffle(ByVal arr)
+	Dim m, n, i
+	'i = search(arr,rand(arr,1))
+	'arr = splice(arr,i,i+1)
+	Randomize   
+	For i = 0 to UBound(arr)
+		m = Int(Rnd()*i)
+		n = arr(m)
+		arr(m) = arr(i) 
+		arr(i) = n
+	Next
+	shuffle = arr
+End Function
+
+'**********
+' 函数名: convComma
+' 参  数: star as a string
+'**********
+Function convComma(ByVal str)
+	convComma = Replace(str,",","&#44;")
+End Function
+
+'**********
+' 函数名: implode
+' 参  数: glue as a split character
+' 参  数: arr as a output array
+' 作  用: Join array elements with a string
+'**********
+Function toString(ByVal arr)
+	If IsArray(arr) Then
+		Dim tmp
+		tmp = Join(arr, ",")
+		toString = tmp
+	Else
+		toString = arr
+	End If
+End Function
+
+'**********
+' 函数名: toArray
+' 参  数: str as a string converted to an array
+' 作  用: Convert to an array
+' Remarks: dim a : a = "a, b, c"
+'		   prinr(toArray(a))
+'**********
+Function toArray(ByVal str)
+	Dim tmp
+	tmp = Split(str, ",")
+	toArray = tmp
+End Function
+]]>
+</script>
+</scriptlet>

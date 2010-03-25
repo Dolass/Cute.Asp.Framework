@@ -1,0 +1,273 @@
+<?XML version="1.0" encoding="GB2312" ?>
+<scriptlet>
+<registration
+description="Class_Interface"
+progid="Public.Interface"
+version="1.00"
+classid="{8D9CC880-D79F-11d2-B7C8-00C0DFE39739}">
+</registration>
+<public>
+	<property name="Stream">
+	   <put/>
+	</property>
+	<method name="PostHttpPage">
+		<parameter name="RefererUrl" />
+		<parameter name="PostUrl" />
+		<parameter name="PostData" />
+		<parameter name="DateType" />
+	</method>
+	<method name="SaveRemoteFile">
+		<parameter name="LocalFileName" />
+		<parameter name="RemoteFileUrl" />
+		<parameter name="Referer" />
+	</method>
+	<method name="GetHttpPage">
+		<parameter name="URL" />
+		<parameter name="Cset" />
+		<parameter name="iUserName" />
+		<parameter name="iPassword" />
+	</method>
+	<method name="BytesToBstr">
+		<parameter name="Body" />
+		<parameter name="Cset" />
+	</method>
+	<method name="GetBody">
+		<parameter name="ConStr" />
+		<parameter name="StartStr" />
+		<parameter name="OverStr" />
+		<parameter name="IncluL" />
+		<parameter name="IncluR" />
+	</method>
+	<method name="GetLinkArray">
+		<parameter name="ConStr" />
+		<parameter name="StartStr" />
+		<parameter name="OverStr" />
+		<parameter name="IncluL" />
+		<parameter name="IncluR" />
+	</method>
+</public>
+<implements type="ASP"/>
+<script language="VBScript">
+<![CDATA[ 
+Private s_stm
+s_stm = "ADODB.Stream"
+		
+'设置Stream组件名称
+Function put_Stream(str)
+	s_stm = str
+End Function
+
+'**********
+'函数名：PostHttpPage
+'参  数：RefererUrl	---- 返回页面
+'		 PostUrl	---- 获取地址
+'		 PostData	---- 发送参数
+'		 DateType	---- 编码类型
+'作  用：登录
+'**********
+Function PostHttpPage(RefererUrl, PostUrl, PostData, DateType)
+	Dim xmlHttp, RetStr
+	On Error Resume Next
+	Set xmlHttp = Server.CreateObject("Msxml2.XMLHTTP")
+	With XmlHttp
+		.Open "POST", PostUrl, false
+		.setRequestHeader "Content-Length", Len(PostData)
+		.setRequestHeader "Content-Type", "application/x-www-form-urlencoded"
+		.setRequestHeader "Referer", RefererUrl
+		.Send PostData
+	End With
+	If Err.Number <> 0 Then
+		Set xmlHttp = Nothing
+		PostHttpPage = "$False$"
+		Exit Function
+	End If
+	On Error Goto 0
+	PostHttpPage = bytesToBSTR(xmlHttp.responseBody, DateType)
+	Set xmlHttp = Nothing
+End Function
+
+'**********
+'过程名：SaveRemoteFile
+'作  用：保存远程的文件到本地
+'参  数：LocalFileName ------ 本地文件名
+'参  数：RemoteFileUrl ------ 远程文件URL
+'参  数：Referer ------ 远程调用文件（对付防采集的，用内容页地址，没有防的留空）
+'**********
+Function SaveRemoteFile(LocalFileName, RemoteFileUrl, Referer)
+	SaveRemoteFile = True
+	Dim Ads, Retrieval, GetRemoteData
+	On Error Resume Next
+	Set Retrieval = Server.CreateObject("Msxml2.XMLHTTP")
+	With Retrieval
+		'.SetTimeouts 10000, 10000, 10000, 10000
+		.Open "Get", RemoteFileUrl, False, "", ""
+		.Send
+		If .Readystate<>4 Or .Status > 300 Then
+			SaveRemoteFile = False
+			Exit Function
+		End If
+		GetRemoteData = .ResponseBody
+	End With
+	Set Retrieval = Nothing
+	Set Ads = Server.CreateObject(s_stm)
+	With Ads
+		.Type = 1
+		.Open
+		.Write GetRemoteData
+		.SaveToFile Server.MapPath(LocalFileName), 2
+		.Cancel()
+		.Close()
+	End With
+	If Err.Number<>0 Then
+		SaveRemoteFile = False
+		On Error Goto 0
+		Exit Function
+	End If
+	Set Ads = Nothing
+End Function
+
+'**********
+'函数名：GetHttpPage
+'作  用：获取网页源码
+'参  数：HttpUrl ------网页地址,Cset 编码
+'**********
+Function GetHttpPage(URL, Cset, iUserName , iPassword)
+	Dim Http
+	If IsNull(URL) = True Or Len(URL)<18 Or URL = "$False$" Then
+		GetHttpPage = "$False$"
+		Exit Function
+	End If
+	Set Http = Server.CreateObject("Msxml2.ServerXMLHTTP")
+	Http.SetTimeouts 15000, 15000, 15000, 15000
+	Http.Open "GET", URL, False, iUserName, iPassword
+	Http.Send()
+	If Http.Readystate<>4 Then
+		Set Http = Nothing
+		GetHttpPage = "$False$"
+		Exit Function
+	End If
+	GetHTTPPage = bytesToBSTR(Http.responseBody, Cset)
+	Set Http = Nothing
+End Function
+
+'**********
+'函数名：BytesToBstr
+'作  用：将获取的源码转换为中文
+'参  数：Body ------要转换的变量
+'参  数：Cset ------要转换的类型
+'**********
+Function BytesToBstr(Body, Cset)
+	Dim Objstream
+	Set Objstream = Server.CreateObject("ADODB.Stream")
+	With objstream
+		.Type = 1
+		.Mode = 3
+		.Open
+		.Write body
+		.Position = 0
+		.Type = 2
+		.Charset = Cset
+		BytesToBstr = objstream.ReadText
+		.Close
+	End With
+	Set objstream = Nothing
+End Function
+
+'**********
+'函数名：GetBody
+'作  用：截取字符串
+'参  数：ConStr ------将要截取的字符串
+'参  数：StartStr ------开始字符串
+'参  数：OverStr ------结束字符串
+'参  数：IncluL ------是否包含StartStr
+'参  数：IncluR ------是否包含OverStr
+'**********
+Function GetBody(ConStr,StartStr,OverStr,IncluL,IncluR)
+   If ConStr = "$False$" or ConStr = "" or IsNull(ConStr) = True Or StartStr = "" or IsNull(StartStr) = True Or OverStr = "" or IsNull(OverStr) = True Then
+	  GetBody = "$False$"
+	  Exit Function
+   End If
+   Dim ConStrTemp
+   Dim Start,Over
+   ConStrTemp = Lcase(ConStr)
+   StartStr = Lcase(StartStr)
+   OverStr = Lcase(OverStr)
+   Start  =  InStrB(1, ConStrTemp, StartStr, vbBinaryCompare)
+   If Start <= 0 then
+	  GetBody = "$False$"
+	  Exit Function
+   Else
+	  If IncluL = False Then
+		 Start = Start+LenB(StartStr)
+	  End If
+   End If
+   Over = InStrB(Start,ConStrTemp,OverStr,vbBinaryCompare)
+   If Over <= 0 Or Over <= Start then
+	  GetBody = "$False$"
+	  Exit Function
+   Else
+	  If IncluR = True Then
+		 Over = Over+LenB(OverStr)
+	  End If
+   End If
+   GetBody = MidB(ConStr,Start,Over-Start)
+End Function
+
+
+'**********
+'函数名：GetLinkArray
+'作  用：提取链接地址，以$Array$分隔
+'参  数：ConStr ------提取地址的原字符
+'参  数：StartStr ------开始字符串
+'参  数：OverStr ------结束字符串
+'参  数：IncluL ------是否包含StartStr
+'参  数：IncluR ------是否包含OverStr
+'**********
+Function GetLinkArray(ConStr,StartStr,OverStr,IncluL,IncluR)
+   If ConStr = "$False$" or ConStr = "" Or IsNull(ConStr) = True or StartStr = "" Or OverStr = "" or  IsNull(StartStr) = True Or IsNull(OverStr) = True Then
+	  GetLinkArray = "$False$"
+	  Exit Function
+   End If
+   Dim TempStr,TempStr2,objRegExp,Matches,Match
+   TempStr = ""
+   Set objRegExp  =  New Regexp 
+   objRegExp.IgnoreCase  =  True 
+   objRegExp.Global  =  True
+   objRegExp.Pattern  =  "("&StartStr&").+?("&OverStr&")"
+   Set Matches  = objRegExp.Execute(ConStr) 
+   For Each Match in Matches
+	  TempStr = TempStr & "$Array$" & Match.Value
+   Next 
+   Set Matches = nothing
+
+   If TempStr = "" Then
+	  GetLinkArray = "$False$"
+	  Exit Function
+   End If
+   TempStr = Right(TempStr,Len(TempStr)-7)
+   If IncluL = False then
+	  objRegExp.Pattern  = StartStr
+	  TempStr = objRegExp.Replace(TempStr,"")
+   End if
+   If IncluR = False then
+	  objRegExp.Pattern  = OverStr
+	  TempStr = objRegExp.Replace(TempStr,"")
+   End if
+   Set objRegExp = nothing
+   Set Matches = nothing
+   
+   TempStr = Replace(TempStr,"""","")
+   TempStr = Replace(TempStr,"'","")
+   TempStr = Replace(TempStr," ","")
+   TempStr = Replace(TempStr,"(","")
+   TempStr = Replace(TempStr,")","")
+
+   If TempStr = "" then
+	  GetLinkArray = "$False$"
+   Else
+	  GetLinkArray = TempStr
+   End if
+End Function
+]]>
+</script>
+</scriptlet>
