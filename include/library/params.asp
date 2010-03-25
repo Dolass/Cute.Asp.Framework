@@ -21,7 +21,7 @@ Class Class_Params
     ' ×÷  ÓÃ: Get Params Value
     '**********
     Public Default Property Get Init(OutParams)
-		Set OutParams = Server.CreateObject("Scripting.Dictionary")
+		Set OutParams = CreateObject("Scripting.Dictionary")
 		OutParams.CompareMode = 1
     End Property
 

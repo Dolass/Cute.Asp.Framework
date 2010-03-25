@@ -273,7 +273,7 @@ Class Class_Page
 		sQueryString = SetQueryString(Replace(Request.QueryString(),str,"",1,-1,1),"PageID","")
 		Select Case p_Type
 		Case "select"
-			echo "&nbsp;跳转到:<select name=""PageID"" onchange=""location.href='?"&sQueryString&IIf(sQueryString,"","","&")&"PageID='+this.options[this.selectedIndex].value+'"&str&"'"" class=""p_select"">"&vbCrlf
+			echo "&nbsp;跳转到:<select name=""PageID"" onchange=""location.href='?"&sQueryString&IIf(sQueryString="","","&")&"PageID='+this.options[this.selectedIndex].value+'"&str&"'"" class=""p_select"">"&vbCrlf
 			Dim i
 			For i=1 to i_pCount
 				echo "<option value="""&i&""""
@@ -285,7 +285,7 @@ Class Class_Page
 			Randomize
 			Dim PageID : PageID = "PageID" & Int(Rnd() * 10000000)
 			echo " 跳转到:<input type=""text"" id="""&PageID&""" name=""PageID"" onkeydown=""if(event.keyCode==13) document.getElementById('btn_"&PageID&"').click();"" size=""3"" value="""&i_pNumber&""" onclick=""this.select()"" maxlength=8 class=""p_text""> "&vbCrlf & _
-			"<input type=""button"" value=""GO"" onclick=""location.href='?"&sQueryString&IIf(sQueryString,"","","&")&"PageID='+document.getElementById('"&PageID&"').value+'"&str&"'"" id=""btn_"&PageID&""" class=""p_btn"">"
+			"<input type=""button"" value=""GO"" onclick=""location.href='?"&sQueryString&IIf(sQueryString="","","&")&"PageID='+document.getElementById('"&PageID&"').value+'"&str&"'"" id=""btn_"&PageID&""" class=""p_btn"">"
 		End Select
 	End Sub
 
@@ -356,8 +356,8 @@ Class Class_Page
 	' Param: str as a output string
 	' 作用: 根据值判断结果
 	'********** 
-	Private Function IIf(var,value,return1,return2)
-		If var = value Then
+	Private Function IIf(var,return1,return2)
+		If var Then
 			IIf = return1
 		Else
 			IIf = return2

@@ -88,12 +88,12 @@ Class Class_String
 	'**********
 	Function KeyWordLight(ByVal str, ByVal re)
 		Dim s_str, a_re, reg, i
-		If Len(str)>0 And Len(re)>0 Then
+		If str <> "" And re <> "" Then
 			s_str = str
 			a_re = Split(re, "|")
 			For i = 0 To UBound(a_re)
 				If Len(Trim(a_re(i)))>0 Then
-					s_str = regExpReplace(s_str,"("&a_re(i)&")", "<strong class=""wordlight"">$1</strong>",true)
+					s_str = Me.Replace(s_str,"("&a_re(i)&")", "<strong class=""wordlight"">$1</strong>",true)
 				End If
 			Next
 			KeyWordLight = s_str
@@ -160,7 +160,7 @@ Class Class_String
 	' 作  用: html到js的转换
 	'**********
 	Function htmlToJs(ByVal str)
-		If Len(str)>0 Then
+		If str <> "" Then
 			str = replace(str,"\","\\")
 			str = replace(str,vbCrlf,"\n")
 			str = replace(str,"""","\""")
@@ -174,32 +174,29 @@ Class Class_String
 	' 作  用: 过滤HTML
 	'**********
 	Function stripHTML(ByVal strHTML)
-		Dim objRegExp, strOutput
-		Set objRegExp = New Regexp
-		objRegExp.IgnoreCase = true
-		objRegExp.Global = true
-		objRegExp.Pattern = "<.+?>"
-		strOutput = objRegExp.Replace(strHTML, "")
-		strOutput = Replace(strOutput, "<", "&lt;")
-		strOutput = Replace(strOutput, ">", "&gt;")
-		stripHTML = strOutput
-		Set objRegExp = Nothing
+		If strHTML <> "" Then
+			strHTML = Me.Replace(strHTML,"<.+?>","",false)
+			strHTML = Replace(strHTML, "<", "&lt;")
+			stripHTML = Replace(strHTML, ">", "&gt;")
+		End If
 	End Function
 
 	'**********
-	' 函数名: regExpReplace
+	' 函数名: Replace
 	'**********
-	Function regExpReplace(ByVal str,ByVal re,ByVal restr,isCase)	'内容,正则
-		If Len(str) > 0 Then
-			Dim Obj
-			Set Obj = New Regexp
-			With Obj
-				If isCase Then .IgnoreCase = False Else .IgnoreCase = True 
-				.Global = True
-				.Pattern = re
-				regExpReplace = .Replace(str,restr)
-			End With
-			Set Obj = Nothing
+	Function [replace](ByVal str,ByVal re,ByVal restr,ByVal isCase)	'内容,正则,替换成，是否区分大小写
+		If str <> "" Then
+			replace = regExpReplace_Js(str&"",re,restr,isCase)
+		End If
+	End Function
+
+	'**********
+	' 函数名: Test
+	'**********
+	Function Test(ByVal str,ByVal re,ByVal isCase)	'内容,正则,是否区分大小写
+		Test = False
+		If str <> "" Then
+			Test = regExpTest_Js(str&"",re,isCase)
 		End If
 	End Function
 
@@ -207,8 +204,8 @@ Class Class_String
 	' 函数名: Trim
 	'**********
 	Function [Trim](ByVal str)	'内容
-		If Len(str) > 0 Then
-			[Trim] = Me.regExpReplace(str,"(^\s*)|(\s*$)","",False)
+		If str <> "" Then
+			[Trim] = Me.Replace(str,"(^\s*)|(\s*$)","",False)
 		End If
 	End Function
 
@@ -216,8 +213,8 @@ Class Class_String
 	' 函数名: RTrim
 	'**********
 	Function [RTrim](ByVal str)	'内容
-		If Len(str) > 0 Then
-			[RTrim] = Me.regExpReplace(str,"\s*$","",False)
+		If str <> "" Then
+			[RTrim] = Me.Replace(str,"\s*$","",False)
 		End If
 	End Function
 
@@ -225,9 +222,23 @@ Class Class_String
 	' 函数名: LTrim
 	'**********
 	Function [LTrim](ByVal str)	'内容
-		If Len(str) > 0 Then
-			[LTrim] = Me.regExpReplace(str,"^\s*","",False)
+		If str <> "" Then
+			[LTrim] = Me.Replace(str,"^\s*","",false)
 		End If
 	End Function
 End Class
 %>
+<script language="jscript" runat="server">
+function regExpReplace_Js(str1,str2,restr,isCase){
+	if(typeof str1 == "string"){
+		return str1.replace(new RegExp(str2,"g" + (isCase ? "" : "i")),restr);
+	}
+	return "";
+}
+function regExpTest_Js(str1,str2,isCase){
+	if(typeof str1 == "string"){
+		return (new RegExp(str2,"g" + (isCase ? "" : "i"))).test(str1);
+	}
+	return false;
+}
+</script>

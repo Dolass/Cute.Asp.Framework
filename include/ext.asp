@@ -125,6 +125,19 @@ Sub die(str)
 End Sub
 
 '********** 
+' 函数名: IIf
+' Param: str as a output string
+' 作用: 根据值判断结果
+'********** 
+Function IIf(var,return1,return2)
+	If var Then
+		IIf = return1
+	Else
+		IIf = return2
+	End If
+End Function
+
+'********** 
 ' 类名: ReAopResult
 ' 作用：返回信息存储工具类
 '********** 
@@ -133,16 +146,4 @@ Class ReAopResult
 	Public Message
 	Public AttachObject
 End Class
-
-'********** 
-' 类名: IIf
-' 作用：根据判断结果赋值
-'********** 
-Function IIf(Condition, ValueIfTrue, ValueIfFalse)
-	If Condition Then
-		IIf = ValueIfTrue
-	Else
-		IIf = ValueIfFalse
-	End If
-End Function
 %>

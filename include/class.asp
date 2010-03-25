@@ -22,9 +22,17 @@ Class Class_Wrap
 
 	Public Db,[String],Params,Arrays,Upload,Page,File,Debug,Cookie,Session,[Date],Cache
 
-	Public SHA1,Md5,Json,ValidCode,Export,Email,InterFace,BEDcode,DES,Xml,Ubb,RSS
+	Public SHA1,Md5,Json,ValidCode,Export,Email,InterFace,BEDcode,DES,Xml,Ubb,Rss
+
+	Public WebConfig	'站点配置
 
 	Private Sub Class_Initialize()
+		Set WebConfig		= Server.CreateObject("Scripting.Dictionary")	'初始化站点配置
+
+		WebConfig.Add "CodePage",	936				'初始化站点编码
+		WebConfig.Add "Charset",	"gb2312"		'初始化站点字符集
+		WebConfig.Add "FilterWord",	""				'初始化过滤字符
+
 		On Error Resume Next
 		Set Db				= New Class_Db				'数据库操作类
 		Set Cache			= New Class_Cache			'缓存操作类
@@ -50,7 +58,7 @@ Class Class_Wrap
 		Set DES				= Class_DES()				'DSC加密解密类
 		Set Xml				= New Class_XML				'XML操作类
 		Set Ubb				= New Class_Ubb				'UBB操作类
-		Set RSS				= New Class_RSS				'RSS操作类
+		Set Rss				= New Class_RSS				'RSS操作类
 		Err.Clear
 		On Error Goto 0
 	End Sub
@@ -84,8 +92,8 @@ Class Class_Wrap
 		Set Rss				= Nothing
 		Err.Clear
 		On Error Goto 0
+		Set WebConfig		= Nothing
 	End Sub
-
 	%>
 	<!--#include file="library/common.asp"-->
 	<%

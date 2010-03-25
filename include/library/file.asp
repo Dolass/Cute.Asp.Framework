@@ -86,7 +86,7 @@ Class Class_File
     'GetFileSize
     '作  用：获取文件的大小
     '**********
-    Function GetFileSize(fls, isUnit)
+    Function GetFileSize(fls)
         Dim fso, fdr, arr_fls, fsize, i, fl
         arr_fls = Split(fls, "||")
         fsize = 0

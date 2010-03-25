@@ -7,8 +7,6 @@
 '	Date		: 2008-4-3
 '**********
 
-Public FilterWord	'过滤字符
-
 '**********
 '函数名：showErr
 '参  数：message	-- 错误信息
@@ -72,18 +70,18 @@ Function GetSystem()
 End Function
 
 '**********
-'函数名：IsObjInstalled
+'函数名：IsInstall
 '作  用：检查组件是否已经安装
 '参  数：obj ----组件名
 '返回值：True  ----已经安装
 '		 False ----没有安装
 '**********
-Function IsObjInstalled(obj)
+Function IsInstall(obj)
 	On Error Resume Next
-	IsObjInstalled = False
+	IsInstall = False
 	Dim xTestObj
 	Set xTestObj = Server.CreateObject(obj)
-	If Err.Number = 0 Then IsObjInstalled = True
+	If Err.Number = 0 Then IsInstall = True
 	Set xTestObj = Nothing
 	Err.Clear
 	On Error Goto 0
@@ -192,11 +190,16 @@ Function safe(str)
 	str = Replace(str,"--","&#45;&#45;")
 	If IsArray(FilterWord) Then
 		Dim item
-		For Each item In FilterWord
-			str = Replace(str,item,"**",1,-1,1)
-		Next
+		str = Tpub.String.regExpReplace(str,Join(FilterWord,"|"),"XX",false)
 	End If
 	safe = str
+End Function
+
+Private Function StrRepeat(length,str)
+	Dim i
+	For i = 1 To length
+		StrRepeat = StrRepeat & str
+	Next
 End Function
 
 '**********
@@ -318,6 +321,8 @@ Function htmlEncode(ByVal Str)
 	End If
 End Function
 
+
+
 '**********
 ' 函数名: htmlDecode
 ' 参  数: str as the input string
@@ -406,15 +411,17 @@ Function SetQueryString(ByVal sQuery, ByVal Name,ByVal Value)
 	SetQueryString = sQuery
 End Function
 
-
 '**********
 ' 函数名: GetGUID
 ' 作用: 生成GUID
 '**********
 Function GetGUID()
 	On Error Resume Next
-	GetGUID = Mid(Server.CreateObject("Scriptlet.TypeLib").Guid,2,36)
+	GetGUID = Mid(CreateObject("Scriptlet.TypeLib").Guid,2,36)
 	Err.Clear
 	On Error Goto 0
 End Function
+
+
+
 %>

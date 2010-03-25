@@ -1,8 +1,6 @@
 <%
 'Option Explicit
 Response.Buffer = True
-Session.CodePage = 936
-Response.Charset = "gb2312"
 Dim StartTime : StartTime = timer()
 %>
 <!--#include file="include/ext.asp"-->
@@ -14,13 +12,19 @@ Dim StartTime : StartTime = timer()
 <!--#include file="include/library/params.asp"-->
 <!--#include file="include/library/session.asp"-->
 <%
+Tpub.WebConfig("CodePage")		=	936				'设置站点编码
+Tpub.WebConfig("Charset")		=	"gb2312"		'设置站点字符集
+Tpub.WebConfig("FilterWord")	=	""				'设置过滤字符
+
 Tpub.db.ConnectionType = "MSSQL"
 Tpub.db.ServerIp = "localhost"
 Tpub.db.Database = "dataname"
 Tpub.db.UserName = "sa"
-Tpub.db.Password = "sa"
+Tpub.db.Password = ""
 
 On Error Resume Next
+Session.CodePage = Tpub.WebConfig("CodePage")
+Response.Charset = Tpub.WebConfig("Charset")
 Tpub.Cookie.Mark = "cute_"		'设置Cookie名称前缀
 Tpub.Cache.Mark = "cute_"		'设置缓存名称前缀
 Tpub.Ubb.Mode = 0				'使用基本UBB

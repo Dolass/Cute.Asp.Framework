@@ -16,13 +16,13 @@
 '	构建类
 '**********
 Class Class_Db
-    Private ConnStr, SqlLocalPath
+    Private ConnStr, SqlLocalPath, rs
     Public ServerIp		'数据库连接主机名
 	Public ConnectionType	'数据库连接类型 -- 1.ACCESS 2.MSSQL
 	Public Database		'数据库名 
 	Public Username			'用户名
 	Public Password			'密码
-    Public Conn, rs
+    Public Conn
 
     Private Sub Class_Initialize()
 		ServerIp			= "(local)"
@@ -82,13 +82,6 @@ Class Class_Db
 			OutRs.close
 			Set OutRs = Nothing
 			On Error Goto 0
-		Else
-			If IsObject(rs) Then
-				On Error Resume Next
-				rs.close
-				Set rs = Nothing
-				On Error Goto 0
-			End If
 		End If
 	End Sub
 
@@ -112,6 +105,31 @@ Class Class_Db
         End If
     End Sub
 
+	
+    '**********
+    ' 方法名: Close
+    ' 作  用: 开始事务
+    '**********
+	Sub BeginTrans()
+		Me.Conn.BeginTrans()
+	End Sub
+	
+    '**********
+    ' 方法名: Close
+    ' 作  用: 回滚事务
+    '**********
+	Sub RollBackTrans()
+		Me.Conn.RollBackTrans()
+	End Sub
+
+    '**********
+    ' 方法名: Close
+    ' 作  用: 提交事务
+    '**********
+	Sub CommitTrans()
+		Me.Conn.CommitTrans()
+	End Sub
+
     '**********
     ' 方法名: GetRecordObject
     ' 参  数: source as sql string or recordset object
@@ -126,7 +144,7 @@ Class Class_Db
 			Set obj = Nothing
 			Exit Sub
 		End If
-		Set obj = Server.CreateObject("Scripting.Dictionary")
+		Set obj = CreateObject("Scripting.Dictionary")
 		obj.CompareMode = 1
 		For i=0 To rs.fields.count-1
 			obj.Add rs.Fields(i).Name,rs(i).Value
@@ -146,7 +164,7 @@ Class Class_Db
 		sqlCmd = "Set nocount on" & vbCrlf
 		sqlCmd = sqlCmd & "Insert Into "&Table&" ("
 		parameteres = " "
-		Set oParams = Server.CreateObject("Scripting.Dictionary")
+		Set oParams = CreateObject("Scripting.Dictionary")
 		If Not IsNull(params) Then
 			For Each iName in params
 				sqlCmd_a = sqlCmd_a & iName & ","
@@ -183,7 +201,7 @@ Class Class_Db
 		sqlCmd = "Set nocount on" & vbCrlf
 		sqlCmd = sqlCmd & "Update "&Table&" set "
 		parameteres = " "
-		Set oParams = Server.CreateObject("Scripting.Dictionary")
+		Set oParams = CreateObject("Scripting.Dictionary")
 		If Not IsNull(params) Then
 			For Each iName in params
 				If InStr(iName,"#") > 0 Then

@@ -78,16 +78,16 @@ Class Class_Date
     End Function
 
     '**********
-    ' 函数名: fromUnixEpoch
+    ' 函数名: Format
     ' 参  数: sDate		--  时间
     ' 参  数: format	--  格式化格式
     ' 作  用: 格式化时间
     '**********
-   Function FormatDate(sDate, format)
+   Function Format(sDate, formatstr)
 		Dim str
 		If Len(sDate) = 0 Then Exit Function
-        If Len(format)>0 Then
-			str = Replace(format, "yyyy", Year(sDate))
+        If Len(formatstr)>0 Then
+			str = Replace(formatstr, "yyyy", Year(sDate))
 			str = Replace(str, "yy", Right(Year(sDate), 2))
 			str = Replace(str, "MM", doublee(Month(sDate)))
 			str = Replace(str, "dd", doublee(Day(sDate)))
@@ -99,9 +99,9 @@ Class Class_Date
 			str = Replace(str, "h", Hour(sDate))
 			str = Replace(str, "m", Minute(sDate))
 			str = Replace(str, "s", Second(sDate))
-            FormatDate = str
+            Format = str
 		Else
-			FormatDate = sDate
+			Format = sDate
         End If
     End Function
 

@@ -1,10 +1,5 @@
 <!--#include file="config.inc.asp"-->
-<!--#include file="interface/comment.asp"-->
-<!--#include file="interface/moderator.asp"-->
-<!--#include file="interface/user.asp"-->
-<!--#include file="interface/category.asp"-->
-<!--#include file="interface/book.asp"-->
-<!--#include file="interface/view.asp"-->
+<!--#include file="interface/demo.asp"-->
 <%
 Set oParams = Server.CreateObject("Scripting.Dictionary")
 oParams.CompareMode = 1
@@ -22,6 +17,7 @@ On Error Resume Next
 ExecuteGlobal("call "&Request("action")&"(oParams)")
 Set oParams = Nothing
 If Err Then
+	'die Err.Description
 	die "-999"
 End If
 On Error Goto 0
