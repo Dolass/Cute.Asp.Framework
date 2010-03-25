@@ -50,6 +50,19 @@ Function isset(Obj)
 End Function
 
 '**********
+'函数名：isNumber
+'作  用：判断是否数字
+'**********
+Function isNumber(str)
+	isNumber = False
+	If isset(str) Then
+		If isNumeric(str) Then
+			isNumber = True
+		End if
+	End If
+End Function
+
+'**********
 '函数名：locationHref
 '作  用：页面跳转
 '**********
