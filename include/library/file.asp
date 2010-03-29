@@ -201,28 +201,6 @@ Class Class_File
     End Function
 
     '**********
-    '函数名：DelFile
-    '作  用：删除文件
-    '参  数：要删除的文件名称(支持以|分隔的列表)
-    '**********
-    Function DelFile(sFiles)
-        DelFile = true
-        Dim fso, sFile, i
-        sFile = Split(sFiles, "|")
-        Set fso = Server.CreateObject(Me.FSO)
-        For i = 0 To UBound(sFile)
-            If fso.FileExists(Server.MapPath(sFile(i))) Then
-                fso.DeleteFile(Server.MapPath(sFile(i)))
-            End If
-        Next
-        Set fso = Nothing
-        If Err Then
-            Err.Clear
-            DelFile = false
-        End If
-    End Function
-
-    '**********
     '函数名：DelFolder
     '作  用：删除目录
     '参  数：要删除的目录名称
@@ -248,6 +226,28 @@ Class Class_File
             Err.Clear
         Else
             DelFolder = true
+        End If
+    End Function
+
+    '**********
+    '函数名：DelFile
+    '作  用：删除文件
+    '参  数：要删除的文件名称(支持以|分隔的列表)
+    '**********
+    Function DelFile(sFiles)
+        DelFile = true
+        Dim fso, sFile, i
+        sFile = Split(sFiles, "|")
+        Set fso = Server.CreateObject(Me.FSO)
+        For i = 0 To UBound(sFile)
+            If fso.FileExists(Server.MapPath(sFile(i))) Then
+                fso.DeleteFile(Server.MapPath(sFile(i)))
+            End If
+        Next
+        Set fso = Nothing
+        If Err Then
+            Err.Clear
+            DelFile = false
         End If
     End Function
 
@@ -320,6 +320,23 @@ Class Class_File
     End Function
 
     '**********
+    '复制目录下所有文件
+    'sFolderPath:源目录
+    'dFolderPath:目标目录
+    '**********
+    Function CopyFolder(sFolderPath, dFolderPath)
+        On Error Resume Next
+        CopyFolder = true
+        Dim fs
+        Set fs = Server.CreateObject(Me.FSO)
+        fs.CopyFolder Server.Mappath(sFolderPath), Server.Mappath(dFolderPath)
+        Set fs = Nothing
+        If Err Then
+            CopyFolder = false
+        End If
+    End Function
+
+    '**********
     '复制文件
     'sFilePath:源文件
     'dFilePath:目文件
@@ -334,23 +351,6 @@ Class Class_File
         If Err Then
             Err.Clear
             CopyFile = false
-        End If
-    End Function
-
-    '**********
-    '复制目录下所有文件
-    'sFolderPath:源目录
-    'dFolderPath:目标目录
-    '**********
-    Function CopyFolder(sFolderPath, dFolderPath)
-        On Error Resume Next
-        CopyFolder = true
-        Dim fs
-        Set fs = Server.CreateObject(Me.FSO)
-        fs.CopyFolder Server.Mappath(sFolderPath), Server.Mappath(dFolderPath)
-        Set fs = Nothing
-        If Err Then
-            CopyFolder = false
         End If
     End Function
 
@@ -401,7 +401,7 @@ Class Class_File
     '去除utf-8签名
     'sFilepath:文件路径
     '**********
-    Sub removeUtf8bom(sFilepath)
+    Sub RemoveUtf8bom(sFilepath)
         On Error Resume Next
         Dim oFile, oStream, oXml, oStream2, oElement
         oFile = Server.MapPath(sFilepath)

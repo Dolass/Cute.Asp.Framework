@@ -136,57 +136,57 @@ Class Class_String
 	End Function
 
 	'**********
-	' 函数名: textToHtml
+	' 函数名: TextToHtml
 	' 参  数: str as the input string
 	' 作  用: filter text code
 	'**********
-	Function textToHtml(ByVal str)
+	Function TextToHtml(ByVal str)
 		If Trim(str)="" Then textEncode = "" : Exit Function
-		str=replace(str,">","&gt;")
-		str=replace(str,"<","&lt;")
-		str=replace(str,chr(32)&chr(32)," &nbsp;")
-		str=replace(str,chr(9),"&nbsp;&nbsp;&nbsp;&nbsp;")
-		str=replace(str,chr(34),"&quot;")
-		str=replace(str,chr(39),"&#39;")
-		str=replace(str,chr(13)&chr(10),"<br />")
-		str=replace(str,chr(13),"")
-		str=replace(str,chr(10),"<br />")
-		textToHtml = str
+		str=Replace(str,">","&gt;")
+		str=Replace(str,"<","&lt;")
+		str=Replace(str,chr(32)&chr(32)," &nbsp;")
+		str=Replace(str,chr(9),"&nbsp;&nbsp;&nbsp;&nbsp;")
+		str=Replace(str,chr(34),"&quot;")
+		str=Replace(str,chr(39),"&#39;")
+		str=Replace(str,chr(13)&chr(10),"<br />")
+		str=Replace(str,chr(13),"")
+		str=Replace(str,chr(10),"<br />")
+		TextToHtml = str
 	End Function
 
 	'**********
-	' 函数名: htmlToJs
+	' 函数名: HtmlToJs
 	' 参  数: str as the input string
 	' 作  用: html到js的转换
 	'**********
-	Function htmlToJs(ByVal str)
+	Function HtmlToJs(ByVal str)
 		If str <> "" Then
-			str = replace(str,"\","\\")
-			str = replace(str,vbCrlf,"\n")
-			str = replace(str,"""","\""")
-			htmlToJs = replace(str,"'","\'")
+			str = Replace(str,"\","\\")
+			str = Replace(str,vbCrlf,"\n")
+			str = Replace(str,"""","\""")
+			HtmlToJs = Replace(str,"'","\'")
 		End If
 	End Function
 
 	'**********
-	' 函数名: stripHTML
+	' 函数名: StripHTML
 	' 参  数: str as the input string
 	' 作  用: 过滤HTML
 	'**********
-	Function stripHTML(ByVal strHTML)
+	Function StripHTML(ByVal strHTML)
 		If strHTML <> "" Then
 			strHTML = Me.Replace(strHTML,"<.+?>","",false)
 			strHTML = Replace(strHTML, "<", "&lt;")
-			stripHTML = Replace(strHTML, ">", "&gt;")
+			StripHTML = Replace(strHTML, ">", "&gt;")
 		End If
 	End Function
 
 	'**********
 	' 函数名: Replace
 	'**********
-	Function [replace](ByVal str,ByVal re,ByVal restr,ByVal isCase)	'内容,正则,替换成，是否区分大小写
+	Function [Replace](ByVal str,ByVal re,ByVal restr,ByVal isCase)	'内容,正则,替换成，是否区分大小写
 		If str <> "" Then
-			replace = regExpReplace_Js(str&"",re,restr,isCase)
+			Replace = regExpReplace_Js(str&"",re,restr,isCase)
 		End If
 	End Function
 
@@ -210,15 +210,6 @@ Class Class_String
 	End Function
 
 	'**********
-	' 函数名: RTrim
-	'**********
-	Function [RTrim](ByVal str)	'内容
-		If str <> "" Then
-			[RTrim] = Me.Replace(str,"\s*$","",False)
-		End If
-	End Function
-
-	'**********
 	' 函数名: LTrim
 	'**********
 	Function [LTrim](ByVal str)	'内容
@@ -226,12 +217,21 @@ Class Class_String
 			[LTrim] = Me.Replace(str,"^\s*","",false)
 		End If
 	End Function
+
+	'**********
+	' 函数名: RTrim
+	'**********
+	Function [RTrim](ByVal str)	'内容
+		If str <> "" Then
+			[RTrim] = Me.Replace(str,"\s*$","",False)
+		End If
+	End Function
 End Class
 %>
 <script language="jscript" runat="server">
 function regExpReplace_Js(str1,str2,restr,isCase){
 	if(typeof str1 == "string"){
-		return str1.replace(new RegExp(str2,"g" + (isCase ? "" : "i")),restr);
+		return str1.Replace(new RegExp(str2,"g" + (isCase ? "" : "i")),restr);
 	}
 	return "";
 }

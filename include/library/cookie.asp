@@ -21,7 +21,7 @@ Class Class_Cookie
 	Public	Mark	'前缀
 
     Public Default Property Get Contents(Value)
-        contents = [get](Value)
+        contents = [Get](Value)
     End Property
 
     '**********
@@ -40,10 +40,10 @@ Class Class_Cookie
     End Sub
 
     '**********
-    ' 函数名: set
+    ' 函数名: Set
     ' 作  用: Add a cookie
     '**********
-	Sub [set](Key, Value, Options)
+	Sub [Set](Key, Value, Options)
         Response.Cookies(Me.Mark & Key) = Value
         If Not (IsNull(Options) Or IsEmpty(Options)) Then
             If IsArray(Options) Then
@@ -58,11 +58,11 @@ Class Class_Cookie
     End Sub
 
     '**********
-    ' 函数名: get
-    ' 作  用: get a cookies
+    ' 函数名: Get
+    ' 作  用: Get a cookies
     '**********
-	Function [get](Key)
-        [get] = Request.Cookies(Me.Mark & Key)
+	Function [Get](Key)
+        [Get] = Request.Cookies(Me.Mark & Key)
     End Function
 
     '**********
@@ -91,6 +91,30 @@ Class Class_Cookie
             Response.Cookies(iCookie).Expires = formatDateTime(Now)
         Next
     End Sub
+
+    '**********
+    ' 函数名: compare
+    ' 作  用: Compare two cookie
+    '**********
+	Function Compare(Key1, Key2)
+        Dim Cache1
+        Cache1 = Me.[Get](Key1)
+        Dim Cache2
+        Cache2 = Me.[Get](Key2)
+        If TypeName(Cache1) <> TypeName(Cache2) Then
+            Compare = False
+        Else
+            If TypeName(Cache1) = "Object" Then
+                Compare = (Cache1 Is Cache2)
+            Else
+                If TypeName(Cache1) = "Variant()" Then
+                    Compare = (Join(Cache1, "^") = Join(Cache2, "^"))
+                Else
+                    Compare = (Cache1 = Cache2)
+                End If
+            End If
+        End If
+    End Function
 
 End Class
 %>

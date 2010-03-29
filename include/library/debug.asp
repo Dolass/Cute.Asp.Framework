@@ -22,10 +22,18 @@ Class Class_Debug
     Private dteFinishTime
     Private objStorage
 
+    '**********
+    ' 方法名: Open
+    ' 作  用: 打开Debug
+    '**********
     Sub Open()
         blnEnabled = true
     End Sub
 
+    '**********
+    ' 方法名: Close
+    ' 作  用: 停止Debug
+    '**********
     Sub Close()
         blnEnabled = false
     End Sub
@@ -35,12 +43,21 @@ Class Class_Debug
         Set objStorage = Server.CreateObject("Scripting.Dictionary")
     End Sub
 
+    '**********
+    ' 方法名: Add
+    ' 作  用: 添加监听变量
+    '**********
     Sub Add(label)
         If blnEnabled Then
             objStorage.Add ValidLabel(label), eval(label)
         End If
     End Sub
 
+
+    '**********
+    ' 方法名: Show
+    ' 作  用: 显示结果
+    '**********
     Sub Show()
         dteFinishTime = Now()
         If blnEnabled Then

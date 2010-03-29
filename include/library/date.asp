@@ -41,11 +41,11 @@ Class Class_Date
     End Function
 
     '**********
-    ' 函数名: toGMTdate
+    ' 函数名: ToGMTdate
     ' 参  数: sDate
     ' 作  用: 获取GMT时间
     '**********
-    Function toGMTdate(sDate)
+    Function ToGMTdate(sDate)
         Dim dWeek, dMonth
         Dim strZero, strZone
         strZero = "00"
@@ -56,25 +56,25 @@ Class Class_Date
         End If
         dWeek = Array("Sun", "Mon", "Tue", "Wes", "Thu", "Fri", "Sat")
         dMonth = Array("Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec")
-        toGMTdate = dWeek(Weekday(sDate) -1)&", "&Right(strZero&Day(sDate), 2)&" "&dMonth(Month(sDate) -1)&" "&Year(sDate)&" "&Right(strZero&Hour(sDate), 2)&":"&Right(strZero&Minute(sDate), 2)&":"&Right(strZero&Second(sDate), 2)&" "&strZone
+        ToGMTdate = dWeek(Weekday(sDate) -1)&", "&Right(strZero&Day(sDate), 2)&" "&dMonth(Month(sDate) -1)&" "&Year(sDate)&" "&Right(strZero&Hour(sDate), 2)&":"&Right(strZero&Minute(sDate), 2)&":"&Right(strZero&Second(sDate), 2)&" "&strZone
     End Function
 
     '**********
-    ' 函数名: toUnixEpoch
+    ' 函数名: ToUnixEpoch
     ' 参  数: sDate
     ' 作  用: 获取时间戳
     '**********
-    Function toUnixEpoch(sDate)
-        toUnixEpoch = DateDiff("s", "1970-1-1 00:00:00", sDate) - getMistiming("1970-1-1 00:00:00")
+    Function ToUnixEpoch(sDate)
+        ToUnixEpoch = DateDiff("s", "1970-1-1 00:00:00", sDate) - getMistiming("1970-1-1 00:00:00")
     End Function
 
     '**********
-    ' 函数名: fromUnixEpoch
+    ' 函数名: FromUnixEpoch
     ' 参  数: iNumber	--  时间戳
     ' 作  用: 获取当地时间
     '**********
-    Function fromUnixEpoch(iNumber)
-        fromUnixEpoch = DateAdd("s", iNumber + getMistiming("1970-1-1 00:00:00"), "1970-1-1 00:00:00")
+    Function FromUnixEpoch(iNumber)
+        FromUnixEpoch = DateAdd("s", iNumber + getMistiming("1970-1-1 00:00:00"), "1970-1-1 00:00:00")
     End Function
 
     '**********
@@ -114,15 +114,15 @@ Class Class_Date
     End Function
 
     '**********
-    ' 函数名: zodiac
+    ' 函数名: Zodiac
     ' 参  数: bYear as birthday year
     ' 作  用: 计算所属生肖
     '**********
-    Function zodiac(bYear)
+    Function Zodiac(bYear)
         If bYear > 0 Then
-            Dim zodiacList
-            zodiacList = Array("猴", "鸡", "狗", "猪", "鼠", "牛", "虎", "兔", "龙", "蛇", "马", "羊")
-            zodiac = zodiacList(bYear Mod 12)
+            Dim ZodiacList
+            ZodiacList = Array("猴", "鸡", "狗", "猪", "鼠", "牛", "虎", "兔", "龙", "蛇", "马", "羊")
+            Zodiac = ZodiacList(bYear Mod 12)
         End If
     End Function
 

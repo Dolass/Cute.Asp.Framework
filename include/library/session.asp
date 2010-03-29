@@ -25,7 +25,7 @@ Class Class_Session
     End Property
 
     Public Default Property Get Contents(Value)
-        contents = [get](Value)
+        contents = [Get](Value)
     End Property
 
     '**********
@@ -44,10 +44,10 @@ Class Class_Session
     End Sub
 
     '**********
-    ' 函数名: set
+    ' 函数名: Set
     ' 作  用: Add a Session
     '**********
-	Sub [set](Key, Value)
+	Sub [Set](Key, Value)
 		If IsObject(Value) Then
 			Set Session(Me.Mark & Key) = Value
 		Else
@@ -56,14 +56,14 @@ Class Class_Session
     End Sub
 
     '**********
-    ' 函数名: get
-    ' 作  用: get a Session
+    ' 函数名: Get
+    ' 作  用: Get a Session
     '**********
-	Function [get](Key)
+	Function [Get](Key)
 		If IsObject(Session(Me.Mark & Key)) Then
-			Set [get] = Session(Me.Mark & Key)
+			Set [Get] = Session(Me.Mark & Key)
 		Else
-			[get] = Session(Me.Mark & Key)
+			[Get] = Session(Me.Mark & Key)
 		End If
     End Function
 
@@ -88,5 +88,29 @@ Class Class_Session
 			Me.Remove(iSession)
         Next
 	End Sub
+
+    '**********
+    ' 函数名: compare
+    ' 作  用: Compare two session
+    '**********
+	Function Compare(Key1, Key2)
+        Dim Cache1
+        Cache1 = Me.[Get](Key1)
+        Dim Cache2
+        Cache2 = Me.[Get](Key2)
+        If TypeName(Cache1) <> TypeName(Cache2) Then
+            Compare = False
+        Else
+            If TypeName(Cache1) = "Object" Then
+                Compare = (Cache1 Is Cache2)
+            Else
+                If TypeName(Cache1) = "Variant()" Then
+                    Compare = (Join(Cache1, "^") = Join(Cache2, "^"))
+                Else
+                    Compare = (Cache1 = Cache2)
+                End If
+            End If
+        End If
+    End Function
 End Class
 %>

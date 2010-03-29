@@ -1,5 +1,5 @@
 ﻿<macromedia-extension
-	 name="Cute ASP ASP v0.1 for Dreamweaver CS3 or CS4"
+	 name="Cute ASP Framework v0.1 for Dreamweaver CS3 or CS4"
 	 version="2.1.0"
 	 type="Suite"
 	 requires-restart="true">
@@ -12,21 +12,18 @@
 
 	<description>
 	<![CDATA[
-	ss
+	Cute ASP Framework for Dreamweaver CS3 or CS4<br />
+	HomePage:<a href="http://cuteaspframework.googlecode.com" target="_blank">http://cuteaspframework.googlecode.com</a>
 	]]>
 	</description>
 
 	<ui-access>
 	<![CDATA[
-	ss
+	<iframe src="http://code.google.com/p/cuteaspframework/downloads/list" width="100%" height="100%"></iframe>
 	]]>
 	</ui-access>
 
-	<license-agreement>
-	<![CDATA[
-	ss
-	]]>
-	</license-agreement>
+	<license-agreement />
 
 	<files>
 		<file source="Casp.xml" destination="$Dreamweaver/Configuration/Strings" />

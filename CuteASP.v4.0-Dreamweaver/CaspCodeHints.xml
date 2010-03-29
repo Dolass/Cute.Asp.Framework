@@ -3,18 +3,23 @@
 <description>
 <MMString:loadString id="codehints_casp" />
 </description>
-<menu pattern="Casp." doctypes="ASP-VB" casesensitive="true">
+<menu pattern="Casp." doctypes="ASP-VB" casesensitive="false">
+	<menuitem label="Cache(name)" icon="shared/mm/images/hintMisc.gif"/>
+	<menuitem label="Cookie(name)" icon="shared/mm/images/hintMisc.gif"/>
+	<menuitem label="Session(name)" icon="shared/mm/images/hintMisc.gif"/>
+	<menuitem label="Params(name)" icon="shared/mm/images/hintMisc.gif"/>
+
 	<menuitem label="ShowErr(string)" icon="shared/mm/images/hintMisc.gif"/>
 	<menuitem label="ShowException()" value="ShowException()" icon="shared/mm/images/hintMisc.gif"/>
 	<menuitem label="CheckPostSource()" value="CheckPostSource()" icon="shared/mm/images/hintMisc.gif"/>
 	<menuitem label="GetSystem()" value="GetSystem()" icon="shared/mm/images/hintMisc.gif"/>
 	<menuitem label="IsInstall(obj)" icon="shared/mm/images/hintMisc.gif"/>
 	<menuitem label="NoBuffer()" value="NoBuffer()" icon="shared/mm/images/hintMisc.gif"/>
-	<menuitem label="rand(min,max)" icon="shared/mm/images/hintMisc.gif"/>
+	<menuitem label="Rand(min,max)" icon="shared/mm/images/hintMisc.gif"/>
 	<menuitem label="RandStr(length)" icon="shared/mm/images/hintMisc.gif"/>
 	<menuitem label="rq(RequestType,Name,dataType,Default)" icon="shared/mm/images/hintMisc.gif"/>
-	<menuitem label="form(element)" icon="shared/mm/images/hintMisc.gif"/>
-	<menuitem label="safe(str)" icon="shared/mm/images/hintMisc.gif"/>
+	<menuitem label="Form(element)" icon="shared/mm/images/hintMisc.gif"/>
+	<menuitem label="Safe(str)" icon="shared/mm/images/hintMisc.gif"/>
 	<menuitem label="CurrentURL()" value="CurrentURL()" icon="shared/mm/images/hintMisc.gif"/>
 	<menuitem label="RefererURL()" value="RefererURL()" icon="shared/mm/images/hintMisc.gif"/>
 	<menuitem label="GetIP()" value="GetIP()" icon="shared/mm/images/hintMisc.gif"/>
@@ -27,7 +32,108 @@
 	<menuitem label="SetQueryString(RequestQueryString, ParamName, Value)" icon="shared/mm/images/hintMisc.gif"/>
 	<menuitem label="GetGUID()" value="GetGUID()" icon="shared/mm/images/hintMisc.gif"/>
 </menu>
-<menu pattern="Casp.db." doctypes="ASP-VB" casesensitive="true">
+<menu pattern="Casp.Array." doctypes="ASP-VB" casesensitive="false">
+	<menuitem label="Max(arr)" icon="shared/mm/images/hintMisc.gif"/>
+	<menuitem label="Min(arr)" icon="shared/mm/images/hintMisc.gif"/>
+	<menuitem label="UnShift(arr,var)" icon="shared/mm/images/hintMisc.gif"/>
+	<menuitem label="Shift(arr)" icon="shared/mm/images/hintMisc.gif"/>
+	<menuitem label="Push(arr,var)" icon="shared/mm/images/hintMisc.gif"/>
+	<menuitem label="Pop(arr)" icon="shared/mm/images/hintMisc.gif"/>
+	<menuitem label="Strip(str)" icon="shared/mm/images/hintMisc.gif"/>
+	<menuitem label="Walk(arr,callback)" icon="shared/mm/images/hintMisc.gif"/>
+	<menuitem label="Splice(arr,start,final)" icon="shared/mm/images/hintMisc.gif"/>
+	<menuitem label="Fill(arr,index,value)" icon="shared/mm/images/hintMisc.gif"/>
+	<menuitem label="Unique(arr)" icon="shared/mm/images/hintMisc.gif"/>
+	<menuitem label="Reverse(arr)" icon="shared/mm/images/hintMisc.gif"/>
+	<menuitem label="Search(arr,value)" icon="shared/mm/images/hintMisc.gif"/>
+	<menuitem label="Rand(arr,num)" icon="shared/mm/images/hintMisc.gif"/>
+	<menuitem label="Sort(arr)" icon="shared/mm/images/hintMisc.gif"/>
+	<menuitem label="rSort(arr)" icon="shared/mm/images/hintMisc.gif"/>
+	<menuitem label="Shuffle(arr)" icon="shared/mm/images/hintMisc.gif"/>
+	<menuitem label="ConvComma(string)" icon="shared/mm/images/hintMisc.gif"/>
+	<menuitem label="ToString(arr)" icon="shared/mm/images/hintMisc.gif"/>
+	<menuitem label="ToArray(string)" icon="shared/mm/images/hintMisc.gif"/>
+</menu>
+<menu pattern="Casp.Cache." doctypes="ASP-VB" casesensitive="false">
+	<menuitem label="Mark" Value="Mark = " icon="shared/mm/images/hintProperty.gif"/>
+	<menuitem label="Contents()" Value="Contents()" icon="shared/mm/images/hintMisc.gif"/>
+	<menuitem label="Timeout" Value="Timeout = " icon="shared/mm/images/hintProperty.gif"/>
+	<menuitem label="Lock()" Value="Lock()" icon="shared/mm/images/hintMisc.gif"/>
+	<menuitem label="UnLock()" Value="UnLock()" icon="shared/mm/images/hintMisc.gif"/>
+	<menuitem label="Set(Key,Value,Expire)" icon="shared/mm/images/hintMisc.gif"/>
+	<menuitem label="Get(Key)" icon="shared/mm/images/hintMisc.gif"/>
+	<menuitem label="Remove(Key)" icon="shared/mm/images/hintMisc.gif"/>
+	<menuitem label="RemoveAll()" Value="set()" icon="shared/mm/images/hintMisc.gif"/>
+	<menuitem label="Compare(Key1, Key2)" icon="shared/mm/images/hintMisc.gif"/>
+</menu>
+<menu pattern="Casp.Cookie." doctypes="ASP-VB" casesensitive="false">
+	<menuitem label="Mark" Value="Mark = " icon="shared/mm/images/hintProperty.gif"/>
+	<menuitem label="Contents()" Value="Contents()" icon="shared/mm/images/hintMisc.gif"/>
+	<menuitem label="set(Key,Value,options[array])" icon="shared/mm/images/hintMisc.gif"/>
+	<menuitem label="get(Key)" icon="shared/mm/images/hintMisc.gif"/>
+	<menuitem label="Remove(Key)" icon="shared/mm/images/hintMisc.gif"/>
+	<menuitem label="RemoveAll()" Value="set()" icon="shared/mm/images/hintMisc.gif"/>
+	<menuitem label="Compare(Key1, Key2)" icon="shared/mm/images/hintMisc.gif"/>
+</menu>
+<menu pattern="Casp.Session." doctypes="ASP-VB" casesensitive="false">
+	<menuitem label="Mark" Value="Mark = " icon="shared/mm/images/hintProperty.gif"/>
+	<menuitem label="Timeout" Value="Timeout = " icon="shared/mm/images/hintProperty.gif"/>
+	<menuitem label="Contents()" Value="Contents()" icon="shared/mm/images/hintMisc.gif"/>
+	<menuitem label="Expires" Value="Expires = " icon="shared/mm/images/hintProperty.gif"/>
+	<menuitem label="Set(Key,Value)" icon="shared/mm/images/hintMisc.gif"/>
+	<menuitem label="Get(Key)" icon="shared/mm/images/hintMisc.gif"/>
+	<menuitem label="Remove(Key)" icon="shared/mm/images/hintMisc.gif"/>
+	<menuitem label="RemoveAll()" Value="set()" icon="shared/mm/images/hintMisc.gif"/>
+	<menuitem label="Compare(Key1, Key2)" icon="shared/mm/images/hintMisc.gif"/>
+</menu>
+<menu pattern="Casp.Date." doctypes="ASP-VB" casesensitive="false">
+	<menuitem label="TimeZone" Value="TimeZone = " icon="shared/mm/images/hintProperty.gif"/>
+	<menuitem label="ToGMTdate(date)" icon="shared/mm/images/hintMisc.gif"/>
+	<menuitem label="ToUnixEpoch(date)" icon="shared/mm/images/hintMisc.gif"/>
+	<menuitem label="FromUnixEpoch(date)" icon="shared/mm/images/hintMisc.gif"/>
+	<menuitem label="Format(date,format)" icon="shared/mm/images/hintMisc.gif"/>
+	<menuitem label="Zodiac(date)" icon="shared/mm/images/hintMisc.gif"/>
+	<menuitem label="Constellation(date)" icon="shared/mm/images/hintMisc.gif"/>
+</menu>
+<menu pattern="Casp.Debug." doctypes="ASP-VB" casesensitive="false">
+	<menuitem label="Open()" Value="Open()" icon="shared/mm/images/hintMisc.gif"/>
+	<menuitem label="Close()" Value="Close()" icon="shared/mm/images/hintMisc.gif"/>
+	<menuitem label="Add(label)" icon="shared/mm/images/hintMisc.gif"/>
+	<menuitem label="Show()" Value="Show()" icon="shared/mm/images/hintMisc.gif"/>
+</menu>
+<menu pattern="Casp.String." doctypes="ASP-VB" casesensitive="false">
+	<menuitem label="Length(string)" icon="shared/mm/images/hintMisc.gif"/>
+	<menuitem label="Cut(string,length,isEnd)" icon="shared/mm/images/hintMisc.gif"/>
+	<menuitem label="KeyWordLight(string, regex)" icon="shared/mm/images/hintMisc.gif"/>
+	<menuitem label="Validate(string,type)" icon="shared/mm/images/hintMisc.gif"/>
+	<menuitem label="TextToHtml(string)" icon="shared/mm/images/hintMisc.gif"/>
+	<menuitem label="HtmlToJs(string)" icon="shared/mm/images/hintMisc.gif"/>
+	<menuitem label="StripHTML(string)" icon="shared/mm/images/hintMisc.gif"/>
+	<menuitem label="Replace(string,regex,replacestring,isCase)" icon="shared/mm/images/hintMisc.gif"/>
+	<menuitem label="Test(string,regex,isCase)" icon="shared/mm/images/hintMisc.gif"/>
+	<menuitem label="Trim(string)" icon="shared/mm/images/hintMisc.gif"/>
+	<menuitem label="LTrim(string)" icon="shared/mm/images/hintMisc.gif"/>
+	<menuitem label="RTrim(string)" icon="shared/mm/images/hintMisc.gif"/>
+</menu>
+<menu pattern="Casp.Params." doctypes="ASP-VB" casesensitive="false">
+	<menuitem label="Init()" Value="Init()" icon="shared/mm/images/hintMisc.gif"/>
+	<menuitem label="Close()" Value="Close()" icon="shared/mm/images/hintMisc.gif"/>
+</menu>
+<menu pattern="Casp.Page." doctypes="ASP-VB" casesensitive="false">
+	<menuitem label="PageProcedure" Value="PageProcedure = " icon="shared/mm/images/hintProperty.gif"/>
+	<menuitem label="Conn" Value="Conn = " icon="shared/mm/images/hintProperty.gif"/>
+	<menuitem label="Size" Value="Size = " icon="shared/mm/images/hintProperty.gif"/>
+	<menuitem label="Page" Value="Page = " icon="shared/mm/images/hintProperty.gif"/>
+	<menuitem label="PageCount" icon="shared/mm/images/hintProperty.gif"/>
+	<menuitem label="RecordCount" icon="shared/mm/images/hintProperty.gif"/>
+	<menuitem label="GetSqlString" icon="shared/mm/images/hintProperty.gif"/>
+	<menuitem label="Header_a(Recordset,Table,Fields,Where,Group,Sort)" icon="shared/mm/images/hintMisc.gif"/>
+	<menuitem label="Header_b(Recordset,Table,Fields,Where,Group,Sort)" icon="shared/mm/images/hintMisc.gif"/>
+	<menuitem label="Header_c(Recordset,Table,Fields,Where,Group,Sort)" icon="shared/mm/images/hintMisc.gif"/>
+	<menuitem label="Footer_a(string,type)" icon="shared/mm/images/hintMisc.gif"/>
+	<menuitem label="Footer_b(string,type)" icon="shared/mm/images/hintMisc.gif"/>
+</menu>
+<menu pattern="Casp.db." doctypes="ASP-VB" casesensitive="false">
 	<menuitem label="Conn" icon="shared/mm/images/hintProperty.gif"/>
 	<menuitem label="ServerIp" value="ServerIp = " icon="shared/mm/images/hintProperty.gif"/>
 	<menuitem label="ConnectionType" value="ConnectionType = " icon="shared/mm/images/hintProperty.gif"/>
@@ -51,15 +157,62 @@
 	<menuitem label="ExecuteNonQuery(commandName,params)" icon="shared/mm/images/hintMisc.gif"/>
 	<menuitem label="ExecuteRecordsetAndValue(commandName,params)" icon="shared/mm/images/hintMisc.gif"/>
 </menu>
-<function pattern="echo(string)" casesensitive="true"></function>
-<function pattern="die(str)" casesensitive="true"></function>
-<function pattern="isset(object)" casesensitive="true"></function>
-<function pattern="isNumber(object)" casesensitive="true"></function>
-<function pattern="locationHref(url)" casesensitive="true"></function>
-<function pattern="locationReferer()" casesensitive="true"></function>
-<function pattern="alertRedirect(str,url)" casesensitive="true"></function>
-<function pattern="alertBack(str)" casesensitive="true"></function>
-<function pattern="alertClose(str)" casesensitive="true"></function>
-<function pattern="IIf(flag,return1,return2)" casesensitive="true"></function>
+<menu pattern="Casp.File." doctypes="ASP-VB" casesensitive="false">
+	<menuitem label="FSO" Value="FSO = " icon="shared/mm/images/hintProperty.gif"/>
+	<menuitem label="Stream" Value="Stream = " icon="shared/mm/images/hintProperty.gif"/>
+	<menuitem label="Charset" Value="Charset = " icon="shared/mm/images/hintProperty.gif"/>
+	<menuitem label="Page" Value="Page = " icon="shared/mm/images/hintProperty.gif"/>
+	<menuitem label="PageCount" icon="shared/mm/images/hintProperty.gif"/>
+	<menuitem label="RecordCount" icon="shared/mm/images/hintProperty.gif"/>
+	<menuitem label="GetSqlString" icon="shared/mm/images/hintProperty.gif"/>
+	<menuitem label="GetFileTypeName(filename)" icon="shared/mm/images/hintMisc.gif"/>
+	<menuitem label="CheckFileExt(file,ext)" icon="shared/mm/images/hintMisc.gif"/>
+	<menuitem label="FormatFileSize(size,point)" icon="shared/mm/images/hintMisc.gif"/>
+	<menuitem label="GetFileSize(size)" icon="shared/mm/images/hintMisc.gif"/>
+	<menuitem label="GetFolderSize(size)" icon="shared/mm/images/hintMisc.gif"/>
+	<menuitem label="IsFolderExists(folderpath)" icon="shared/mm/images/hintMisc.gif"/>
+	<menuitem label="IsFileExists(filepath)" icon="shared/mm/images/hintMisc.gif"/>
+	<menuitem label="CreatePath(folderpat)" icon="shared/mm/images/hintMisc.gif"/>
+	<menuitem label="DelFolder(folderpath)" icon="shared/mm/images/hintMisc.gif"/>
+	<menuitem label="DelFile(filepath)" icon="shared/mm/images/hintMisc.gif"/>
+	<menuitem label="LoadFile(filepath)" icon="shared/mm/images/hintMisc.gif"/>
+	<menuitem label="SaveFile(filepath,content)" icon="shared/mm/images/hintMisc.gif"/>
+	<menuitem label="CopyFolder(filepath1,filepath2)" icon="shared/mm/images/hintMisc.gif"/>
+	<menuitem label="CopyFile(filepath1,filepath2)" icon="shared/mm/images/hintMisc.gif"/>
+	<menuitem label="LoadIncludeFiles(path,extlist[string])" icon="shared/mm/images/hintMisc.gif"/>
+	<menuitem label="RemoveUtf8bom(filepath)" icon="shared/mm/images/hintMisc.gif"/>
+</menu>
+<menu pattern="Casp.upload." doctypes="ASP-VB" casesensitive="false">
+	<menuitem label="MaxSize" Value="MaxSize = " icon="shared/mm/images/hintProperty.gif"/>
+	<menuitem label="TotalSize" Value="TotalSize = " icon="shared/mm/images/hintProperty.gif"/>
+	<menuitem label="Mode" Value="Mode = " icon="shared/mm/images/hintProperty.gif"/>
+	<menuitem label="SavePath" Value="SavePath = " icon="shared/mm/images/hintProperty.gif"/>
+	<menuitem label="Charset" Value="Charset = " icon="shared/mm/images/hintProperty.gif"/>
+	<menuitem label="FileType" Value="FileType = " icon="shared/mm/images/hintProperty.gif"/>
+	<menuitem label="AutoSave" Value="AutoSave = " icon="shared/mm/images/hintProperty.gif"/>
+	<menuitem label="FormItem" Value="FormItem = " icon="shared/mm/images/hintProperty.gif"/>
+	<menuitem label="FileItem" Value="FileItem = " icon="shared/mm/images/hintProperty.gif"/>
+	<menuitem label="Close()" Value="Close()" icon="shared/mm/images/hintMisc.gif"/>
+	<menuitem label="Open()" Value="Open()" icon="shared/mm/images/hintMisc.gif"/>
+	<menuitem label="Save(Item, filepath)" icon="shared/mm/images/hintMisc.gif"/>
+	<menuitem label="GetData()" Value="GetData()" icon="shared/mm/images/hintMisc.gif"/>
+	<menuitem label="Form(Item)" icon="shared/mm/images/hintMisc.gif"/>
+</menu>
+<function pattern="echo(string)" casesensitive="false"></function>
+<function pattern="die(str)" casesensitive="false"></function>
+<function pattern="isset(object)" casesensitive="false"></function>
+<function pattern="isNumber(object)" casesensitive="false"></function>
+<function pattern="locationHref(url)" casesensitive="false"></function>
+<function pattern="locationReferer()" casesensitive="false"></function>
+<function pattern="alertRedirect(str,url)" casesensitive="false"></function>
+<function pattern="alertBack(str)" casesensitive="false"></function>
+<function pattern="alertClose(str)" casesensitive="false"></function>
+<function pattern="IIf(flag,return1,return2)" casesensitive="false"></function>
+
+
+<function pattern="Cache(name)" casesensitive="true"></function>
+<function pattern="Cookie(name)" casesensitive="true"></function>
+<function pattern="Session(name)" casesensitive="true"></function>
+<function pattern="Params(name)" casesensitive="true"></function>
 </menugroup>
 </codehints>

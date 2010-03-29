@@ -102,18 +102,18 @@ Sub NoBuffer()
 End Sub
 
 '**********
-' 函数名: rand
+' 函数名: Rand
 ' 参  数: str as the input string
-' 作  用: Generate a random integer
+' 作  用: Generate a Random integer
 '**********
-Function rand(min, max)
+Function Rand(min, max)
     Randomize
-    rand = Int((max - min + 1) * Rnd + min)
+    Rand = Int((max - min + 1) * Rnd + min)
 End Function
 
 '**********
 ' 函数名: RandStr
-' 作用: Generate a specific length random string
+' 作用: Generate a specific length Random string
 '**********
 Function RandStr(intLength)
 	Dim strSeed,seedLength,i
@@ -131,7 +131,7 @@ End Function
 ' 参  数: Name as the request name
 ' 参  数: iType as check type
 ' 参  数: Default as the Default string
-' 作  用: safe filter
+' 作  用: Safe filter
 '**********
 Function rq(Requester,Name,iType,Default)
 	Dim tmp
@@ -160,7 +160,7 @@ Function rq(Requester,Name,iType,Default)
 			tmp = CSng(tmp)
 		End If
 	Case 1
-		tmp = safe(EncodeJP(tmp))
+		tmp = Safe(EncodeJP(tmp))
 	Case 2
 		If Not IsDate(tmp) Or Len(tmp) <= 0 Then 
 			tmp = CDate(Default)
@@ -172,13 +172,13 @@ Function rq(Requester,Name,iType,Default)
 End function
 
 '**********
-'函数名：form
+'函数名：Form
 '参  数：element ---- 控件名
 '作  用：获取Form控件数据
 '**********
-Function form(element)
+Function Form(element)
     On Error Resume Next
-    If InStr(LCase(Request.ServerVariables("Content_Type")), "multipart/form-data") Then	'multipart/form-data
+    If InStr(LCase(Request.ServerVariables("Content_Type")), "multipart/Form-data") Then	'multipart/Form-data
         If IsObject(Tpub.Upload) = False Then
     		If Err Then
 				die("no include upload class file")
@@ -187,9 +187,9 @@ Function form(element)
 		If Tpub.Upload.Error <> 0 Then
 			Tpub.Upload.Open
 		End If
-        form = Tpub.Upload.Form(element)
+        Form = Tpub.Upload.Form(element)
     Else
-        form = Request.Form(element)
+        Form = Request.Form(element)
     End If
     On Error GoTo 0
 End Function
@@ -198,7 +198,7 @@ End Function
 '函数名：sqlFilter
 '作  用：过滤Sql关键字
 '**********
-Function safe(str)
+Function Safe(str)
 	If str = "" Then Exit Function
 	str = Replace(str, "'", "''")
 	str = Replace(str,"--","&#45;&#45;")
@@ -206,7 +206,7 @@ Function safe(str)
 		Dim item
 		str = Tpub.String.regExpReplace(str,Join(FilterWord,"|"),"XX",false)
 	End If
-	safe = str
+	Safe = str
 End Function
 
 Private Function StrRepeat(length,str)

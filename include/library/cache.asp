@@ -23,15 +23,15 @@ Class Class_Cache
 	Private IExpires
 
     Public Default Property Get Contents(Value)
-        Contents = [get](Value)
+        Contents = [Get](Value)
     End Property
 
-    Private Property Let Expires(Value)
+    Private Property Let Timeout(Value)
         IExpires = DateAdd("n", Value, Now)	'分钟
     End Property
 
-    Private Property Get Expires()
-        Expires = IExpires
+    Private Property Get Timeout()
+        Timeout = IExpires
     End Property
 
     '**********
@@ -58,10 +58,10 @@ Class Class_Cache
     End Sub
 
     '**********
-    ' 函数名: unlock
+    ' 函数名: UnLock
     ' 作  用: unLock the applaction
     '**********
-	Sub unlock()
+	Sub UnLock()
         Application.unLock()
     End Sub
 
@@ -69,7 +69,7 @@ Class Class_Cache
     ' 函数名: SetCache
     ' 作  用: Set a cache
     '**********
-	Sub [set](Key, Value, Expire)
+	Sub [Set](Key, Value, Expire)
         Expires = Expire
         Lock
 		Application(Mark & Key) = Value
@@ -78,17 +78,17 @@ Class Class_Cache
     End Sub
 
     '**********
-    ' 函数名: getCache
+    ' 函数名: Get
     ' 作  用: Get a cache
     '**********
-	Function [get](Key)
+	Function [Get](Key)
         Dim Expire
         Expire = Application(Mark & Key & "_Expires")
         If IsNull(Expire) Or IsEmpty(Expire) Then
-            [get] = ""
+            [Get] = ""
         Else
             If IsDate(Expire) And CDate(Expire) > Now Then
-                [get] = Application(Mark & Key)
+                [Get] = Application(Mark & Key)
             Else
                 Call Remove(Mark & Key)
                 Value = ""
@@ -123,11 +123,11 @@ Class Class_Cache
     '**********
 	Function Compare(Key1, Key2)
         Dim Cache1
-        Cache1 = getCache(Key1)
+        Cache1 = Me.[Get](Key1)
         Dim Cache2
-        Cache2 = getCache(Key2)
+        Cache2 = Me.[Get](Key2)
         If TypeName(Cache1) <> TypeName(Cache2) Then
-            Compare = True
+            Compare = False
         Else
             If TypeName(Cache1) = "Object" Then
                 Compare = (Cache1 Is Cache2)
