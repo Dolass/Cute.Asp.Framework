@@ -85,7 +85,7 @@ Class Class_Db
 		End If
 	End Sub
 
-    Sub setRs(OutRs, strsql, CursorAndLockType)
+    Sub SetRs(OutRs, strsql, CursorAndLockType)
 		Set OutRs = Server.Createobject("ADODB.Recordset")
         OutRs.Open strsql, Conn, 1, CursorAndLockType
     End Sub

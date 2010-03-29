@@ -1,0 +1,259 @@
+<codehints xmlns:MMString="http://www.macromedia.com/schemes/data/string/">
+<menugroup MMString:name="codehints_casp" enabled="true" id="CodeHints_Casp">
+<description>
+<MMString:loadString id="codehints_casp" />
+</description>
+<menu pattern="Casp." doctypes="ASP-VB" casesensitive="true">
+	<menuitem label="Alert(string)" icon="shared/mm/images/hintMisc.gif"/>
+	<menuitem label="AlertUrl(string,url)" icon="shared/mm/images/hintMisc.gif"/>
+	<menuitem label="C(object)" icon="shared/mm/images/hintMisc.gif"/>
+	<menuitem label="CharSet" value="CharSet = " icon="shared/mm/images/hintProperty.gif"/>
+	<menuitem label="CheckDataFrom()" value="CheckDataFrom()" icon="shared/mm/images/hintMisc.gif"/>
+	<menuitem label="CheckDataFromA()" value="CheckDataFromA()" icon="shared/mm/images/hintMisc.gif"/>
+	<menuitem label="CheckForm(string,rule,require,emptyErrMsg|[emptyErrMsg:]ruleErrMsg)" icon="shared/mm/images/hintMisc.gif"/>
+	<menuitem label="CheckSql()" value="CheckSql()" icon="shared/mm/images/hintMisc.gif"/>
+	<menuitem label="CheckSqlA()" value="CheckSqlA()" icon="shared/mm/images/hintMisc.gif"/>
+	<menuitem label="ConfirmUrl(string,okUrl,cancelUrl)" icon="shared/mm/images/hintMisc.gif"/>
+	<menuitem label="CutString(string,charNumber[:separator])" icon="shared/mm/images/hintMisc.gif"/>
+	<menuitem label="DateTime(date,format|otherDate)" icon="shared/mm/images/hintMisc.gif"/>
+	<menuitem label="db" icon="shared/mm/images/hintProperty.gif"/>
+	<menuitem label="Escape(string)" icon="shared/mm/images/hintMisc.gif"/>
+	<menuitem label="FsoName" value="FsoName = " icon="shared/mm/images/hintProperty.gif"/>
+	<menuitem label="GetApp(appName)" icon="shared/mm/images/hintMisc.gif"/>
+	<menuitem label="GetCookie(cookieName[:keyName])" icon="shared/mm/images/hintMisc.gif"/>
+	<menuitem label="GetInclude(filePath)" icon="shared/mm/images/hintMisc.gif"/>
+	<menuitem label="GetIp()" value="GetIp()" icon="shared/mm/images/hintMisc.gif"/>
+	<menuitem label="GetScriptTime(startTimer)" icon="shared/mm/images/hintMisc.gif"/>
+	<menuitem label="GetUrl(type|[:]hash)" icon="shared/mm/images/hintMisc.gif"/>
+	<menuitem label="GetUrlWith(type|[:]hash,newHash)" icon="shared/mm/images/hintMisc.gif"/>
+	<menuitem label="HtmlDecode(string)" icon="shared/mm/images/hintMisc.gif"/>
+	<menuitem label="HtmlEncode(string)" icon="shared/mm/images/hintMisc.gif"/>
+	<menuitem label="HtmlFilter(string)" icon="shared/mm/images/hintMisc.gif"/>
+	<menuitem label="HtmlFormat(string)" icon="shared/mm/images/hintMisc.gif"/>
+	<menuitem label="IIF(condition,ifTrue,ifFalse)" icon="shared/mm/images/hintMisc.gif"/>
+	<menuitem label="Include(filePath)" icon="shared/mm/images/hintMisc.gif"/>
+	<menuitem label="IsInstall(objectName)" icon="shared/mm/images/hintMisc.gif"/>
+	<menuitem label="IsN(object)" icon="shared/mm/images/hintMisc.gif"/>
+	<menuitem label="JS(string)" icon="shared/mm/images/hintMisc.gif"/>
+	<menuitem label="JSEncode(string)" icon="shared/mm/images/hintMisc.gif"/>
+	<menuitem label="NoCache()" value="NoCache()" icon="shared/mm/images/hintMisc.gif"/>
+	<menuitem label="R(name,type[:default])" icon="shared/mm/images/hintMisc.gif"/>
+	<menuitem label="RA(name,type[:default])" icon="shared/mm/images/hintMisc.gif"/>
+	<menuitem label="Rand(min,max)" icon="shared/mm/images/hintMisc.gif"/>
+	<menuitem label="RandStr(charNumber[:range]|min-max|string[:range])" icon="shared/mm/images/hintMisc.gif"/>
+	<menuitem label="RegMatch(string,rule)" icon="shared/mm/images/hintMisc.gif"/>
+	<menuitem label="RegReplace(string,rule,result)" icon="shared/mm/images/hintMisc.gif"/>
+	<menuitem label="RegReplaceM(string,rule,result)" icon="shared/mm/images/hintMisc.gif"/>
+	<menuitem label="RemoveApp(appName)" icon="shared/mm/images/hintMisc.gif"/>
+	<menuitem label="RemoveCookie(cookieName[:keyName])" icon="shared/mm/images/hintMisc.gif"/>
+	<menuitem label="RF(name,type[:default])" icon="shared/mm/images/hintMisc.gif"/>
+	<menuitem label="RFA(name,type[:default])" icon="shared/mm/images/hintMisc.gif"/>
+	<menuitem label="RQ(name,type[:default])" icon="shared/mm/images/hintMisc.gif"/>
+	<menuitem label="RQA(name,type[:default])" icon="shared/mm/images/hintMisc.gif"/>
+	<menuitem label="RR(url)" icon="shared/mm/images/hintMisc.gif"/>
+	<menuitem label="SetApp(appName,appData)" icon="shared/mm/images/hintMisc.gif"/>
+	<menuitem label="SetCookie(cooName[:keyName],cooValue,cooConfig)" icon="shared/mm/images/hintMisc.gif"/>
+	<menuitem label="Test(string,rule)" icon="shared/mm/images/hintMisc.gif"/>
+	<menuitem label="ToNumber(number,decimal)" icon="shared/mm/images/hintMisc.gif"/>
+	<menuitem label="ToPercent(number)" icon="shared/mm/images/hintMisc.gif"/>
+	<menuitem label="ToPrice(number)" icon="shared/mm/images/hintMisc.gif"/>
+	<menuitem label="UnEscape(string)" icon="shared/mm/images/hintMisc.gif"/>
+	<menuitem label="W" value="W " icon="shared/mm/images/hintMisc.gif"/>
+	<menuitem label="WC" value="WC " icon="shared/mm/images/hintMisc.gif"/>
+	<menuitem label="WE" value="WE " icon="shared/mm/images/hintMisc.gif"/>
+	<menuitem label="WN" value="WN " icon="shared/mm/images/hintMisc.gif"/>
+</menu>
+<menu pattern="Casp.db." doctypes="ASP-VB" casesensitive="true">
+	<menuitem label="AddRecord(table[:idField],valueArray)" icon="shared/mm/images/hintMisc.gif"/>
+	<menuitem label="AR(table[:idField],valueArray)" icon="shared/mm/images/hintMisc.gif"/>
+	<menuitem label="AutoId(TableName[:FieldName])" icon="shared/mm/images/hintMisc.gif"/>
+	<menuitem label="C(object)" icon="shared/mm/images/hintMisc.gif"/>
+	<menuitem label="CreatConn(string)" icon="shared/mm/images/hintMisc.gif"/>
+	<menuitem label="DatabaseType" icon="shared/mm/images/hintProperty.gif"/>
+	<menuitem label="DbConn" icon="shared/mm/images/hintProperty.gif"/>
+	<menuitem label="DbErr" icon="shared/mm/images/hintProperty.gif"/>
+	<menuitem label="Debug" icon="shared/mm/images/hintProperty.gif"/>
+	<menuitem label="DeleteRecord(table,field:valueList|condition|arrayCondition)" icon="shared/mm/images/hintMisc.gif"/>
+	<menuitem label="DR(table,field:valueList|condition|arrayCondition)" icon="shared/mm/images/hintMisc.gif"/>
+	<menuitem label="DoSP(spName:spType,spParams)" icon="shared/mm/images/hintMisc.gif"/>
+	<menuitem label="Exec(sql)" icon="shared/mm/images/hintMisc.gif"/>
+	<menuitem label="GetPager(name)" icon="shared/mm/images/hintMisc.gif"/>
+	<menuitem label="GetPageRecord(type[:pageParam][:pageSize],arrayConfig|sql|recordset)" icon="shared/mm/images/hintMisc.gif"/>
+	<menuitem label="GPR(type[:pageParam][:pageSize],arrayConfig|sql|recordset)" icon="shared/mm/images/hintMisc.gif"/>
+	<menuitem label="GetRandRecord(table:fields:number,condition)" icon="shared/mm/images/hintMisc.gif"/>
+	<menuitem label="GetRecord(table[:fields][:topN],condition,orderBy)" icon="shared/mm/images/hintMisc.gif"/>
+	<menuitem label="GR(table[:fields][:topN],condition,orderBy)" icon="shared/mm/images/hintMisc.gif"/>
+	<menuitem label="GetRecordBySql(sql)" icon="shared/mm/images/hintMisc.gif"/>
+	<menuitem label="GRS(sql)" icon="shared/mm/images/hintMisc.gif"/>
+	<menuitem label="GetRecordDetail(table,condition)" icon="shared/mm/images/hintMisc.gif"/>
+	<menuitem label="GRD(table,condition)" icon="shared/mm/images/hintMisc.gif"/>
+	<menuitem label="Json(rs,name[:escape])" icon="shared/mm/images/hintMisc.gif"/>
+	<menuitem label="OpenConn(type,name,accessPass|user[:password]@server[:port])" icon="shared/mm/images/hintMisc.gif"/>
+	<menuitem label="PageCount" icon="shared/mm/images/hintProperty.gif"/>
+	<menuitem label="PageIndex" icon="shared/mm/images/hintProperty.gif"/>
+	<menuitem label="PageParam" icon="shared/mm/images/hintProperty.gif"/>
+	<menuitem label="Pager(html,config)" icon="shared/mm/images/hintMisc.gif"/>
+	<menuitem label="PageRecordCount" icon="shared/mm/images/hintProperty.gif"/>
+	<menuitem label="PageSize" icon="shared/mm/images/hintProperty.gif"/>
+	<menuitem label="PageSpName" icon="shared/mm/images/hintProperty.gif"/>
+	<menuitem label="QueryType" icon="shared/mm/images/hintProperty.gif"/>
+	<menuitem label="Rand(min,max,table:field)" icon="shared/mm/images/hintMisc.gif"/>
+	<menuitem label="RandStr(charNumber[:range]|min-max|string[:range],table:field)" icon="shared/mm/images/hintMisc.gif"/>
+	<menuitem label="ReadTable(table,condition,targetField)" icon="shared/mm/images/hintMisc.gif"/>
+	<menuitem label="RT(table,condition,targetField)" icon="shared/mm/images/hintMisc.gif"/>
+	<menuitem label="SetPager(name,html,config)" icon="shared/mm/images/hintMisc.gif"/>
+	<menuitem label="UpdateRecord(table,condition,value)" icon="shared/mm/images/hintMisc.gif"/>
+	<menuitem label="UR(table,condition,value)" icon="shared/mm/images/hintMisc.gif"/>
+	<menuitem label="wAddRecord(table[:idField],valueArray)" icon="shared/mm/images/hintMisc.gif"/>
+	<menuitem label="wAR(table[:idField],valueArray)" icon="shared/mm/images/hintMisc.gif"/>
+	<menuitem label="wDeleteRecord(table,field:valueList|condition|arrayCondition)" icon="shared/mm/images/hintMisc.gif"/>
+	<menuitem label="wDR(table,field:valueList|condition|arrayCondition)" icon="shared/mm/images/hintMisc.gif"/>
+	<menuitem label="wGetRecord(table[:fields][:topN],condition,orderBy)" icon="shared/mm/images/hintMisc.gif"/>
+	<menuitem label="wGR(table[:fields][:topN],condition,orderBy)" icon="shared/mm/images/hintMisc.gif"/>
+	<menuitem label="wUpdateRecord(table,condition,value)" icon="shared/mm/images/hintMisc.gif"/>
+	<menuitem label="wUR(table,condition,value)" icon="shared/mm/images/hintMisc.gif"/>
+</menu>
+<menu pattern="db." doctypes="ASP-VB" casesensitive="true">
+	<menuitem label="AddRecord(table[:idField],valueArray)" icon="shared/mm/images/hintMisc.gif"/>
+	<menuitem label="AR(table[:idField],valueArray)" icon="shared/mm/images/hintMisc.gif"/>
+	<menuitem label="AutoId(TableName[:FieldName])" icon="shared/mm/images/hintMisc.gif"/>
+	<menuitem label="C(object)" icon="shared/mm/images/hintMisc.gif"/>
+	<menuitem label="CreatConn(string)" icon="shared/mm/images/hintMisc.gif"/>
+	<menuitem label="DatabaseType" icon="shared/mm/images/hintProperty.gif"/>
+	<menuitem label="DbConn" icon="shared/mm/images/hintProperty.gif"/>
+	<menuitem label="DbErr" icon="shared/mm/images/hintProperty.gif"/>
+	<menuitem label="Debug" icon="shared/mm/images/hintProperty.gif"/>
+	<menuitem label="DeleteRecord(table,field:valueList|condition|arrayCondition)" icon="shared/mm/images/hintMisc.gif"/>
+	<menuitem label="DR(table,field:valueList|condition|arrayCondition)" icon="shared/mm/images/hintMisc.gif"/>
+	<menuitem label="DoSP(spName:spType,spParams)" icon="shared/mm/images/hintMisc.gif"/>
+	<menuitem label="Exec(sql)" icon="shared/mm/images/hintMisc.gif"/>
+	<menuitem label="GetPager(name)" icon="shared/mm/images/hintMisc.gif"/>
+	<menuitem label="GetPageRecord(type[:pageParam][:pageSize],arrayConfig|sql|recordset)" icon="shared/mm/images/hintMisc.gif"/>
+	<menuitem label="GPR(type[:pageParam][:pageSize],arrayConfig|sql|recordset)" icon="shared/mm/images/hintMisc.gif"/>
+	<menuitem label="GetRandRecord(table:fields:number,condition)" icon="shared/mm/images/hintMisc.gif"/>
+	<menuitem label="GetRecord(table[:fields][:topN],condition,orderBy)" icon="shared/mm/images/hintMisc.gif"/>
+	<menuitem label="GR(table[:fields][:topN],condition,orderBy)" icon="shared/mm/images/hintMisc.gif"/>
+	<menuitem label="GetRecordBySql(sql)" icon="shared/mm/images/hintMisc.gif"/>
+	<menuitem label="GRS(sql)" icon="shared/mm/images/hintMisc.gif"/>
+	<menuitem label="GetRecordDetail(table,condition)" icon="shared/mm/images/hintMisc.gif"/>
+	<menuitem label="GRD(table,condition)" icon="shared/mm/images/hintMisc.gif"/>
+	<menuitem label="Json(rs,name[:escape])" icon="shared/mm/images/hintMisc.gif"/>
+	<menuitem label="OpenConn(type,name,accessPass|user[:password]@server[:port])" icon="shared/mm/images/hintMisc.gif"/>
+	<menuitem label="PageCount" icon="shared/mm/images/hintProperty.gif"/>
+	<menuitem label="PageIndex" icon="shared/mm/images/hintProperty.gif"/>
+	<menuitem label="PageParam" icon="shared/mm/images/hintProperty.gif"/>
+	<menuitem label="Pager(html,config)" icon="shared/mm/images/hintMisc.gif"/>
+	<menuitem label="PageRecordCount" icon="shared/mm/images/hintProperty.gif"/>
+	<menuitem label="PageSize" icon="shared/mm/images/hintProperty.gif"/>
+	<menuitem label="PageSpName" icon="shared/mm/images/hintProperty.gif"/>
+	<menuitem label="QueryType" icon="shared/mm/images/hintProperty.gif"/>
+	<menuitem label="Rand(min,max,table:field)" icon="shared/mm/images/hintMisc.gif"/>
+	<menuitem label="RandStr(charNumber[:range]|min-max|string[:range],table:field)" icon="shared/mm/images/hintMisc.gif"/>
+	<menuitem label="ReadTable(table,condition,targetField)" icon="shared/mm/images/hintMisc.gif"/>
+	<menuitem label="RT(table,condition,targetField)" icon="shared/mm/images/hintMisc.gif"/>
+	<menuitem label="SetPager(name,html,config)" icon="shared/mm/images/hintMisc.gif"/>
+	<menuitem label="UpdateRecord(table,condition,value)" icon="shared/mm/images/hintMisc.gif"/>
+	<menuitem label="UR(table,condition,value)" icon="shared/mm/images/hintMisc.gif"/>
+	<menuitem label="wAddRecord(table[:idField],valueArray)" icon="shared/mm/images/hintMisc.gif"/>
+	<menuitem label="wAR(table[:idField],valueArray)" icon="shared/mm/images/hintMisc.gif"/>
+	<menuitem label="wDeleteRecord(table,field:valueList|condition|arrayCondition)" icon="shared/mm/images/hintMisc.gif"/>
+	<menuitem label="wDR(table,field:valueList|condition|arrayCondition)" icon="shared/mm/images/hintMisc.gif"/>
+	<menuitem label="wGetRecord(table[:fields][:topN],condition,orderBy)" icon="shared/mm/images/hintMisc.gif"/>
+	<menuitem label="wGR(table[:fields][:topN],condition,orderBy)" icon="shared/mm/images/hintMisc.gif"/>
+	<menuitem label="wUpdateRecord(table,condition,value)" icon="shared/mm/images/hintMisc.gif"/>
+	<menuitem label="wUR(table,condition,value)" icon="shared/mm/images/hintMisc.gif"/>
+</menu>
+<function pattern="AddRecord(table[:idField],valueArray)" casesensitive="true"></function>
+<function pattern="AR(table[:idField],valueArray)" casesensitive="true"></function>
+<function pattern="Alert(string)" casesensitive="true"></function>
+<function pattern="AlertUrl(string,url)" casesensitive="true"></function>
+<function pattern="AutoId(TableName[:FieldName])" casesensitive="true"></function>
+<function pattern="C(object)" casesensitive="true"></function>
+<function pattern="C(object)" casesensitive="true"></function>
+<function pattern="CheckDataFrom()" casesensitive="true"></function>
+<function pattern="CheckDataFromA()" casesensitive="true"></function>
+<function pattern="CheckForm(string,rule,require,emptyErrMsg|[emptyErrMsg:]ruleErrMsg)" casesensitive="true"></function>
+<function pattern="CheckSql()" casesensitive="true"></function>
+<function pattern="CheckSqlA()" casesensitive="true"></function>
+<function pattern="ConfirmUrl(string,okUrl,cancelUrl)" casesensitive="true"></function>
+<function pattern="CreatConn(string)" casesensitive="true"></function>
+<function pattern="CutString(string,charNumber[:separator])" casesensitive="true"></function>
+<function pattern="DateTime(date,format|otherDate)" casesensitive="true"></function>
+<function pattern="DeleteRecord(table,field:valueList|condition|arrayCondition)" casesensitive="true"></function>
+<function pattern="DR(table,field:valueList|condition|arrayCondition)" casesensitive="true"></function>
+<function pattern="DoSP(spName:spType,spParams)" casesensitive="true"></function>
+<function pattern="Escape(string)" casesensitive="true"></function>
+<function pattern="Exec(sql)" casesensitive="true"></function>
+<function pattern="GetApp(appName)" casesensitive="true"></function>
+<function pattern="GetCookie(cookieName[:keyName])" casesensitive="true"></function>
+<function pattern="GetInclude(filePath)" casesensitive="true"></function>
+<function pattern="GetIp()" casesensitive="true"></function>
+<function pattern="GetPager(name)" casesensitive="true"></function>
+<function pattern="GetPageRecord(type[:pageParam][:pageSize],arrayConfig|sql|recordset)" casesensitive="true"></function>
+<function pattern="GPR(type[:pageParam][:pageSize],arrayConfig|sql|recordset)" casesensitive="true"></function>
+<function pattern="GetRandRecord(table:fields:number,condition)" casesensitive="true"></function>
+<function pattern="GetRecord(table[:fields][:topN],condition,orderBy)" casesensitive="true"></function>
+<function pattern="GR(table[:fields][:topN],condition,orderBy)" casesensitive="true"></function>
+<function pattern="GetRecordBySql(sql)" casesensitive="true"></function>
+<function pattern="GRS(sql)" casesensitive="true"></function>
+<function pattern="GetRecordDetail(table,condition)" casesensitive="true"></function>
+<function pattern="GRD(table,condition)" casesensitive="true"></function>
+<function pattern="GetScriptTime(startTimer)" casesensitive="true"></function>
+<function pattern="GetUrl(type|[:]hash)" casesensitive="true"></function>
+<function pattern="GetUrlWith(type|[:]hash,newHash)" casesensitive="true"></function>
+<function pattern="HtmlDecode(string)" casesensitive="true"></function>
+<function pattern="HtmlEncode(string)" casesensitive="true"></function>
+<function pattern="HtmlFilter(string)" casesensitive="true"></function>
+<function pattern="HtmlFormat(string)" casesensitive="true"></function>
+<function pattern="IIF(condition,ifTrue,ifFalse)" casesensitive="true"></function>
+<function pattern="Include(filePath)" casesensitive="true"></function>
+<function pattern="IsInstall(objectName)" casesensitive="true"></function>
+<function pattern="IsN(object)" casesensitive="true"></function>
+<function pattern="JS(string)" casesensitive="true"></function>
+<function pattern="JSEncode(string)" casesensitive="true"></function>
+<function pattern="Json(rs,name[:escape])" casesensitive="true"></function>
+<function pattern="NoCache()" casesensitive="true"></function>
+<function pattern="OpenConn(type,name,accessPass|user[:password]@server[:port])" casesensitive="true"></function>
+<function pattern="Pager(html,config)" casesensitive="true"></function>
+<function pattern="R(name,type[:default])" casesensitive="true"></function>
+<function pattern="RA(name,type[:default])" casesensitive="true"></function>
+<function pattern="Rand(min,max)" casesensitive="true"></function>
+<function pattern="db.Rand(min,max,table:field)" casesensitive="true"></function>
+<function pattern="db.RandStr(charNumber[:range]|min-max|string[:range],table:field)" casesensitive="true"></function>
+<function pattern="RandStr(charNumber[:range]|min-max|string[:range])" casesensitive="true"></function>
+<function pattern="ReadTable(table,condition,targetField)" casesensitive="true"></function>
+<function pattern="RT(table,condition,targetField)" casesensitive="true"></function>
+<function pattern="RegMatch(string,rule)" casesensitive="true"></function>
+<function pattern="RegReplace(string,rule,result)" casesensitive="true"></function>
+<function pattern="RegReplaceM(string,rule,result)" casesensitive="true"></function>
+<function pattern="RemoveApp(appName)" casesensitive="true"></function>
+<function pattern="RemoveCookie(cookieName[:keyName])" casesensitive="true"></function>
+<function pattern="RF(name,type[:default])" casesensitive="true"></function>
+<function pattern="RFA(name,type[:default])" casesensitive="true"></function>
+<function pattern="RQ(name,type[:default])" casesensitive="true"></function>
+<function pattern="RQA(name,type[:default])" casesensitive="true"></function>
+<function pattern="RR(url)" casesensitive="true"></function>
+<function pattern="SetApp(appName,appData)" casesensitive="true"></function>
+<function pattern="SetCookie(cooName[:keyName],cooValue,cooConfig)" casesensitive="true"></function>
+<function pattern="SetPager(name,html,config)" casesensitive="true"></function>
+<function pattern="Test(string,rule)" casesensitive="true"></function>
+<function pattern="ToNumber(number,decimal)" casesensitive="true"></function>
+<function pattern="ToPercent(number)" casesensitive="true"></function>
+<function pattern="ToPrice(number)" casesensitive="true"></function>
+<function pattern="UnEscape(string)" casesensitive="true"></function>
+<function pattern="UpdateRecord(table,condition,value)" casesensitive="true"></function>
+<function pattern="UR(table,condition,value)" casesensitive="true"></function>
+<function pattern="W(string)" casesensitive="true"></function>
+<function pattern="WC(string)" casesensitive="true"></function>
+<function pattern="WE(string)" casesensitive="true"></function>
+<function pattern="WN(string)" casesensitive="true"></function>
+<function pattern="wAddRecord(table[:idField],valueArray)" casesensitive="true"></function>
+<function pattern="wAR(table[:idField],valueArray)" casesensitive="true"></function>
+<function pattern="wDeleteRecord(table,field:valueList|condition|arrayCondition)" casesensitive="true"></function>
+<function pattern="wDR(table,field:valueList|condition|arrayCondition)" casesensitive="true"></function>
+<function pattern="wGetRecord(table[:fields][:topN],condition,orderBy)" casesensitive="true"></function>
+<function pattern="wGR(table[:fields][:topN],condition,orderBy)" casesensitive="true"></function>
+<function pattern="wUpdateRecord(table,condition,value)" casesensitive="true"></function>
+<function pattern="wUR(table,condition,value)" casesensitive="true"></function>
+</menugroup>
+</codehints>

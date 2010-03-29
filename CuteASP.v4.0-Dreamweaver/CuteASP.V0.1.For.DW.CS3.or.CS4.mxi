@@ -1,0 +1,39 @@
+﻿<macromedia-extension
+	 name="Cute ASP ASP v0.1 for Dreamweaver CS3 or CS4"
+	 version="2.1.0"
+	 type="Suite"
+	 requires-restart="true">
+
+	<author name="ColdStone" />
+
+	<products>
+		<product name="Dreamweaver" version="9" primary="true" />
+	</products>
+
+	<description>
+	<![CDATA[
+	ss
+	]]>
+	</description>
+
+	<ui-access>
+	<![CDATA[
+	ss
+	]]>
+	</ui-access>
+
+	<license-agreement>
+	<![CDATA[
+	ss
+	]]>
+	</license-agreement>
+
+	<files>
+		<file source="Casp.xml" destination="$Dreamweaver/Configuration/Strings" />
+		<file source="CaspCodeHints.xml" destination="$Dreamweaver/Configuration/CodeHints" />
+		<file source="CaspColors.xml" destination="$Dreamweaver/Configuration/CodeColoring" />
+		<file source="CaspSetup.htm" destination="$Dreamweaver/Configuration/Startup" />
+		<file source="CaspRemove.htm" destination="$Dreamweaver/Configuration/Shared/CuteASP" />
+	</files>
+
+</macromedia-extension>

@@ -1,0 +1,30 @@
+<html>
+<head>
+<script language="JavaScript">
+var easpRemove = "Startup/CuteASPRemove.htm";
+var isRemove = "Shared/CuteASP/CuteASPRemove.htm";
+var vbsColor = "CodeColoring/ASP VBScript.xml";
+function initialize(){
+	var cfg = dw.getConfigurationPath() + dwscripts.FILE_SEP;
+	var isRemoveFile = cfg + isRemove;
+	var removeFile = cfg + easpRemove;
+	if (!DWfile.exists(isRemoveFile)) {
+		DWfile.remove(removeFile);
+		var colorFile = cfg + vbsColor;
+		if (DWfile.exists(colorFile)) {
+			var colorDOM = dw.getDocumentDOM(colorFile);
+				if (colorDOM) {
+					var vbNode = colorDOM.getElementById("CodeColor_CuteASPASPkeywords");
+					if (vbNode) {
+						vbNode.outerHTML = "";
+						DWfile.write(colorFile, colorDOM.documentElement.outerHTML);
+						dw.reloadCodeColoring();
+					}
+				}
+		}
+	}
+}
+</script>
+</head>
+<body onLoad="initialize()">
+</body>

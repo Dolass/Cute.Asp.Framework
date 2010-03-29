@@ -1,0 +1,40 @@
+<html>
+<head>
+<script language="JavaScript">
+var easpSetup = "Startup/CaspSetup.htm";
+var vbsColor = "CodeColoring/ASP VBScript.xml";
+var easpRemove = "Startup/CaspRemove.htm";
+var isRemove = "Shared/CuteASP/CaspRemove.htm";
+var keywords = ["Casp"];
+function initialize(){
+	var cfg = dw.getConfigurationPath() + dwscripts.FILE_SEP;
+	var removeFile = cfg + easpRemove;
+	if (!DWfile.exists(removeFile)) {
+		var isRemoveFile = cfg + isRemove;
+		if (DWfile.exists(isRemoveFile) && DWfile.copy(isRemoveFile,removeFile)) {
+			var colorFile = cfg + vbsColor;
+			if (DWfile.exists(colorFile)) {
+				var colorDOM = dw.getDocumentDOM(colorFile);
+				if (colorDOM) {
+					var vbNode = colorDOM.getElementById("VBScript");
+					if (vbNode) {
+						DWfile.remove(cfg + easpSetup);
+						var str = new Array(keywords.length+2);
+						str[0] = '\t<keywords name="CuteASP ¹Ø¼ü×Ö" id="CodeColor_CuteASPkeywords">';
+						for (var i = 0, j = 1; i < keywords.length; i++, j++) {
+							str[j] = "\t\t<keyword>" + keywords[i] + "</keyword>";
+						}
+						str[str.length - 1] = "\t</keywords>\n";
+						vbNode.innerHTML += str.join('\n');
+						DWfile.write(colorFile, colorDOM.documentElement.outerHTML);
+						dw.reloadCodeColoring();
+					}
+				}
+			}
+		}
+	}
+}
+</script>
+</head>
+<body onLoad="initialize()">
+</body>

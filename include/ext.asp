@@ -19,6 +19,19 @@ Sub echo(ByVal str)
     Response.Write str
 End Sub
 
+'********** 
+' 函数名: die
+' Param: str as a output string
+' 作用: Print the value of a variable and exit the procedure
+'********** 
+Sub die(str)
+	echo(str)
+	On Error Resume Next
+	Tpub.db.closeRs rs
+	Set Tpub = Nothing
+	Response.End()
+End Sub
+
 '**********
 ' 函数名: isset
 ' 参  数: Obj as a object
@@ -125,25 +138,11 @@ Sub alertClose(msgstr)
 End Sub
 
 '********** 
-' 函数名: die
-' Param: str as a output string
-' 作用: Print the value of a variable and exit the procedure
-'********** 
-Sub die(str)
-	echo(str)
-	On Error Resume Next
-	Tpub.db.closeRs rs
-	Set Tpub = Nothing
-	Response.End()
-End Sub
-
-'********** 
 ' 函数名: IIf
-' Param: str as a output string
 ' 作用: 根据值判断结果
 '********** 
-Function IIf(var,return1,return2)
-	If var Then
+Function IIf(flag,return1,return2)
+	If flag Then
 		IIf = return1
 	Else
 		IIf = return2

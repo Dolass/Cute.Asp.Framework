@@ -1,0 +1,65 @@
+<codehints xmlns:MMString="http://www.macromedia.com/schemes/data/string/">
+<menugroup MMString:name="codehints_casp" enabled="true" id="CodeHints_Casp">
+<description>
+<MMString:loadString id="codehints_casp" />
+</description>
+<menu pattern="Casp." doctypes="ASP-VB" casesensitive="true">
+	<menuitem label="ShowErr(string)" icon="shared/mm/images/hintMisc.gif"/>
+	<menuitem label="ShowException()" value="ShowException()" icon="shared/mm/images/hintMisc.gif"/>
+	<menuitem label="CheckPostSource()" value="CheckPostSource()" icon="shared/mm/images/hintMisc.gif"/>
+	<menuitem label="GetSystem()" value="GetSystem()" icon="shared/mm/images/hintMisc.gif"/>
+	<menuitem label="IsInstall(obj)" icon="shared/mm/images/hintMisc.gif"/>
+	<menuitem label="NoBuffer()" value="NoBuffer()" icon="shared/mm/images/hintMisc.gif"/>
+	<menuitem label="rand(min,max)" icon="shared/mm/images/hintMisc.gif"/>
+	<menuitem label="RandStr(length)" icon="shared/mm/images/hintMisc.gif"/>
+	<menuitem label="rq(RequestType,Name,dataType,Default)" icon="shared/mm/images/hintMisc.gif"/>
+	<menuitem label="form(element)" icon="shared/mm/images/hintMisc.gif"/>
+	<menuitem label="safe(str)" icon="shared/mm/images/hintMisc.gif"/>
+	<menuitem label="CurrentURL()" value="CurrentURL()" icon="shared/mm/images/hintMisc.gif"/>
+	<menuitem label="RefererURL()" value="RefererURL()" icon="shared/mm/images/hintMisc.gif"/>
+	<menuitem label="GetIP()" value="GetIP()" icon="shared/mm/images/hintMisc.gif"/>
+	<menuitem label="GetSelfName()" value="GetSelfName()" icon="shared/mm/images/hintMisc.gif"/>
+	<menuitem label="ReturnObj()" value="ReturnObj()" icon="shared/mm/images/hintMisc.gif"/>
+	<menuitem label="EncodeJP(string)" icon="shared/mm/images/hintMisc.gif"/>
+	<menuitem label="HtmlEncode(string)" icon="shared/mm/images/hintMisc.gif"/>
+	<menuitem label="HtmlDecode(string)" icon="shared/mm/images/hintMisc.gif"/>
+	<menuitem label="UrlDecode(url)" icon="shared/mm/images/hintMisc.gif"/>
+	<menuitem label="SetQueryString(RequestQueryString, ParamName, Value)" icon="shared/mm/images/hintMisc.gif"/>
+	<menuitem label="GetGUID()" value="GetGUID()" icon="shared/mm/images/hintMisc.gif"/>
+</menu>
+<menu pattern="Casp.db." doctypes="ASP-VB" casesensitive="true">
+	<menuitem label="Conn" icon="shared/mm/images/hintProperty.gif"/>
+	<menuitem label="ServerIp" value="ServerIp = " icon="shared/mm/images/hintProperty.gif"/>
+	<menuitem label="ConnectionType" value="ConnectionType = " icon="shared/mm/images/hintProperty.gif"/>
+	<menuitem label="Username" value="Username = " icon="shared/mm/images/hintProperty.gif"/>
+	<menuitem label="Password" value="Password = " icon="shared/mm/images/hintProperty.gif"/>
+	<menuitem label="ShowErr(string)" icon="shared/mm/images/hintMisc.gif"/>
+	<menuitem label="Open()" value="Open()" icon="shared/mm/images/hintMisc.gif"/>
+	<menuitem label="Close()" value="Close()" icon="shared/mm/images/hintMisc.gif"/>
+	<menuitem label="CloseRs(Recordset)" icon="shared/mm/images/hintMisc.gif"/>
+	<menuitem label="SetRs(Recordset, sql, CursorAndLockType)" icon="shared/mm/images/hintMisc.gif"/>
+	<menuitem label="Exec(Recordset, sql)" icon="shared/mm/images/hintMisc.gif"/>
+	<menuitem label="BeginTrans()" value="BeginTrans()" icon="shared/mm/images/hintMisc.gif"/>
+	<menuitem label="RollBackTrans()" value="RollBackTrans()" icon="shared/mm/images/hintMisc.gif"/>
+	<menuitem label="CommitTrans()" value="CommitTrans()" icon="shared/mm/images/hintMisc.gif"/>
+	<menuitem label="GetRowObject(Dictionary,Recordset)" icon="shared/mm/images/hintMisc.gif"/>
+	<menuitem label="Insert(Table,Params)" icon="shared/mm/images/hintMisc.gif"/>
+	<menuitem label="Update(Table,Params,Where)" icon="shared/mm/images/hintMisc.gif"/>
+	<menuitem label="ExecuteRecordSet(commandName,params)" icon="shared/mm/images/hintMisc.gif"/>
+	<menuitem label="ExecuteScalar(commandName,params)" icon="shared/mm/images/hintMisc.gif"/>
+	<menuitem label="ExecuteReturnValue(commandName,params)" icon="shared/mm/images/hintMisc.gif"/>
+	<menuitem label="ExecuteNonQuery(commandName,params)" icon="shared/mm/images/hintMisc.gif"/>
+	<menuitem label="ExecuteRecordsetAndValue(commandName,params)" icon="shared/mm/images/hintMisc.gif"/>
+</menu>
+<function pattern="echo(string)" casesensitive="true"></function>
+<function pattern="die(str)" casesensitive="true"></function>
+<function pattern="isset(object)" casesensitive="true"></function>
+<function pattern="isNumber(object)" casesensitive="true"></function>
+<function pattern="locationHref(url)" casesensitive="true"></function>
+<function pattern="locationReferer()" casesensitive="true"></function>
+<function pattern="alertRedirect(str,url)" casesensitive="true"></function>
+<function pattern="alertBack(str)" casesensitive="true"></function>
+<function pattern="alertClose(str)" casesensitive="true"></function>
+<function pattern="IIf(flag,return1,return2)" casesensitive="true"></function>
+</menugroup>
+</codehints>

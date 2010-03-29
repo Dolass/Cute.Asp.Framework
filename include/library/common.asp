@@ -8,36 +8,36 @@
 '**********
 
 '**********
-'函数名：showErr
+'函数名：ShowErr
 '参  数：message	-- 错误信息
 '作  用：显示错误信息
 '**********
-Sub showErr(message)
+Sub ShowErr(message)
     die "<html><head><title>Exception page</title><meta http-equiv=""Content-Type"" content=""text/html; charset=gbk"" /><style type=""text/css""><!--" & vbNewLine & "* { margin:0; padding:0 }" & vbNewLine & "body { background:#333; color:#0f0; font:14px/1.6em ""宋体"", Verdana, Arial, Helvetica, sans-serif; }" & vbNewLine & "dl { margin:20px 40px; padding:20px; border:3px solid #f63; }" & vbNewLine & "dt { margin:0 0 0.8em 0; font-weight:bold; font-size:1.6em; }" & vbNewLine & "dd { margin-left:2em; margin-top:0.2em; }" & vbNewLine & "--></style></head><body><div id=""container""><dl><dt>Description:</dt><dd><span style=""color:#ff0;font-weight:bold;font-size:1.2em;"">Position:</span> " & message & "</dd></dl></div></body></html>"
 End Sub
 
 '**********
-'函数名：showException
+'函数名：ShowException
 '作  用：显示异常信息
 '**********
-Sub showException()
+Sub ShowException()
     echo "<p><span style=""color:#ff0;font-weight:bold;font-size:1.2em;"">Error:</span> " & Err.Number & " " & Err.Description & "</p>"
     Err.Clear
     die("")
 End Sub
 
 '**********
-' 函数名: checkPostSource
+' 函数名: CheckPostSource
 ' 作  用: 检验来源地址
 '**********
-Function checkPostSource()
+Function CheckPostSource()
 	Dim server_v1,server_v2
 	server_v1=Cstr(Request.ServerVariables("HTTP_REFERER"))
 	server_v2=Cstr(Request.ServerVariables("SERVER_NAME"))
 	If Mid(server_v1,8,Len(server_v2))=server_v2 Then
-		checkPostSource=True
+		CheckPostSource=True
 	Else
-		checkPostSource=False
+		CheckPostSource=False
 	End If
 End Function
 
@@ -88,10 +88,10 @@ Function IsInstall(obj)
 End Function
 
 '**********
-' 函数名: noBuffer
+' 函数名: NoBuffer
 ' 作  用: no buffer
 '**********
-Sub noBuffer()
+Sub NoBuffer()
 	Response.Buffer = True
 	Response.Expires = 0
 	Response.AddHeader "Expires",0
@@ -112,6 +112,20 @@ Function rand(min, max)
 End Function
 
 '**********
+' 函数名: RandStr
+' 作用: Generate a specific length random string
+'**********
+Function RandStr(intLength)
+	Dim strSeed,seedLength,i
+	strSeed = "abcdefghijklmnopqrstuvwxyz1234567890"
+	seedLength = len(strSeed)
+	For i=1 to intLength
+		Randomize
+		RandStr = RandStr & Mid(strSeed,Round((Rnd*(seedLength-1))+1),1)
+	Next
+End Function
+
+'**********
 ' 函数名: rq
 ' 参  数: Requester as the request type
 ' 参  数: Name as the request name
@@ -126,16 +140,16 @@ Function rq(Requester,Name,iType,Default)
 		tmp = Name
 	Case 1
 		tmp = Trim(Request(Name))
-		tmp = htmlEncode(tmp)
+		tmp = HtmlEncode(tmp)
 	Case 2
 		tmp = Trim(Request.QueryString(Name))
-		tmp = htmlEncode(tmp)
+		tmp = HtmlEncode(tmp)
 	Case 3
 		tmp = Trim(Form(Name))
-		tmp = htmlEncode(tmp)
+		tmp = HtmlEncode(tmp)
 	Case 4
 		tmp = Request.Cookies(Name)
-		tmp = htmlEncode(tmp)
+		tmp = HtmlEncode(tmp)
 	End Select
 	If tmp = "" Then tmp = Default
 	Select Case iType
@@ -146,7 +160,7 @@ Function rq(Requester,Name,iType,Default)
 			tmp = CSng(tmp)
 		End If
 	Case 1
-		tmp = safe(encodeJP(tmp))
+		tmp = safe(EncodeJP(tmp))
 	Case 2
 		If Not IsDate(tmp) Or Len(tmp) <= 0 Then 
 			tmp = CDate(Default)
@@ -158,11 +172,11 @@ Function rq(Requester,Name,iType,Default)
 End function
 
 '**********
-'函数名：Form
+'函数名：form
 '参  数：element ---- 控件名
 '作  用：获取Form控件数据
 '**********
-Function Form(element)
+Function form(element)
     On Error Resume Next
     If InStr(LCase(Request.ServerVariables("Content_Type")), "multipart/form-data") Then	'multipart/form-data
         If IsObject(Tpub.Upload) = False Then
@@ -173,9 +187,9 @@ Function Form(element)
 		If Tpub.Upload.Error <> 0 Then
 			Tpub.Upload.Open
 		End If
-        Form = Tpub.Upload.Form(element)
+        form = Tpub.Upload.Form(element)
     Else
-        Form = Request.Form(element)
+        form = Request.Form(element)
     End If
     On Error GoTo 0
 End Function
@@ -203,10 +217,10 @@ Private Function StrRepeat(length,str)
 End Function
 
 '**********
-' 函数名: currentURL
+' 函数名: CurrentURL
 ' 作  用: 返回当前地址
 '**********
-Function currentURL()
+Function CurrentURL()
 	Dim port : port = LCase(Request.ServerVariables("Server_Port"))
     Dim page : page = LCase(Request.ServerVariables("Script_Name"))
     Dim query : query = LCase(Request.QueryString())
@@ -217,9 +231,9 @@ Function currentURL()
 		url = ":" & port & page
 	End If
 	If query <> "" Then
-		currentURL = "http://" & Request.ServerVariables("server_name") & url & "?" & query
+		CurrentURL = "http://" & Request.ServerVariables("server_name") & url & "?" & query
 	Else
-		currentURL = "http://" & Request.ServerVariables("server_name") & url
+		CurrentURL = "http://" & Request.ServerVariables("server_name") & url
 	End If
 End Function
 
@@ -227,15 +241,15 @@ End Function
 ' 函数名: refererURL
 ' 作  用: 返回来源地址
 '**********
-Function refererURL()
-	refererURL = Request.ServerVariables("HTTP_REFERER")
+Function RefererURL()
+	RefererURL = Request.ServerVariables("HTTP_REFERER")
 End Function
 
 '**********
-' 函数名: getIP
+' 函数名: GetIP
 ' 作  用: 获取客户端IP
 '**********
-Function getIP()
+Function GetIP()
 	Dim Ip,Tmp
 	Dim i,IsErr
 	Dim ForTotal
@@ -256,19 +270,19 @@ Function getIP()
 		End If
 	End If
 	If IsErr Then 
-		getIP="1.1.1.1"
+		GetIP="1.1.1.1"
 	Else
-		getIP=Ip
+		GetIP=Ip
 	End If
 End Function
 
 '**********
-' 函数名: getSelfName
+' 函数名: GetSelfName
 ' 作  用: 获取当前访问文件名
 '**********
-Function getSelfName()
-    getSelfName = Request.ServerVariables("PATH_TRANSLATED")
-    getSelfName = Mid(getSelfName, InstrRev(getSelfName, "\") + 1, Len(getSelfName))
+Function GetSelfName()
+    GetSelfName = Request.ServerVariables("PATH_TRANSLATED")
+    GetSelfName = Mid(GetSelfName, InstrRev(GetSelfName, "\") + 1, Len(GetSelfName))
 End Function
 
 '**********
@@ -276,24 +290,24 @@ End Function
 '作  用：返回一个对象
 '返回值：对象包含三个参数(Code,Message,AttachObject)
 '**********
-Function returnObj()
+Function ReturnObj()
 	On Error Resume Next
 	TypeName(New AopResult)
 	If Err Then
-		Set returnObj = New ReAopResult		'重定义的AopResult
+		Set ReturnObj = New ReAopResult		'重定义的AopResult
 		Err.Clear
 	Else
-		Set returnObj = New AopResult
+		Set ReturnObj = New AopResult
 	End If
 	On Error Goto 0
 End Function
 
 '**********
-' 函数名: encodeJP
+' 函数名: EncodeJP
 ' 参  数: str as the input string
 ' 作  用: 编码日文
 '**********
-Function encodeJP(ByVal str)
+Function EncodeJP(ByVal str)
 	If str="" Then Exit Function
 	Dim c1 : c1 = Array("ガ","ギ","グ","ア","ゲ","ゴ","ザ","ジ","ズ","ゼ","ゾ","ダ","ヂ","ヅ","デ","ド","バ","パ","ビ","ピ","ブ","プ","ベ","ペ","ボ","ポ","ヴ")
 	Dim c2 : c2 = Array("460","462","463","450","466","468","470","472","474","476","478","480","482","485","487","489","496","497","499","500","502","503","505","506","508","509","532")
@@ -301,48 +315,48 @@ Function encodeJP(ByVal str)
 	For i=0 to 26
 		str=Replace(str,c1(i),"&#12"&c2(i)&";")
 	Next
-	encodeJP = str
+	EncodeJP = str
 End Function
 
 '**********
-' 函数名: htmlEncode
+' 函数名: HtmlEncode
 ' 参  数: str as the input string
 ' 作  用: filter html code
 '**********
-Function htmlEncode(ByVal Str)
+Function HtmlEncode(ByVal Str)
 	If Trim(Str) = "" Or IsNull(Str) Then
-		htmlEncode = ""
+		HtmlEncode = ""
 	Else
 		str = Replace(str, "  ", "&nbsp; ")
 		str = Replace(str, """", "&quot;")
 		str = Replace(str, ">", "&gt;")
 		str = Replace(str, "<", "&lt;")
-		htmlEncode = Str
+		HtmlEncode = Str
 	End If
 End Function
 
 
 
 '**********
-' 函数名: htmlDecode
+' 函数名: HtmlDecode
 ' 参  数: str as the input string
 ' 作  用: Decode the html tag
 '**********
-Function htmlDecode(ByVal str)
+Function HtmlDecode(ByVal str)
 	If Not IsNull(str) And str <> "" Then
 		str = Replace(str, "&nbsp;", " ",1,-1,1)
 		str = Replace(str, "&quot;", """",1,-1,1)
 		str = Replace(str, "&gt;", ">",1,-1,1)
 		str = Replace(str, "&lt;", "<",1,-1,1)
-		htmlDecode = str
+		HtmlDecode = str
 	End If
 End Function
 
 '**********
-' 函数名: URLDecode
-' 作  用: URLDecode — URL decode
+' 函数名: UrlDecode
+' 作  用: UrlDecode — URL decode
 '**********
-Function URLDecode(ByVal vstrin)
+Function UrlDecode(ByVal vstrin)
 	Dim i, strreturn, strSpecial, intasc, thischr
 	strSpecial = "!""#$%&'()*+,.-_/:;<=>?@[\]^`{|}~%"
 	strreturn = ""
@@ -366,22 +380,7 @@ Function URLDecode(ByVal vstrin)
 			End If
 		End If
 	Next
-	URLDecode = strreturn
-End Function
-
-
-'**********
-' 函数名: randStr
-' 作用: Generate a specific length random string
-'**********
-Function randStr(intLength)
-	Dim strSeed,seedLength,i
-	strSeed = "abcdefghijklmnopqrstuvwxyz1234567890"
-	seedLength = len(strSeed)
-	For i=1 to intLength
-		Randomize
-		randStr = randStr & Mid(strSeed,Round((Rnd*(seedLength-1))+1),1)
-	Next
+	UrlDecode = strreturn
 End Function
 
 '**********
