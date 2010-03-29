@@ -93,10 +93,10 @@ Class Class_JSON
     ''                    (if toResponse is on then the return is written directly to the response and nothing is returned)
     '*******************************************************************************************
     Public Function toJSON(Name, Val, nested)
-        If Not nested And Not IsEmpty(Name) Then Write("{")
-        If Not IsEmpty(Name) Then Write("""" & escape(Name) & """: ")
+        If Not nested And Not IsNull(Name) Then Write("{")
+        If Not IsNull(Name) Then Write("""" & escape(Name) & """: ")
         generateValue(Val)
-        If Not nested And Not IsEmpty(Name) Then Write("}")
+        If Not nested And Not IsNull(Name) Then Write("}")
         toJSON = output
 
         If innerCall = 0 Then newGeneration()

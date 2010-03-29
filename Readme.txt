@@ -1,6 +1,6 @@
 ----------------------------------------------------------
 
-		Cute Asp Framework (ver.1.0)
+		Cute Asp Framework (ver.3.5)
 
 ----------------------------------------------------------
 
@@ -13,7 +13,7 @@
     echo Tpub.Md5.Encode("admin")
 
 帮助文档：
-    http://www.pisces24.com/cuteaspframework/help/
+    http://terran.cc/cuteaspframework/help/
 
 ----------------------------------------------------------
 	若发现任何Bug或有意一起完善它欢迎加入

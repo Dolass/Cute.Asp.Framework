@@ -37,7 +37,7 @@ Class Class_Wrap
 		Set Db				= New Class_Db				'数据库操作类
 		Set Cache			= New Class_Cache			'缓存操作类
 		Set [String]		= New Class_String			'String操作类
-		Set Params			= New Class_String			'Dictionary简化操作类
+		Set Params			= New Class_Params			'Dictionary简化操作类
 		Set Arrays			= New Class_Array			'数组操作类
 		Set Upload			= New Class_Upload			'上传类
 		Set Page			= New Class_Page			'分页类
@@ -49,7 +49,7 @@ Class Class_Wrap
 
 		Set SHA1			= Class_SHA1()				'SHA1编码
 		Set Md5				= New Class_Md5				'Md5加密
-		Set Json			= New Class_Json				'Json操作类
+		Set Json			= New Class_Json			'Json操作类
 		Set ValidCode		= New Class_ValidCode		'验证码
 		Set Export			= New Class_Export			'Export Data
 		Set Email			= New Class_Email			'Email发送类
