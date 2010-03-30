@@ -13,7 +13,7 @@
 '作  用：显示错误信息
 '**********
 Sub ShowErr(message)
-    die "<html><head><title>Exception page</title><meta http-equiv=""Content-Type"" content=""text/html; charset=gbk"" /><style type=""text/css""><!--" & vbNewLine & "* { margin:0; padding:0 }" & vbNewLine & "body { background:#333; color:#0f0; font:14px/1.6em ""宋体"", Verdana, Arial, Helvetica, sans-serif; }" & vbNewLine & "dl { margin:20px 40px; padding:20px; border:3px solid #f63; }" & vbNewLine & "dt { margin:0 0 0.8em 0; font-weight:bold; font-size:1.6em; }" & vbNewLine & "dd { margin-left:2em; margin-top:0.2em; }" & vbNewLine & "--></style></head><body><div id=""container""><dl><dt>Description:</dt><dd><span style=""color:#ff0;font-weight:bold;font-size:1.2em;"">Position:</span> " & message & "</dd></dl></div></body></html>"
+    die "<html><head><title>Exception page</title><meta http-equiv=""Content-Type"" content=""text/html; charset=gbk"" /><style type=""text/css""><!--" & vbCrlf & "* { margin:0; padding:0 }" & vbCrlf & "body { background:#333; color:#0f0; font:14px/1.6em ""宋体"", Verdana, Arial, Helvetica, sans-serif; }" & vbCrlf & "dl { margin:20px 40px; padding:20px; border:3px solid #f63; }" & vbCrlf & "dt { margin:0 0 0.8em 0; font-weight:bold; font-size:1.6em; }" & vbCrlf & "dd { margin-left:2em; margin-top:0.2em; }" & vbCrlf & "--></style></head><body><div id=""container""><dl><dt>Description:</dt><dd><span style=""color:#ff0;font-weight:bold;font-size:1.2em;"">Position:</span> " & message & "</dd></dl></div></body></html>"
 End Sub
 
 '**********

@@ -316,7 +316,7 @@ Class Class_Db
 			' 执行后得到返回值
 			Case 1
 				Call cmd.Execute(, , 128)
-				ExecuteSqlCommand = cmd("@ReturnValue")
+				ExecuteSqlCommand = cmd("@ReturnValue").Value
 				' 执行后得到记录集
 			Case 2
 				Set ExecuteSqlCommand = cmd.Execute()

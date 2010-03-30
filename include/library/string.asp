@@ -108,8 +108,7 @@ Class Class_String
 	'返回值: True 符合   False 不符合
 	'**********
 	Function Validate(ByVal str, ByVal cType)
-		Dim re, obj
-		Set obj = New RegExp
+		Dim re
 		Select Case UCASE(cType)
 			Case "KEY" re = "^(([A-Z]*|[a-z]*|\d*|[-_\~!@#\$%\^&\*\.\(\)\[\]\{\}<>\?\\\/\''\""]*)|.{0,5})$|\s"	'键盘上有的字符
 			Case "EN" re = "^[A-Za-z]+$"	'英文字母
@@ -130,9 +129,7 @@ Class Class_String
 			Case "IP" re = "^(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])$"	'IP
 			Case Else re = cType	'自定义正则
 		End Select
-		obj.Pattern = re
-		Validate = obj.Test(Trim(str))
-		Set obj = Nothing
+		Validate = Me.Test(Trim(str),re,false)
 	End Function
 
 	'**********

@@ -43,7 +43,7 @@ Class Class_Date
     '**********
     ' 函数名: ToGMTdate
     ' 参  数: sDate
-    ' 作  用: 获取GMT时间
+    ' 作  用: 本地时间转GMT时间
     '**********
     Function ToGMTdate(sDate)
         Dim dWeek, dMonth
