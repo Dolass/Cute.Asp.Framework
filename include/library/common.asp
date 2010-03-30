@@ -204,7 +204,7 @@ Function Safe(str)
 	str = Replace(str,"--","&#45;&#45;")
 	If IsArray(FilterWord) Then
 		Dim item
-		str = Tpub.String.regExpReplace(str,Join(FilterWord,"|"),"XX",false)
+		str = Tpub.String.Replace(str,Join(FilterWord,"|"),"XX",false)
 	End If
 	Safe = str
 End Function
