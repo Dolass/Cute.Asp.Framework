@@ -1,14 +1,15 @@
 <html>
 <head>
 <script language="JavaScript">
-var easpSetup = "Startup/CaspSetup.htm";
+var caspSetup = "Startup/CaspSetup.htm";
 var vbsColor = "CodeColoring/ASP VBScript.xml";
-var easpRemove = "Startup/CaspRemove.htm";
+var caspRemove = "Startup/CaspRemove.htm";
 var isRemove = "Shared/CuteASP/CaspRemove.htm";
-var keywords = ["Casp"];
+var keywords = ["Casp","Arrays","Cache","Cookie","Session","Date","Debug","String","Params","Page","db","File","Upload"];
+var methodkeywords = ["ShowErr","ShowException","CheckPostSource","GetSystem","IsInstall","NoBuffer","Rand","RandStr","rq","Form","Safe","CurrentURL","RefererURL","GetIP","GetSelfName","ReturnObj","EncodeJP","HtmlEncode","HtmlDecode","UrlDecode","SetQueryString","GetGUID","Max","Min","UnShift","Shift","Push","Pop","Strip","Walk","Splice","Fill","Unique","Reverse","Search","Sort","rSort","Shuffle","ConvComma","ToString","ToArray","Mark","Timeout","Lock","UnLock","Set","Get","Remove","RemoveAll","Compare","TimeZone","ToGMTdate","ToUnixEpoch","FromUnixEpoch","Format","Zodiac","Constellation","Length","Cut","KeyWordLight","Validate","TextToHtml","HtmlToJs","StripHTML","Replace","Test","Trim","LTrim","RTrim","PageProcedure","Conn","Size","Page","PageCount","RecordCount","GetSqlString","Header_a","Header_b","Header_c","Footer_a","Footer_b","ServerIp","ConnectionType","Username","Password","Open","Close","CloseRs","SetRs","Exec","BeginTrans","RollBackTrans","CommitTrans","GetRowObject","Insert","Update","ExecuteRecordSet","ExecuteScalar","ExecuteReturnValue","ExecuteNonQuery","ExecuteRecordsetAndValue","FSO","Stream","Charset","GetFileTypeName","CheckFileExt","FormatFileSize","GetFileSize","GetFolderSize","IsFolderExists","IsFileExists","CreatePath","DelFolder","DelFile","LoadFile","SaveFile","CopyFolder","CopyFile","LoadIncludeFiles","RemoveUtf8bom","MaxSize","TotalSize","Mode","SavePath","FileType","AutoSave","FormItem","FileItem","Save","GetData","echo","die","isset","isNumber","locationHref","locationReferer","alertRedirect","alertBack","alertClose","IIf"];
 function initialize(){
 	var cfg = dw.getConfigurationPath() + dwscripts.FILE_SEP;
-	var removeFile = cfg + easpRemove;
+	var removeFile = cfg + caspRemove;
 	if (!DWfile.exists(removeFile)) {
 		var isRemoveFile = cfg + isRemove;
 		if (DWfile.exists(isRemoveFile) && DWfile.copy(isRemoveFile,removeFile)) {
@@ -18,7 +19,7 @@ function initialize(){
 				if (colorDOM) {
 					var vbNode = colorDOM.getElementById("VBScript");
 					if (vbNode) {
-						DWfile.remove(cfg + easpSetup);
+						DWfile.remove(cfg + caspSetup);
 						var str = new Array(keywords.length+2);
 						str[0] = '\t<keywords name="CuteASP 关键字" id="CodeColor_CuteASPkeywords">';
 						for (var i = 0, j = 1; i < keywords.length; i++, j++) {
@@ -26,6 +27,15 @@ function initialize(){
 						}
 						str[str.length - 1] = "\t</keywords>\n";
 						vbNode.innerHTML += str.join('\n');
+						DWfile.write(colorFile, colorDOM.documentElement.outerHTML);
+						dw.reloadCodeColoring();
+						var str1 = new Array(methodkeywords.length+2);
+						str1[0] = '\t<keywords name="CuteASP 方法关键字" id="CodeColor_CuteASPmethodkeywords">';
+						for (var i = 0, j = 1; i < methodkeywords.length; i++, j++) {
+							str1[j] = "\t\t<keyword>" + methodkeywords[i] + "</keyword>";
+						}
+						str1[str1.length - 1] = "\t</keywords>\n";
+						vbNode.innerHTML += str1.join('\n');
 						DWfile.write(colorFile, colorDOM.documentElement.outerHTML);
 						dw.reloadCodeColoring();
 					}
