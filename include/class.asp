@@ -14,8 +14,8 @@
 '**********
 '	构建类
 '**********
-Dim Tpub
-Set Tpub = New Class_Wrap
+Dim Casp
+Set Casp = New Class_Wrap
 
 
 Class Class_Wrap
@@ -100,5 +100,5 @@ Class Class_Wrap
 End Class
 %>
 <script language="vbscript" runat="server">
-	Set Tpub = Nothing	'页面执行完毕后自动释放对象
+	Set Casp = Nothing	'页面执行完毕后自动释放对象
 </script>

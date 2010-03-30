@@ -12,23 +12,23 @@ Dim StartTime : StartTime = timer()
 <!--#include file="include/library/params.asp"-->
 <!--#include file="include/library/session.asp"-->
 <%
-Tpub.WebConfig("CodePage")		=	936				'设置站点编码
-Tpub.WebConfig("Charset")		=	"gb2312"		'设置站点字符集
-Tpub.WebConfig("FilterWord")	=	""				'设置过滤字符
+Casp.WebConfig("CodePage")		=	936				'设置站点编码
+Casp.WebConfig("Charset")		=	"gb2312"		'设置站点字符集
+Casp.WebConfig("FilterWord")	=	""				'设置过滤字符
 
-Tpub.db.ConnectionType = "MSSQL"
-Tpub.db.ServerIp = "localhost"
-Tpub.db.Database = "dataname"
-Tpub.db.UserName = "sa"
-Tpub.db.Password = ""
+Casp.db.ConnectionType = "MSSQL"
+Casp.db.ServerIp = "localhost"
+Casp.db.Database = "dataname"
+Casp.db.UserName = "sa"
+Casp.db.Password = ""
 
 On Error Resume Next
-Session.CodePage = Tpub.WebConfig("CodePage")
-Response.Charset = Tpub.WebConfig("Charset")
-Tpub.Cookie.Mark = "cute_"		'设置Cookie名称前缀
-Tpub.Cache.Mark = "cute_"		'设置缓存名称前缀
-Tpub.Ubb.Mode = 0				'使用基本UBB
-Tpub.Date.TimeZone = 8			'设置所在时区
+Session.CodePage = Casp.WebConfig("CodePage")
+Response.Charset = Casp.WebConfig("Charset")
+Casp.Cookie.Mark = "cute_"		'设置Cookie名称前缀
+Casp.Cache.Mark = "cute_"		'设置缓存名称前缀
+Casp.Ubb.Mode = 0				'使用基本UBB
+Casp.Date.TimeZone = 8			'设置所在时区
 On Error Goto 0
 
 Sub Finish()

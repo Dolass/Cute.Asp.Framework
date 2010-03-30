@@ -24,8 +24,8 @@ Class Class_Session
 		If IsNumeric(Value) Then Session.Timeout = Value
     End Property
 
-    Public Default Property Get Contents(Value)
-        contents = [Get](Value)
+    Public Default Property Get Constructor(Value)
+        Constructor = [Get](Value)
     End Property
 
     '**********

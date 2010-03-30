@@ -22,8 +22,8 @@ Class Class_Cache
 
 	Private IExpires
 
-    Public Default Property Get Contents(Value)
-        Contents = [Get](Value)
+    Public Default Property Get Constructor(Value)
+        Constructor = [Get](Value)
     End Property
 
     Private Property Let Timeout(Value)

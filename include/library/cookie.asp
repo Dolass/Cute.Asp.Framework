@@ -20,8 +20,8 @@
 Class Class_Cookie
 	Public	Mark	'ǰ׺
 
-    Public Default Property Get Contents(Value)
-        contents = [Get](Value)
+    Public Default Property Get Constructor(Value)
+        Constructor = [Get](Value)
     End Property
 
     '**********

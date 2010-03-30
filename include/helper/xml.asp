@@ -23,15 +23,15 @@ Class Class_XML
     Public XmlDom
 
     '开打一个已经存在的XML文件,返回打开状态
-    Public Function Open(byVal xmlSourceFile)
+    Public Function Open(byVal XmlSourceFile)
         Open = false
         fErrInfo = ""
         fFileName = ""
         fopen = false
         Set fNode = Nothing
         Set fANode = Nothing
-        xmlSourceFile = Trim(xmlSourceFile)
-        If xmlSourceFile = "" Then Exit Function
+        XmlSourceFile = Trim(XmlSourceFile)
+        If XmlSourceFile = "" Then Exit Function
 		On Error Resume Next
 	    Set XmlDom = CreateObject("Msxml2.DOMDocument.3.0")
 		If Err Then
@@ -41,13 +41,13 @@ Class Class_XML
 		On Error Goto 0
         XmlDom.preserveWhiteSpace = true
         XmlDom.async = False
-        If Left(xmlSourceFile,5) = "<?xml" Then
-	        XmlDom.loadXML xmlSourceFile
+        If Left(XmlSourceFile,5) = "<?xml" Then
+	        XmlDom.loadXML XmlSourceFile
 		Else
-			XmlDom.load Server.MapPath(xmlSourceFile)
+			XmlDom.load Server.MapPath(XmlSourceFile)
 		End If
 
-        fFileName = xmlSourceFile
+        fFileName = XmlSourceFile
         If Not IsError Then
             Open = true
             fopen = true
@@ -66,13 +66,13 @@ Class Class_XML
     End Sub
 
     '给xml内容
-    Public Property Get xmlSource(byVal ElementOBJ)
+    Public Property Get XmlSource(byVal ElementOBJ)
         If fopen = false Then Exit Property
 
         Set ElementOBJ = ChildNode(XmlDom, ElementOBJ, false)
         If ElementOBJ Is Nothing Then Set ElementOBJ = Nothing : Exit Property
 
-        xmlSource = ElementOBJ.xml
+        XmlSource = ElementOBJ.xml
     End Property
 
     '返回节点的缩进字串
@@ -183,9 +183,9 @@ Class Class_XML
     '如果已经存在名为AttributeName的属性对象，就进行修改。
     '返回插入或修改属性的Node
     'ElementOBJ可以是Element对象或名，为空就取当前默认对象
-    Public Function setAttributeNode(byVal ElementOBJ, byVal AttributeName, byVal AttributeText)
+    Public Function SetAttributeNode(byVal ElementOBJ, byVal AttributeName, byVal AttributeText)
         Dim AttributeNode
-        Set setAttributeNode = Nothing
+        Set SetAttributeNode = Nothing
 
         If Not fopen Then Exit Function
 
@@ -195,13 +195,13 @@ Class Class_XML
         Set AttributeNode = ElementOBJ.Attributes.getNamedItem(AttributeName)
         If AttributeNode Is Nothing Then
             Set AttributeNode = XmlDom.CreateAttribute(AttributeName)
-            ElementOBJ.setAttributeNode AttributeNode
+            ElementOBJ.SetAttributeNode AttributeNode
         End If
         AttributeNode.text = AttributeText
 
         Set fNode = ElementOBJ
         Set fANode = AttributeNode
-        Set setAttributeNode = AttributeNode
+        Set SetAttributeNode = AttributeNode
     End Function
 
     '修改ElementOBJ节点的Text值，并返回这个节点
@@ -232,8 +232,8 @@ Class Class_XML
 
     '读取一个NodeOBJ的节点Text的值
     'NodeOBJ可以是节点对象或节点名，为空就取当前默认fNode
-    Public Function getNodeText(byVal NodeOBJ)
-        getNodeText = ""
+    Public Function GetNodeText(byVal NodeOBJ)
+        GetNodeText = ""
         If fopen = false Then Exit Function
 
         Set NodeOBJ = ChildNode(null, NodeOBJ, false)
@@ -244,14 +244,14 @@ Class Class_XML
         Else
             Set fANode = NodeOBJ
         End If
-        getNodeText = NodeOBJ.text
+        GetNodeText = NodeOBJ.text
     End Function
 
     '返回符合testValue条件的第一个ElementNode，为空就取当前默认对象
-    Public Function getElementNode(byVal ElementName, byVal testValue)
+    Public Function GetElementNode(byVal ElementName, byVal testValue)
         Dim Element, regEx, baseName
 
-        Set getElementNode = Nothing
+        Set GetElementNode = Nothing
         If Not fopen Then Exit Function
 
         testValue = Trim(testValue)
@@ -266,7 +266,7 @@ Class Class_XML
         Set Element = XmlDom.SelectSingleNode("//"&ElementName&testValue)
 
         If Element Is Nothing Then
-            Set getElementNode = Nothing
+            Set GetElementNode = Nothing
             Exit Function
         End If
 
@@ -276,9 +276,9 @@ Class Class_XML
         Loop
 
         If LCase(Element.baseName)<>baseName Then
-            Set getElementNode = Nothing
+            Set GetElementNode = Nothing
         Else
-            Set getElementNode = Element
+            Set GetElementNode = Element
             If LCase(Element.nodeTypeString) = "element" Then
                 Set fNode = Element
             Else
@@ -288,8 +288,8 @@ Class Class_XML
     End Function
 
     '删除一个子节点
-    Public Function removeChild(byVal ElementOBJ)
-        removeChild = false
+    Public Function RemoveChild(byVal ElementOBJ)
+        RemoveChild = false
         If Not fopen Then Exit Function
 
         Set ElementOBJ = ChildNode(null, ElementOBJ, false)
@@ -298,11 +298,11 @@ Class Class_XML
         If LCase(ElementOBJ.nodeTypeString) = "element" Then
             If ElementOBJ Is fNode Then Set fNode = Nothing
             If ElementOBJ.parentNode Is Nothing Then
-                XmlDom.removeChild(ElementOBJ)
+                XmlDom.RemoveChild(ElementOBJ)
             Else
-                ElementOBJ.parentNode.removeChild(ElementOBJ)
+                ElementOBJ.parentNode.RemoveChild(ElementOBJ)
             End If
-            removeChild = true
+            RemoveChild = true
         End If
     End Function
 
@@ -315,15 +315,15 @@ Class Class_XML
         If ElementOBJ Is Nothing Then Exit Function
 
         ElementOBJ.text = ""
-        ElementOBJ.removeChild(ElementOBJ.firstchild)
+        ElementOBJ.RemoveChild(ElementOBJ.firstchild)
 
         Set ClearNode = ElementOBJ
         Set fNode = ElementOBJ
     End Function
 
     '删除子节点的一个属性
-    Public Function removeAttributeNode(byVal ElementOBJ, byVal AttributeOBJ)
-        removeAttributeNode = false
+    Public Function RemoveAttributeNode(byVal ElementOBJ, byVal AttributeOBJ)
+        RemoveAttributeNode = false
         If Not fopen Then Exit Function
 
         Set ElementOBJ = ChildNode(XmlDom, ElementOBJ, false)
@@ -331,8 +331,8 @@ Class Class_XML
 
         Set AttributeOBJ = ChildNode(ElementOBJ, AttributeOBJ, true)
         If Not AttributeOBJ Is Nothing Then
-            ElementOBJ.removeAttributeNode(AttributeOBJ)
-            removeAttributeNode = true
+            ElementOBJ.RemoveAttributeNode(AttributeOBJ)
+            RemoveAttributeNode = true
         End If
     End Function
 

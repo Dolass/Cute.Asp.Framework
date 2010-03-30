@@ -20,7 +20,7 @@ Class Class_Params
     ' 函数名: Contents
     ' 作  用: Get Params Value
     '**********
-    Public Default Property Get Init(OutParams)
+    Public Default Property Get Constructor(OutParams)
 		Set OutParams = CreateObject("Scripting.Dictionary")
 		OutParams.CompareMode = 1
     End Property
