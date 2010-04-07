@@ -14,7 +14,7 @@
 
 'Dim Getdata
 'Tpub.page.Conn = Tpub.db.conn
-'Tpub.page.Page = Trim(Request("PageID"))
+'Tpub.page.PageID = Trim(Request("PageID"))
 'Tpub.page.Size = 10
 'Tpub.page.Header_b(rs,sTable,sFields,sWhere,sGroup,sSort)
 'Do While Not rs.eof
@@ -52,7 +52,7 @@ Class Class_Page
 		i_pSize = n
 	End Property
 
-	Public Property Let Page(ByVal n)
+	Public Property Let PageID(ByVal n)
 		If Not IsNumeric(n) Then n = 1
 		If n <= 0 Then n = 1
 		i_pNumber = CLng(n)
@@ -60,7 +60,7 @@ Class Class_Page
 	
 	'**********获取属性**************************
 	'Size : 每页显示
-	'Page : 当前页码
+	'PageID : 当前页码
 	'PageCount : 结果页数
 	'RecordCount : 结果记录总数
 	'GetSqlString : 获取Sql语句
@@ -69,8 +69,8 @@ Class Class_Page
 		Size = i_pSize
 	End Property
 	
-	Public Property Get Page()
-		Page = i_pNumber
+	Public Property Get PageID()
+		PageID = i_pNumber
 	End Property
 	
 	Public Property Get PageCount()
