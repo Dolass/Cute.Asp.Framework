@@ -9,37 +9,39 @@
 
 
 '**********
-'	Ê¾Àı
+'	ç¤ºä¾‹
 '**********
 
 '**********
-'ÉèÖÃÉÏ´«Ä£Ê½
-'ÊôĞÔMode: 0.ÎŞ×é¼şÉÏ´«	1.AspUploadÉÏ´«
+'è®¾ç½®ä¸Šä¼ æ¨¡å¼
+'å±æ€§Mode: 0.æ— ç»„ä»¶ä¸Šä¼ 	1.AspUploadä¸Šä¼ 
 
 '**********
-'	¹¹½¨Àà
+'	æ„å»ºç±»
 '**********
 
 Class Class_Upload
     Private objForm, binForm, binItem, strDate, lngTime, objFormASP
-    Public Error '³ö´íĞÅÏ¢
-    Public MaxSize 'µ¥ÎÄ¼ş×î´óÉÏ´«´óĞ¡
-    Public TotalSize '×ÜÎÄ¼ş×î´óÉÏ´«´óĞ¡
-    Public Mode 'ÉÏ´«Ä£Ê½
-    Public SavePath 'ÉÏ´«Â·¾¶
-    Public Charset '×Ö·û¼¯
-    Public FileType 'ÔÊĞíÉÏ´«µÄÎÄ¼şÀàĞÍ
-    Public AutoSave 'ÎÄ¼şÃû±£´æ·½Ê½
+    Public Error 'å‡ºé”™ä¿¡æ¯
+    Public MaxSize 'å•æ–‡ä»¶æœ€å¤§ä¸Šä¼ å¤§å°
+    Public TotalSize 'æ€»æ–‡ä»¶æœ€å¤§ä¸Šä¼ å¤§å°
+    Public Mode 'ä¸Šä¼ æ¨¡å¼
+    Public SavePath 'ä¸Šä¼ è·¯å¾„
+    Public Charset 'å­—ç¬¦é›†
+    Public FileType 'å…è®¸ä¸Šä¼ çš„æ–‡ä»¶ç±»å‹
+    Public AutoSave 'æ–‡ä»¶åä¿å­˜æ–¹å¼
     Public FormItem, FileItem
+    Public UpCount	'æ€»ä¸Šä¼ æ–‡ä»¶æ•°
 
     Private Sub Class_Initialize
         Error = -1
-        MaxSize = 10485760 'Ä¬ÈÏÎª10mb
+        MaxSize = 10485760 'é»˜è®¤ä¸º10mb
         FileType = "jpg/gif/jpeg/png/bmp"
         SavePath = "./upfile/"
         AutoSave = 0
         TotalSize = 0
         Mode = 0
+		UpCount = 0
         Charset = "gb2312"
         strDate = Replace(CStr(Year(Date()) & "-" & Month(Date()) & "-" & Day(Date())), "-", "")
         lngTime = CLng(Timer() * 1000)
@@ -72,17 +74,16 @@ Class Class_Upload
         If Me.Mode = 1 Then
             On Error Resume Next
             Set objFormASP = Server.CreateObject("Persits.Upload")
-            objFormASP.OverWriteFiles = True 'Í¬Ãû¸²¸Ç
+            objFormASP.OverWriteFiles = True 'åŒåè¦†ç›–
             objFormASP.IgnorenoPost = True
-            objFormASP.SetMaxSize Me.MaxSize, True 'ÉèÖÃµ¥¸öÎÄ¼ş×î´óÉÏ´«
-            objFormASP.CreateDirectory Server.MapPath(Me.SavePath), True '½¨Á¢Ä¿Â¼
+            objFormASP.SetMaxSize Me.MaxSize, True 'è®¾ç½®å•ä¸ªæ–‡ä»¶æœ€å¤§ä¸Šä¼ 
+            objFormASP.CreateDirectory Server.MapPath(Me.SavePath), True 'å»ºç«‹ç›®å½•
             If LCase(Me.Charset) = "gb2312" Then
                 objFormASP.CodePage = 936
             Else
                 objFormASP.CodePage = 65001
             End If
-            Dim UpCount
-             UpCount = objFormASP.Save()
+            UpCount = objFormASP.Save()
             For Each strFormItem in objFormASP.Form
                 objForm.Add strFormItem.Name, strFormItem.Value
             Next
@@ -164,9 +165,9 @@ Class Class_Upload
 
                 intTemp = InStr(39, strItem, """")
                 strInam = Mid(strItem, 39, intTemp -39)
-
                 If InStr(intTemp, strItem, "filename=""")<>0 Then
                     If Not objForm.Exists(strInam&"_From") Then
+						UpCount = UpCount + 1
                         strFileItem = strFileItem&strSplit&strInam
                         If binItem.Size<>0 Then
                             intTemp = intTemp + 13
@@ -239,6 +240,7 @@ Class Class_Upload
 								End If
 							End If
 						Else
+							UpCount = 0
 							objForm.Add strInam&"_Err", -1
 						End If
 					End If

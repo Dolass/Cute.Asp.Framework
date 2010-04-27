@@ -179,15 +179,15 @@ End function
 Function Form(element)
     On Error Resume Next
     If InStr(LCase(Request.ServerVariables("Content_Type")), "multipart/Form-data") Then	'multipart/Form-data
-        If IsObject(Tpub.Upload) = False Then
+        If IsObject(Casp.Upload) = False Then
     		If Err Then
 				die("no include upload class file")
 			End If
         End If
-		If Tpub.Upload.Error <> 0 Then
-			Tpub.Upload.Open
+		If Casp.Upload.Error <> 0 Then
+			Casp.Upload.Open
 		End If
-        Form = Tpub.Upload.Form(element)
+        Form = Casp.Upload.Form(element)
     Else
         Form = Request.Form(element)
     End If
@@ -205,7 +205,7 @@ Function Safe(str)
 	str = Replace(str,"--","&#45;&#45;")
 	If IsArray(FilterWord) Then
 		Dim item
-		str = Tpub.String.RegexpReplace(str,Join(FilterWord,"|"),"XX",false)
+		str = Casp.String.RegexpReplace(str,Join(FilterWord,"|"),"XX",false)
 	End If
 	Safe = str
 End Function
