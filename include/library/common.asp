@@ -8,17 +8,17 @@
 '**********
 
 '**********
-'º¯ÊıÃû£ºShowErr
-'²Î  Êı£ºmessage	-- ´íÎóĞÅÏ¢
-'×÷  ÓÃ£ºÏÔÊ¾´íÎóĞÅÏ¢
+'å‡½æ•°åï¼šShowErr
+'å‚  æ•°ï¼šmessage	-- é”™è¯¯ä¿¡æ¯
+'ä½œ  ç”¨ï¼šæ˜¾ç¤ºé”™è¯¯ä¿¡æ¯
 '**********
 Sub ShowErr(message)
-    die "<html><head><title>Exception page</title><meta http-equiv=""Content-Type"" content=""text/html; charset=gbk"" /><style type=""text/css""><!--" & vbCrlf & "* { margin:0; padding:0 }" & vbCrlf & "body { background:#333; color:#0f0; font:14px/1.6em ""ËÎÌå"", Verdana, Arial, Helvetica, sans-serif; }" & vbCrlf & "dl { margin:20px 40px; padding:20px; border:3px solid #f63; }" & vbCrlf & "dt { margin:0 0 0.8em 0; font-weight:bold; font-size:1.6em; }" & vbCrlf & "dd { margin-left:2em; margin-top:0.2em; }" & vbCrlf & "--></style></head><body><div id=""container""><dl><dt>Description:</dt><dd><span style=""color:#ff0;font-weight:bold;font-size:1.2em;"">Position:</span> " & message & "</dd></dl></div></body></html>"
+    die "<html><head><title>Exception page</title><meta http-equiv=""Content-Type"" content=""text/html; charset=utf-8"" /><style type=""text/css""><!--" & vbCrlf & "* { margin:0; padding:0 }" & vbCrlf & "body { background:#333; color:#0f0; font:14px/1.6em ""å®‹ä½“"", Verdana, Arial, Helvetica, sans-serif; }" & vbCrlf & "dl { margin:20px 40px; padding:20px; border:3px solid #f63; }" & vbCrlf & "dt { margin:0 0 0.8em 0; font-weight:bold; font-size:1.6em; }" & vbCrlf & "dd { margin-left:2em; margin-top:0.2em; }" & vbCrlf & "--></style></head><body><div id=""container""><dl><dt>Description:</dt><dd><span style=""color:#ff0;font-weight:bold;font-size:1.2em;"">Position:</span> " & message & "</dd></dl></div></body></html>"
 End Sub
 
 '**********
-'º¯ÊıÃû£ºShowException
-'×÷  ÓÃ£ºÏÔÊ¾Òì³£ĞÅÏ¢
+'å‡½æ•°åï¼šShowException
+'ä½œ  ç”¨ï¼šæ˜¾ç¤ºå¼‚å¸¸ä¿¡æ¯
 '**********
 Sub ShowException()
     echo "<p><span style=""color:#ff0;font-weight:bold;font-size:1.2em;"">Error:</span> " & Err.Number & " " & Err.Description & "</p>"
@@ -27,8 +27,8 @@ Sub ShowException()
 End Sub
 
 '**********
-' º¯ÊıÃû: CheckPostSource
-' ×÷  ÓÃ: ¼ìÑéÀ´Ô´µØÖ·
+' å‡½æ•°å: CheckPostSource
+' ä½œ  ç”¨: æ£€éªŒæ¥æºåœ°å€
 '**********
 Function CheckPostSource()
 	Dim server_v1,server_v2
@@ -42,9 +42,9 @@ Function CheckPostSource()
 End Function
 
 '**********
-'º¯ÊıÃû£ºGetSystem
-'×÷  ÓÃ£º»ñÈ¡¿Í»§¶Ë²Ù×÷ÏµÍ³°æ±¾
-'·µ»ØÖµ£º²Ù×÷ÏµÍ³°æ±¾Ãû³Æ
+'å‡½æ•°åï¼šGetSystem
+'ä½œ  ç”¨ï¼šè·å–å®¢æˆ·ç«¯æ“ä½œç³»ç»Ÿç‰ˆæœ¬
+'è¿”å›å€¼ï¼šæ“ä½œç³»ç»Ÿç‰ˆæœ¬åç§°
 '**********
 Function GetSystem()
 	Dim System
@@ -70,11 +70,11 @@ Function GetSystem()
 End Function
 
 '**********
-'º¯ÊıÃû£ºIsInstall
-'×÷  ÓÃ£º¼ì²é×é¼şÊÇ·ñÒÑ¾­°²×°
-'²Î  Êı£ºobj ----×é¼şÃû
-'·µ»ØÖµ£ºTrue  ----ÒÑ¾­°²×°
-'		 False ----Ã»ÓĞ°²×°
+'å‡½æ•°åï¼šIsInstall
+'ä½œ  ç”¨ï¼šæ£€æŸ¥ç»„ä»¶æ˜¯å¦å·²ç»å®‰è£…
+'å‚  æ•°ï¼šobj ----ç»„ä»¶å
+'è¿”å›å€¼ï¼šTrue  ----å·²ç»å®‰è£…
+'		 False ----æ²¡æœ‰å®‰è£…
 '**********
 Function IsInstall(obj)
 	On Error Resume Next
@@ -88,8 +88,8 @@ Function IsInstall(obj)
 End Function
 
 '**********
-' º¯ÊıÃû: NoBuffer
-' ×÷  ÓÃ: no buffer
+' å‡½æ•°å: NoBuffer
+' ä½œ  ç”¨: no buffer
 '**********
 Sub NoBuffer()
 	Response.Buffer = True
@@ -102,9 +102,9 @@ Sub NoBuffer()
 End Sub
 
 '**********
-' º¯ÊıÃû: Rand
-' ²Î  Êı: str as the input string
-' ×÷  ÓÃ: Generate a Random integer
+' å‡½æ•°å: Rand
+' å‚  æ•°: str as the input string
+' ä½œ  ç”¨: Generate a Random integer
 '**********
 Function Rand(min, max)
     Randomize
@@ -112,8 +112,8 @@ Function Rand(min, max)
 End Function
 
 '**********
-' º¯ÊıÃû: RandStr
-' ×÷ÓÃ: Generate a specific length Random string
+' å‡½æ•°å: RandStr
+' ä½œç”¨: Generate a specific length Random string
 '**********
 Function RandStr(intLength)
 	Dim strSeed,seedLength,i
@@ -126,12 +126,12 @@ Function RandStr(intLength)
 End Function
 
 '**********
-' º¯ÊıÃû: rq
-' ²Î  Êı: Requester as the request type
-' ²Î  Êı: Name as the request name
-' ²Î  Êı: iType as check type
-' ²Î  Êı: Default as the Default string
-' ×÷  ÓÃ: Safe filter
+' å‡½æ•°å: rq
+' å‚  æ•°: Requester as the request type
+' å‚  æ•°: Name as the request name
+' å‚  æ•°: iType as check type
+' å‚  æ•°: Default as the Default string
+' ä½œ  ç”¨: Safe filter
 '**********
 Function rq(Requester,Name,iType,Default)
 	Dim tmp
@@ -172,9 +172,9 @@ Function rq(Requester,Name,iType,Default)
 End function
 
 '**********
-'º¯ÊıÃû£ºForm
-'²Î  Êı£ºelement ---- ¿Ø¼şÃû
-'×÷  ÓÃ£º»ñÈ¡Form¿Ø¼şÊı¾İ
+'å‡½æ•°åï¼šForm
+'å‚  æ•°ï¼šelement ---- æ§ä»¶å
+'ä½œ  ç”¨ï¼šè·å–Formæ§ä»¶æ•°æ®
 '**********
 Function Form(element)
     On Error Resume Next
@@ -195,16 +195,17 @@ Function Form(element)
 End Function
 
 '**********
-'º¯ÊıÃû£ºsqlFilter
-'×÷  ÓÃ£º¹ıÂËSql¹Ø¼ü×Ö
+'å‡½æ•°åï¼šsqlFilter
+'ä½œ  ç”¨ï¼šè¿‡æ»¤Sqlå…³é”®å­—
 '**********
 Function Safe(str)
+	Safe = str
 	If str = "" Then Exit Function
 	str = Replace(str, "'", "''")
 	str = Replace(str,"--","&#45;&#45;")
 	If IsArray(FilterWord) Then
 		Dim item
-		str = Tpub.String.Replace(str,Join(FilterWord,"|"),"XX",false)
+		str = Tpub.String.RegexpReplace(str,Join(FilterWord,"|"),"XX",false)
 	End If
 	Safe = str
 End Function
@@ -217,8 +218,8 @@ Private Function StrRepeat(length,str)
 End Function
 
 '**********
-' º¯ÊıÃû: CurrentURL
-' ×÷  ÓÃ: ·µ»Øµ±Ç°µØÖ·
+' å‡½æ•°å: CurrentURL
+' ä½œ  ç”¨: è¿”å›å½“å‰åœ°å€
 '**********
 Function CurrentURL()
 	Dim port : port = LCase(Request.ServerVariables("Server_Port"))
@@ -238,16 +239,16 @@ Function CurrentURL()
 End Function
 
 '**********
-' º¯ÊıÃû: refererURL
-' ×÷  ÓÃ: ·µ»ØÀ´Ô´µØÖ·
+' å‡½æ•°å: refererURL
+' ä½œ  ç”¨: è¿”å›æ¥æºåœ°å€
 '**********
 Function RefererURL()
 	RefererURL = Request.ServerVariables("HTTP_REFERER")
 End Function
 
 '**********
-' º¯ÊıÃû: GetIP
-' ×÷  ÓÃ: »ñÈ¡¿Í»§¶ËIP
+' å‡½æ•°å: GetIP
+' ä½œ  ç”¨: è·å–å®¢æˆ·ç«¯IP
 '**********
 Function GetIP()
 	Dim Ip,Tmp
@@ -277,24 +278,24 @@ Function GetIP()
 End Function
 
 '**********
-' º¯ÊıÃû: GetSelfName
-' ×÷  ÓÃ: »ñÈ¡µ±Ç°·ÃÎÊÎÄ¼şÃû
+' å‡½æ•°å: GetSelfName
+' ä½œ  ç”¨: è·å–å½“å‰è®¿é—®æ–‡ä»¶å
 '**********
 Function GetSelfName()
     GetSelfName = Request.ServerVariables("PATH_TRANSLATED")
-    GetSelfName = Mid(GetSelfName, InstrRev(GetSelfName, "\") + 1, Len(GetSelfName))
+    GetSelfName = LCase(Mid(GetSelfName, InstrRev(GetSelfName, "\") + 1, Len(GetSelfName)))
 End Function
 
 '**********
-'º¯ÊıÃû£ºReturnObj
-'×÷  ÓÃ£º·µ»ØÒ»¸ö¶ÔÏó
-'·µ»ØÖµ£º¶ÔÏó°üº¬Èı¸ö²ÎÊı(Code,Message,AttachObject)
+'å‡½æ•°åï¼šReturnObj
+'ä½œ  ç”¨ï¼šè¿”å›ä¸€ä¸ªå¯¹è±¡
+'è¿”å›å€¼ï¼šå¯¹è±¡åŒ…å«ä¸‰ä¸ªå‚æ•°(Code,Message,AttachObject)
 '**********
 Function ReturnObj()
 	On Error Resume Next
 	TypeName(New AopResult)
 	If Err Then
-		Set ReturnObj = New ReAopResult		'ÖØ¶¨ÒåµÄAopResult
+		Set ReturnObj = New ReAopResult		'é‡å®šä¹‰çš„AopResult
 		Err.Clear
 	Else
 		Set ReturnObj = New AopResult
@@ -303,13 +304,14 @@ Function ReturnObj()
 End Function
 
 '**********
-' º¯ÊıÃû: EncodeJP
-' ²Î  Êı: str as the input string
-' ×÷  ÓÃ: ±àÂëÈÕÎÄ
+' å‡½æ•°å: EncodeJP
+' å‚  æ•°: str as the input string
+' ä½œ  ç”¨: ç¼–ç æ—¥æ–‡
 '**********
 Function EncodeJP(ByVal str)
+	EncodeJP = str
 	If str="" Then Exit Function
-	Dim c1 : c1 = Array("¥¬","¥®","¥°","¥¢","¥²","¥´","¥¶","¥¸","¥º","¥¼","¥¾","¥À","¥Â","¥Å","¥Ç","¥É","¥Ğ","¥Ñ","¥Ó","¥Ô","¥Ö","¥×","¥Ù","¥Ú","¥Ü","¥İ","¥ô")
+	Dim c1 : c1 = Array("ã‚¬","ã‚®","ã‚°","ã‚¢","ã‚²","ã‚´","ã‚¶","ã‚¸","ã‚º","ã‚¼","ã‚¾","ãƒ€","ãƒ‚","ãƒ…","ãƒ‡","ãƒ‰","ãƒ","ãƒ‘","ãƒ“","ãƒ”","ãƒ–","ãƒ—","ãƒ™","ãƒš","ãƒœ","ãƒ","ãƒ´")
 	Dim c2 : c2 = Array("460","462","463","450","466","468","470","472","474","476","478","480","482","485","487","489","496","497","499","500","502","503","505","506","508","509","532")
 	Dim i
 	For i=0 to 26
@@ -319,9 +321,9 @@ Function EncodeJP(ByVal str)
 End Function
 
 '**********
-' º¯ÊıÃû: HtmlEncode
-' ²Î  Êı: str as the input string
-' ×÷  ÓÃ: filter html code
+' å‡½æ•°å: HtmlEncode
+' å‚  æ•°: str as the input string
+' ä½œ  ç”¨: filter html code
 '**********
 Function HtmlEncode(ByVal Str)
 	If Trim(Str) = "" Or IsNull(Str) Then
@@ -338,9 +340,9 @@ End Function
 
 
 '**********
-' º¯ÊıÃû: HtmlDecode
-' ²Î  Êı: str as the input string
-' ×÷  ÓÃ: Decode the html tag
+' å‡½æ•°å: HtmlDecode
+' å‚  æ•°: str as the input string
+' ä½œ  ç”¨: Decode the html tag
 '**********
 Function HtmlDecode(ByVal str)
 	If Not IsNull(str) And str <> "" Then
@@ -353,8 +355,8 @@ Function HtmlDecode(ByVal str)
 End Function
 
 '**********
-' º¯ÊıÃû: UrlDecode
-' ×÷  ÓÃ: UrlDecode ¡ª URL decode
+' å‡½æ•°å: UrlDecode
+' ä½œ  ç”¨: UrlDecode â€” URL decode
 '**********
 Function UrlDecode(ByVal vstrin)
 	Dim i, strreturn, strSpecial, intasc, thischr
@@ -384,8 +386,8 @@ Function UrlDecode(ByVal vstrin)
 End Function
 
 '**********
-' º¯ÊıÃû: SetQueryString
-' ×÷ÓÃ: ÖØÖÃ²ÎÊı
+' å‡½æ•°å: SetQueryString
+' ä½œç”¨: é‡ç½®å‚æ•°
 '**********
 Function SetQueryString(ByVal sQuery, ByVal Name,ByVal Value)
 	Dim Obj
@@ -411,8 +413,8 @@ Function SetQueryString(ByVal sQuery, ByVal Name,ByVal Value)
 End Function
 
 '**********
-' º¯ÊıÃû: GetGUID
-' ×÷ÓÃ: Éú³ÉGUID
+' å‡½æ•°å: GetGUID
+' ä½œç”¨: ç”ŸæˆGUID
 '**********
 Function GetGUID()
 	On Error Resume Next

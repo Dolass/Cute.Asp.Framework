@@ -9,16 +9,16 @@
 
 
 '**********
-'	Ê¾Àı
+'	ç¤ºä¾‹
 '**********
 
 '********** 
 
 '**********
-'	¹¹½¨Àà
+'	æ„å»ºç±»
 '**********
 Class Class_Session
-	Public	Mark	'Ç°×º
+	Public	Mark	'å‰ç¼€
 
     Public Property Let Timeout(Value)
 		If IsNumeric(Value) Then Session.Timeout = Value
@@ -29,23 +29,23 @@ Class Class_Session
     End Property
 
     '**********
-    ' º¯ÊıÃû: class_Initialize
-    ' ×÷  ÓÃ: Save the session
+    ' å‡½æ•°å: class_Initialize
+    ' ä½œ  ç”¨: Save the session
     '**********
 	Private Sub class_initialize()
 		Mark = "cute_"
     End Sub
 
     '**********
-    ' º¯ÊıÃû: class_Terminate
-    ' ×÷  ÓÃ: Deconstrutor
+    ' å‡½æ•°å: class_Terminate
+    ' ä½œ  ç”¨: Deconstrutor
     '**********
 	Private Sub class_Terminate()
     End Sub
 
     '**********
-    ' º¯ÊıÃû: Set
-    ' ×÷  ÓÃ: Add a Session
+    ' å‡½æ•°å: Set
+    ' ä½œ  ç”¨: Add a Session
     '**********
 	Sub [Set](Key, Value)
 		If IsObject(Value) Then
@@ -56,8 +56,8 @@ Class Class_Session
     End Sub
 
     '**********
-    ' º¯ÊıÃû: Get
-    ' ×÷  ÓÃ: Get a Session
+    ' å‡½æ•°å: Get
+    ' ä½œ  ç”¨: Get a Session
     '**********
 	Function [Get](Key)
 		If IsObject(Session(Me.Mark & Key)) Then
@@ -68,8 +68,8 @@ Class Class_Session
     End Function
 
     '**********
-    ' º¯ÊıÃû: remove
-    ' ×÷  ÓÃ: Remove a Session
+    ' å‡½æ•°å: remove
+    ' ä½œ  ç”¨: Remove a Session
     '**********
 	Sub Remove(Key)
 		If IsObject(Session(Me.Mark & Key)) Then
@@ -79,19 +79,19 @@ Class Class_Session
     End Sub
 
     '**********
-    ' º¯ÊıÃû: removeAll
-    ' ×÷  ÓÃ: Remove all Session
+    ' å‡½æ•°å: removeAll
+    ' ä½œ  ç”¨: Remove all Session
     '**********
 	Sub RemoveAll()
         Dim iSession
         For Each iSession In Session.Contents
-			Me.Remove(iSession)
+			Me.Remove(Replace(iSession,Me.Mark,""))
         Next
 	End Sub
 
     '**********
-    ' º¯ÊıÃû: compare
-    ' ×÷  ÓÃ: Compare two session
+    ' å‡½æ•°å: compare
+    ' ä½œ  ç”¨: Compare two session
     '**********
 	Function Compare(Key1, Key2)
         Dim Cache1

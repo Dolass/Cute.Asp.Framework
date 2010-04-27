@@ -51,9 +51,9 @@ Class Class_Db
 		Set Conn = CreateObject("ADODB.Connection")
 		Conn.Open ConnStr
 		If Err Then
-			Err.Clear
 			Set Conn = Nothing
-			Response.Write "数据库连接出错，请检查连接字串。"
+			Response.Write Err.Description
+			Err.Clear
 			Response.End()
 		End If
 		On Error GoTo 0
@@ -137,13 +137,12 @@ Class Class_Db
     '**********
 	Sub GetRowObject(obj,source)
 		Dim i, rs
-		If TypeName(source) <> "Recordset" Then
+		If TypeName(source) = "Recordset" Then
+			Set rs = source
+		Else
 			Me.Exec rs,source
 		End If
-		If rs.eof Then 
-			Set obj = Nothing
-			Exit Sub
-		End If
+		If rs.eof Then Exit Sub
 		Set obj = CreateObject("Scripting.Dictionary")
 		obj.CompareMode = 1
 		For i=0 To rs.fields.count-1

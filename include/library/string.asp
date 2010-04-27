@@ -9,25 +9,25 @@
 
 
 '**********
-'	Ê¾Àı
+'	ç¤ºä¾‹
 '**********
 
 '**********
-'	¹¹½¨Àà
+'	æ„å»ºç±»
 '**********
 
 Class Class_String
 	'**********
-    ' º¯ÊıÃû: class_Initialize
-    ' ×÷  ÓÃ: Constructor
+    ' å‡½æ•°å: class_Initialize
+    ' ä½œ  ç”¨: Constructor
     '**********
 	Private Sub Class_Initialize()
     End Sub
 
 	'**********
-	' º¯ÊıÃû: Length
-	' ²Î  Êı: str as the input string
-	' ×÷  ÓÃ: ¼ÆËã×Ö·û´®³¤¶È
+	' å‡½æ•°å: Length
+	' å‚  æ•°: str as the input string
+	' ä½œ  ç”¨: è®¡ç®—å­—ç¬¦ä¸²é•¿åº¦
 	'**********
 	Function Length(ByVal Str)
 		If Trim(Str) = "" Or IsNull(Str) Then
@@ -48,9 +48,9 @@ Class Class_String
 	End Function
 
 	'**********
-	' º¯ÊıÃû: Cut
-	' ²Î  Êı: str as the input string
-	' ×÷  ÓÃ: ½Ø¶Ï×Ö·û´®
+	' å‡½æ•°å: Cut
+	' å‚  æ•°: str as the input string
+	' ä½œ  ç”¨: æˆªæ–­å­—ç¬¦ä¸²
 	'**********
 	Function Cut(ByVal txt,ByVal length,ByVal isEnd)
 		Dim x, y, ii
@@ -60,16 +60,16 @@ Class Class_String
 		y = 0
 		If x >= 1 Then
 			For ii = 1 To x
-				If Asc(Mid(txt, ii, 1)) < 0 Or Asc(Mid(txt, ii, 1)) > 255 Then 'Èç¹ûÊÇºº×Ö
+				If Asc(Mid(txt, ii, 1)) < 0 Or Asc(Mid(txt, ii, 1)) > 255 Then 'å¦‚æœæ˜¯æ±‰å­—
 					y = y + 2
 				Else
 					y = y + 1
 				End If
 				If y >= length Then
 					If isEnd = True Then
-						txt = Left(Trim(txt), ii) & "..."  '×Ö·û´®ÏŞ³¤
+						txt = Left(Trim(txt), ii) & "..."  'å­—ç¬¦ä¸²é™é•¿
 					Else
-						txt = Left(Trim(txt), ii)  '×Ö·û´®ÏŞ³¤
+						txt = Left(Trim(txt), ii)  'å­—ç¬¦ä¸²é™é•¿
 					End If
 					Exit For
 				End If
@@ -81,10 +81,10 @@ Class Class_String
 	End Function
 
 	'**********
-	' º¯ÊıÃû: KeyWordLight
-	' ²Î  Êı: str as the input string
-	' ²Î  Êı: re as regex
-	' ×÷  ÓÃ: ¸ßÁÁ×Ö·û´®
+	' å‡½æ•°å: KeyWordLight
+	' å‚  æ•°: str as the input string
+	' å‚  æ•°: re as regex
+	' ä½œ  ç”¨: é«˜äº®å­—ç¬¦ä¸²
 	'**********
 	Function KeyWordLight(ByVal str, ByVal re)
 		Dim s_str, a_re, reg, i
@@ -93,7 +93,7 @@ Class Class_String
 			a_re = Split(re, "|")
 			For i = 0 To UBound(a_re)
 				If Len(Trim(a_re(i)))>0 Then
-					s_str = Me.Replace(s_str,"("&a_re(i)&")", "<strong class=""wordlight"">$1</strong>",true)
+					s_str = Me.RegexpReplace(s_str,"("&a_re(i)&")", "<strong class=""wordlight"">$1</strong>",true)
 				End If
 			Next
 			KeyWordLight = s_str
@@ -101,41 +101,41 @@ Class Class_String
 	End Function
 
 	'**********
-	'º¯ÊıÃû£ºValidate
-	'×÷  ÓÃ£ºÕıÔòÅĞ¶Ï
-	'²Î  Êı£ºstr  ----Òª¼ìÑéµÄ×Ö·û´®
-	'			  ----ÕıÔò¹æÔò
-	'·µ»ØÖµ: True ·ûºÏ   False ²»·ûºÏ
+	'å‡½æ•°åï¼šValidate
+	'ä½œ  ç”¨ï¼šæ­£åˆ™åˆ¤æ–­
+	'å‚  æ•°ï¼šstr  ----è¦æ£€éªŒçš„å­—ç¬¦ä¸²
+	'			  ----æ­£åˆ™è§„åˆ™
+	'è¿”å›å€¼: True ç¬¦åˆ   False ä¸ç¬¦åˆ
 	'**********
 	Function Validate(ByVal str, ByVal cType)
 		Dim re
 		Select Case UCASE(cType)
-			Case "KEY" re = "^(([A-Z]*|[a-z]*|\d*|[-_\~!@#\$%\^&\*\.\(\)\[\]\{\}<>\?\\\/\''\""]*)|.{0,5})$|\s"	'¼üÅÌÉÏÓĞµÄ×Ö·û
-			Case "EN" re = "^[A-Za-z]+$"	'Ó¢ÎÄ×ÖÄ¸
-			Case "CN" re = "^[\u0391-\uFFE5]+$"	'ÖĞÎÄ
-			Case "NUM" re = "^\d+$"	'Êı×Ö
-			Case "INT" re = "^-?[0-9\,]+$"	'ÕıÕûÊı
-			Case "FLOAT" re = "^-?\d+(\.{1}\d+)?$"	'¸¡µãÊı
-			Case "SAFE" re = "^[A-Za-z0-9\_\-]+$"	'Êı×Ö¡¢´óĞ¡×ÖÄ¸¡¢ÏÂ»®Ïß¡¢ºáÏß
+			Case "KEY" re = "^(([A-Z]*|[a-z]*|\d*|[-_\~!@#\$%\^&\*\.\(\)\[\]\{\}<>\?\\\/\''\""]*)|.{0,5})$|\s"	'é”®ç›˜ä¸Šæœ‰çš„å­—ç¬¦
+			Case "EN" re = "^[A-Za-z]+$"	'è‹±æ–‡å­—æ¯
+			Case "CN" re = "^[\u0391-\uFFE5]+$"	'ä¸­æ–‡
+			Case "NUM" re = "^\d+$"	'æ•°å­—
+			Case "INT" re = "^-?[0-9\,]+$"	'æ­£æ•´æ•°
+			Case "FLOAT" re = "^-?\d+(\.{1}\d+)?$"	'æµ®ç‚¹æ•°
+			Case "SAFE" re = "^[A-Za-z0-9\_\-]+$"	'æ•°å­—ã€å¤§å°å­—æ¯ã€ä¸‹åˆ’çº¿ã€æ¨ªçº¿
 			Case "EMAIL" re = "^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$"	'Email
 			Case "PHONE" re = "^((\(\d{3}\))|(\d{3}\-))?(\(0\d{2,3}\)|0\d{2,3}-)?[1-9]\d{6,7}$"	'Phone
 			Case "MOBILE" re = "^((\(\d{3}\))|(\d{3}\-))?13\d{9}$"	'Mobile
-			Case "IDCARD" re = "^\d{15}(\d{2}[A-Za-z0-9])?$"	'Éí·İÖ¤
-			Case "ZIP" re = "^[1-9]\d{5}$"	'ÓÊ±à
-			Case "QQ" re = "^[1-9]\d{4,8}$"	'Éí·İÖ¤
-			Case "URL" re = "^(http|https|ftp):(\/\/|\\\\)(([\w\/\\\+\-~`@:%])+\.)+([\w\/\\\.\=\?\+\-~`@\':!%#]|(&amp;)|&)+"	'URLµØÖ·
-			Case "IMGURL" re = "^((http|https|ftp):(\/\/|\\\\)(([\w\/\\\+\-~`@:%])+\.)+([\w\/\\\.\=\?\+\-~`@\':!%#]|(&amp;)|&)+|\/([\w\/\\\.\=\?\+\-~`@\':!%#]|(&amp;)|&)+)\.(jpeg|jpg|gif|png|bmp)$"	'Í¼Æ¬µØÖ·
-			Case "TIME" re = "^(?=\d)(?:(?!(?:1582(?:\.|-|\/)10(?:\.|-|\/)(?:0?[5-9]|1[0-4]))|(?:1752(?:\.|-|\/)0?9(?:\.|-|\/)(?:0?[3-9]|1[0-3])))(?=(?:(?!000[04]|(?:(?:1[^0-6]|[2468][^048]|[3579][^26])00))(?:(?:\d\d)(?:[02468][048]|[13579][26]))\D0?2\D29)|(?:\d{4}\D(?!(?:0?[2469]|11)\D31)(?!0?2(?:\.|-|\/)(?:29|30))))(\d{4})([-\/.])(0?\d|1[012])\2((?!00)[012]?\d|3[01])(?:$|(?=\x20\d)\x20))?((?:(?:0?[1-9]|1[012])(?::[0-5]\d){0,2}(?:\x20[aApP][mM]))|(?:[01]\d|2[0-3])(?::[0-5]\d){1,2})?$"	'Ê±¼ä
+			Case "IDCARD" re = "^\d{15}(\d{2}[A-Za-z0-9])?$"	'èº«ä»½è¯
+			Case "ZIP" re = "^[1-9]\d{5}$"	'é‚®ç¼–
+			Case "QQ" re = "^[1-9]\d{4,8}$"	'èº«ä»½è¯
+			Case "URL" re = "^(http|https|ftp):(\/\/|\\\\)(([\w\/\\\+\-~`@:%])+\.)+([\w\/\\\.\=\?\+\-~`@\':!%#]|(&amp;)|&)+"	'URLåœ°å€
+			Case "IMGURL" re = "^((http|https|ftp):(\/\/|\\\\)(([\w\/\\\+\-~`@:%])+\.)+([\w\/\\\.\=\?\+\-~`@\':!%#]|(&amp;)|&)+|\/([\w\/\\\.\=\?\+\-~`@\':!%#]|(&amp;)|&)+)\.(jpeg|jpg|gif|png|bmp)$"	'å›¾ç‰‡åœ°å€
+			Case "TIME" re = "^(?=\d)(?:(?!(?:1582(?:\.|-|\/)10(?:\.|-|\/)(?:0?[5-9]|1[0-4]))|(?:1752(?:\.|-|\/)0?9(?:\.|-|\/)(?:0?[3-9]|1[0-3])))(?=(?:(?!000[04]|(?:(?:1[^0-6]|[2468][^048]|[3579][^26])00))(?:(?:\d\d)(?:[02468][048]|[13579][26]))\D0?2\D29)|(?:\d{4}\D(?!(?:0?[2469]|11)\D31)(?!0?2(?:\.|-|\/)(?:29|30))))(\d{4})([-\/.])(0?\d|1[012])\2((?!00)[012]?\d|3[01])(?:$|(?=\x20\d)\x20))?((?:(?:0?[1-9]|1[012])(?::[0-5]\d){0,2}(?:\x20[aApP][mM]))|(?:[01]\d|2[0-3])(?::[0-5]\d){1,2})?$"	'æ—¶é—´
 			Case "IP" re = "^(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])$"	'IP
-			Case Else re = cType	'×Ô¶¨ÒåÕıÔò
+			Case Else re = cType	'è‡ªå®šä¹‰æ­£åˆ™
 		End Select
 		Validate = Me.Test(Trim(str),re,false)
 	End Function
 
 	'**********
-	' º¯ÊıÃû: TextToHtml
-	' ²Î  Êı: str as the input string
-	' ×÷  ÓÃ: filter text code
+	' å‡½æ•°å: TextToHtml
+	' å‚  æ•°: str as the input string
+	' ä½œ  ç”¨: filter text code
 	'**********
 	Function TextToHtml(ByVal str)
 		If Trim(str)="" Then textEncode = "" : Exit Function
@@ -152,9 +152,9 @@ Class Class_String
 	End Function
 
 	'**********
-	' º¯ÊıÃû: HtmlToJs
-	' ²Î  Êı: str as the input string
-	' ×÷  ÓÃ: htmlµ½jsµÄ×ª»»
+	' å‡½æ•°å: HtmlToJs
+	' å‚  æ•°: str as the input string
+	' ä½œ  ç”¨: htmlåˆ°jsçš„è½¬æ¢
 	'**********
 	Function HtmlToJs(ByVal str)
 		If str <> "" Then
@@ -166,31 +166,31 @@ Class Class_String
 	End Function
 
 	'**********
-	' º¯ÊıÃû: StripHTML
-	' ²Î  Êı: str as the input string
-	' ×÷  ÓÃ: ¹ıÂËHTML
+	' å‡½æ•°å: StripHTML
+	' å‚  æ•°: str as the input string
+	' ä½œ  ç”¨: è¿‡æ»¤HTML
 	'**********
 	Function StripHTML(ByVal strHTML)
 		If strHTML <> "" Then
-			strHTML = Me.Replace(strHTML,"<.+?>","",false)
+			strHTML = Me.RegexpReplace(strHTML,"<.+?>","",false)
 			strHTML = Replace(strHTML, "<", "&lt;")
 			StripHTML = Replace(strHTML, ">", "&gt;")
 		End If
 	End Function
 
 	'**********
-	' º¯ÊıÃû: Replace
+	' å‡½æ•°å: RegexpReplace
 	'**********
-	Function [Replace](ByVal str,ByVal re,ByVal restr,ByVal isCase)	'ÄÚÈİ,ÕıÔò,Ìæ»»³É£¬ÊÇ·ñÇø·Ö´óĞ¡Ğ´
+	Function [RegexpReplace](ByVal str,ByVal re,ByVal restr,ByVal isCase)	'å†…å®¹,æ­£åˆ™,æ›¿æ¢æˆï¼Œæ˜¯å¦åŒºåˆ†å¤§å°å†™
 		If str <> "" Then
-			Replace = regExpReplace_Js(str&"",re,restr,isCase)
+			RegexpReplace = regExpReplace_Js(str&"",re,restr,isCase)
 		End If
 	End Function
 
 	'**********
-	' º¯ÊıÃû: Test
+	' å‡½æ•°å: Test
 	'**********
-	Function Test(ByVal str,ByVal re,ByVal isCase)	'ÄÚÈİ,ÕıÔò,ÊÇ·ñÇø·Ö´óĞ¡Ğ´
+	Function Test(ByVal str,ByVal re,ByVal isCase)	'å†…å®¹,æ­£åˆ™,æ˜¯å¦åŒºåˆ†å¤§å°å†™
 		Test = False
 		If str <> "" Then
 			Test = regExpTest_Js(str&"",re,isCase)
@@ -198,29 +198,29 @@ Class Class_String
 	End Function
 
 	'**********
-	' º¯ÊıÃû: Trim
+	' å‡½æ•°å: Trim
 	'**********
-	Function [Trim](ByVal str)	'ÄÚÈİ
+	Function [Trim](ByVal str)	'å†…å®¹
 		If str <> "" Then
-			[Trim] = Me.Replace(str,"(^\s*)|(\s*$)","",False)
+			[Trim] = Me.RegexpReplace(str,"(^\s*)|(\s*$)","",False)
 		End If
 	End Function
 
 	'**********
-	' º¯ÊıÃû: LTrim
+	' å‡½æ•°å: LTrim
 	'**********
-	Function [LTrim](ByVal str)	'ÄÚÈİ
+	Function [LTrim](ByVal str)	'å†…å®¹
 		If str <> "" Then
-			[LTrim] = Me.Replace(str,"^\s*","",false)
+			[LTrim] = Me.RegexpReplace(str,"^\s*","",false)
 		End If
 	End Function
 
 	'**********
-	' º¯ÊıÃû: RTrim
+	' å‡½æ•°å: RTrim
 	'**********
-	Function [RTrim](ByVal str)	'ÄÚÈİ
+	Function [RTrim](ByVal str)	'å†…å®¹
 		If str <> "" Then
-			[RTrim] = Me.Replace(str,"\s*$","",False)
+			[RTrim] = Me.RegexpReplace(str,"\s*$","",False)
 		End If
 	End Function
 End Class
@@ -228,7 +228,7 @@ End Class
 <script language="jscript" runat="server">
 function regExpReplace_Js(str1,str2,restr,isCase){
 	if(typeof str1 == "string"){
-		return str1.Replace(new RegExp(str2,"g" + (isCase ? "" : "i")),restr);
+		return str1.replace(new RegExp(str2,"g" + (isCase ? "" : "i")),restr);
 	}
 	return "";
 }

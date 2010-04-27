@@ -16,9 +16,9 @@ Casp.WebConfig("CodePage")		=	936				'设置站点编码
 Casp.WebConfig("Charset")		=	"gb2312"		'设置站点字符集
 Casp.WebConfig("FilterWord")	=	""				'设置过滤字符
 
-Casp.db.ConnectionType = "MSSQL"
+Casp.db.ConnectionType = "ACCESS"
 Casp.db.ServerIp = "localhost"
-Casp.db.Database = "dataname"
+Casp.db.Database = "\aspframework\db.mdb"
 Casp.db.UserName = "sa"
 Casp.db.Password = ""
 

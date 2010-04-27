@@ -9,18 +9,18 @@
 
 
 '**********
-'	Ê¾Àı
+'	ç¤ºä¾‹
 '**********
 
 '**********
-'	¹¹½¨Àà
+'	æ„å»ºç±»
 '**********
 Class Class_Array
 
 	'**********
-	' º¯ÊıÃû: Max
-	' ²Î  Êı: arr as a Array
-	' ×÷  ÓÃ: Max ¡ª È¡³ö×î´óÖµ
+	' å‡½æ•°å: Max
+	' å‚  æ•°: arr as a Array
+	' ä½œ  ç”¨: Max â€” å–å‡ºæœ€å¤§å€¼
 	'**********
 	Function Max(ByVal arr)
 		Dim tmp
@@ -29,9 +29,9 @@ Class Class_Array
 	End Function
 	
 	'**********
-	' º¯ÊıÃû: Min
-	' ²Î  Êı: arr as a Array
-	' ×÷  ÓÃ: Min ¡ª È¡³ö×îĞ¡Öµ
+	' å‡½æ•°å: Min
+	' å‚  æ•°: arr as a Array
+	' ä½œ  ç”¨: Min â€” å–å‡ºæœ€å°å€¼
 	'**********
 	Function Min(ByVal arr)
 		Dim tmp
@@ -40,9 +40,9 @@ Class Class_Array
 	End Function
 	
 	'**********
-	' º¯ÊıÃû: UnShift
-	' ²Î  Êı: arr as an Array
-	' ×÷  ÓÃ: UnShift ¡ª ´ÓÇ°Ñ¹ÈëÔªËØ
+	' å‡½æ•°å: UnShift
+	' å‚  æ•°: arr as an Array
+	' ä½œ  ç”¨: UnShift â€” ä»å‰å‹å…¥å…ƒç´ 
 	'**********
 	Function UnShift(ByVal arr, ByVal var)
 		Dim i, tmp
@@ -53,9 +53,9 @@ Class Class_Array
 	End Function
 	
 	'**********
-	' º¯ÊıÃû: Shift
-	' ²Î  Êı: arr as an Array
-	' ×÷  ÓÃ: Shift ¡ª ´ÓÇ°É¾³ıÔªËØ
+	' å‡½æ•°å: Shift
+	' å‚  æ•°: arr as an Array
+	' ä½œ  ç”¨: Shift â€” ä»å‰åˆ é™¤å…ƒç´ 
 	'**********
 	Function Shift(ByVal arr)
 		Dim i, tmp
@@ -68,10 +68,10 @@ Class Class_Array
 	End Function
 	
 	'**********
-	' º¯ÊıÃû: Push
-	' ²Î  Êı: arr as an Array
-	' ²Î  Êı: var as a variable added to an array
-	' ×÷  ÓÃ: Push ¡ª ´ÓºóÑ¹ÈëÔªËØ
+	' å‡½æ•°å: Push
+	' å‚  æ•°: arr as an Array
+	' å‚  æ•°: var as a variable added to an array
+	' ä½œ  ç”¨: Push â€” ä»åå‹å…¥å…ƒç´ 
 	'**********
 	Function Push(ByVal arr, ByVal var)
 		Dim tmp : tmp = Me.ToString(arr)
@@ -81,9 +81,9 @@ Class Class_Array
 	End Function
 	
 	'**********
-	' º¯ÊıÃû: Pop
-	' ²Î  Êı: arr as an array
-	' ×÷  ÓÃ: Pop ¡ª ´ÓºóÉ¾³ıÔªËØ
+	' å‡½æ•°å: Pop
+	' å‚  æ•°: arr as an array
+	' ä½œ  ç”¨: Pop â€” ä»ååˆ é™¤å…ƒç´ 
 	'**********
 	Function Pop(ByVal arr)
 		Dim i, tmp
@@ -95,9 +95,9 @@ Class Class_Array
 	End Function
 	
 	'**********
-	' º¯ÊıÃû: Strip
-	' ²Î  Êı: str as a string such as "1,2,3,"
-	' ×÷  ÓÃ: Strip "," of string
+	' å‡½æ•°å: Strip
+	' å‚  æ•°: str as a string such as "1,2,3,"
+	' ä½œ  ç”¨: Strip "," of string
 	'**********
 	Function Strip(ByVal Str)
 		If IsArray(Str) Then Str = Me.ToString(Str)
@@ -108,10 +108,10 @@ Class Class_Array
 	End Function
 	
 	'**********
-	' º¯ÊıÃû: Walk
-	' ²Î  Êı: arr as an Array
-	' ²Î  Êı: callback as callback function
-	' ×÷  ÓÃ: Walk ¡ª ¶ÔÊı×éÄÚÔªËØÖ´ĞĞº¯Êıºó·µ»ØĞÂÊı×é
+	' å‡½æ•°å: Walk
+	' å‚  æ•°: arr as an Array
+	' å‚  æ•°: callback as callback function
+	' ä½œ  ç”¨: Walk â€” å¯¹æ•°ç»„å†…å…ƒç´ æ‰§è¡Œå‡½æ•°åè¿”å›æ–°æ•°ç»„
 	'**********
 	Function Walk(ByVal arr, ByVal callback)
 		Dim e : e = ""
@@ -128,11 +128,11 @@ Class Class_Array
 	End Function
 	
 	'**********
-	' º¯ÊıÃû: Splice
-	' ²Î  Êı: arr as an array
-	' ²Î  Êı: start as start index
-	' ²Î  Êı: final as end index
-	' ×÷  ÓÃ: Splice ¡ª ´ÓÒ»¸öÊı×éÖĞÒÆ³ıÒ»¸ö»ò¶à¸öÔªËØ
+	' å‡½æ•°å: Splice
+	' å‚  æ•°: arr as an array
+	' å‚  æ•°: start as start index
+	' å‚  æ•°: final as end index
+	' ä½œ  ç”¨: Splice â€” ä»ä¸€ä¸ªæ•°ç»„ä¸­ç§»é™¤ä¸€ä¸ªæˆ–å¤šä¸ªå…ƒç´ 
 	'**********
 	Function Splice(ByVal arr, ByVal start, ByVal final)
 		Dim i, temp, tmp
@@ -149,11 +149,11 @@ Class Class_Array
 	End Function
 	
 	'**********
-	' º¯ÊıÃû: Fill
-	' ²Î  Êı: arr as a Array
-	' ²Î  Êı: index as index to insert into an array
-	' ²Î  Êı: value as element to insert into an array
-	' ×÷  ÓÃ: Fill ¡ª ²åÈëÔªËØ
+	' å‡½æ•°å: Fill
+	' å‚  æ•°: arr as a Array
+	' å‚  æ•°: index as index to insert into an array
+	' å‚  æ•°: value as element to insert into an array
+	' ä½œ  ç”¨: Fill â€” æ’å…¥å…ƒç´ 
 	'**********
 	Function Fill(ByVal arr, ByVal index, ByVal Value)
 		Dim i, tmp
@@ -169,9 +169,9 @@ Class Class_Array
 	End Function
 	
 	'**********
-	' º¯ÊıÃû: Unique
-	' ²Î  Êı: arr as a Array
-	' ×÷  ÓÃ: Unique ¡ª ÒÆ³ıÖØ¸´µÄÔªËØ
+	' å‡½æ•°å: Unique
+	' å‚  æ•°: arr as a Array
+	' ä½œ  ç”¨: Unique â€” ç§»é™¤é‡å¤çš„å…ƒç´ 
 	'**********
 	Function Unique(ByVal arr)
 		Dim tmp, e
@@ -185,9 +185,9 @@ Class Class_Array
 	End Function
 
 	'**********
-	' º¯ÊıÃû: Reverse
-	' ²Î  Êı: arr as a Array
-	' ×÷  ÓÃ: Reverse ¡ª ·´Ïò
+	' å‡½æ•°å: Reverse
+	' å‚  æ•°: arr as a Array
+	' ä½œ  ç”¨: Reverse â€” åå‘
 	'**********
 	Function Reverse(ByVal arr)
 		Dim tmp, e
@@ -200,10 +200,10 @@ Class Class_Array
 	End Function
 	
 	'**********
-	' º¯ÊıÃû: Search
-	' ²Î  Êı: arr as a Array
-	' ²Î  Êı: value as Searching value
-	' ×÷  ÓÃ: Search ¡ª ²éÑ¯ÔªËØ£¬²»´æÔÚÔò·µ»ØFalse
+	' å‡½æ•°å: Search
+	' å‚  æ•°: arr as a Array
+	' å‚  æ•°: value as Searching value
+	' ä½œ  ç”¨: Search â€” æŸ¥è¯¢å…ƒç´ ï¼Œä¸å­˜åœ¨åˆ™è¿”å›False
 	'**********
 	Function Search(ByVal arr, ByVal Value)
 		Dim i
@@ -217,10 +217,10 @@ Class Class_Array
 	End Function
 	
 	'**********
-	' º¯ÊıÃû: Rand
-	' ²Î  Êı: arr as a Array
-	' ²Î  Êı: num as specifies how many entries you want to pick
-	' ×÷  ÓÃ: Rand ¡ª ÂÒĞò
+	' å‡½æ•°å: Rand
+	' å‚  æ•°: arr as a Array
+	' å‚  æ•°: num as specifies how many entries you want to pick
+	' ä½œ  ç”¨: Rand â€” ä¹±åº
 	'**********
 	Function Rand(ByVal arr, ByVal num)
 		Dim tmpi, tmp, i
@@ -234,9 +234,9 @@ Class Class_Array
 	End Function
 	
 	'**********
-	' º¯ÊıÃû: Sort
-	' ²Î  Êı: arr as a Array
-	' ×÷  ÓÃ: Sort ¡ª Ë³Ğò
+	' å‡½æ•°å: Sort
+	' å‚  æ•°: arr as a Array
+	' ä½œ  ç”¨: Sort â€” é¡ºåº
 	'**********
 	Function Sort(ByVal arr)
 		Dim tmp, i, j
@@ -257,9 +257,9 @@ Class Class_Array
 	End Function
 	
 	'**********
-	' º¯ÊıÃû: rSort
-	' ²Î  Êı: arr as a Array
-	' ×÷  ÓÃ: rSort ¡ª µ¹Ğò
+	' å‡½æ•°å: rSort
+	' å‚  æ•°: arr as a Array
+	' ä½œ  ç”¨: rSort â€” å€’åº
 	'**********
 	Function rSort(ByVal arr)
 		Dim tmp, i, j
@@ -280,9 +280,9 @@ Class Class_Array
 	End Function
 
 	'**********
-	' º¯ÊıÃû: Shuffle
-	' ²Î  Êı: arr as a Array
-	' ×÷  ÓÃ: Shuffle ¡ª Ëæ»úÅÅĞò
+	' å‡½æ•°å: Shuffle
+	' å‚  æ•°: arr as a Array
+	' ä½œ  ç”¨: Shuffle â€” éšæœºæ’åº
 	'**********
 	Function Shuffle(ByVal arr)
 		Dim m, n, i
@@ -299,18 +299,18 @@ Class Class_Array
 	End Function
 
 	'**********
-	' º¯ÊıÃû: ConvComma
-	' ²Î  Êı: star as a string
+	' å‡½æ•°å: ConvComma
+	' å‚  æ•°: star as a string
 	'**********
 	Function ConvComma(ByVal str)
 		ConvComma = Replace(str,",","&#44;")
 	End Function
 
 	'**********
-	' º¯ÊıÃû: implode
-	' ²Î  Êı: glue as a split character
-	' ²Î  Êı: arr as a output array
-	' ×÷  ÓÃ: Join array elements with a string
+	' å‡½æ•°å: implode
+	' å‚  æ•°: glue as a split character
+	' å‚  æ•°: arr as a output array
+	' ä½œ  ç”¨: Join array elements with a string
 	'**********
 	Function ToString(ByVal arr)
 		If IsArray(arr) Then
@@ -323,9 +323,9 @@ Class Class_Array
 	End Function
 
 	'**********
-	' º¯ÊıÃû: ToArray
-	' ²Î  Êı: str as a string converted to an array
-	' ×÷  ÓÃ: Convert to an array
+	' å‡½æ•°å: ToArray
+	' å‚  æ•°: str as a string converted to an array
+	' ä½œ  ç”¨: Convert to an array
 	' Remarks: dim a : a = "a, b, c"
 	'		   prinr(ToArray(a))
 	'**********
