@@ -277,15 +277,15 @@ Class Class_Page
 			Dim i
 			For i=1 to i_pCount
 				echo "<option value="""&i&""""
-				If i=i_pNumber Then echo " selected"
+				If i=PageID Then echo " selected"
 				echo ">第"&i&"页</option>"&vbCrlf
 			Next
 			echo "</select>"&vbCrlf
 		Case Else
 			Randomize
-			Dim PageID : PageID = "PageID" & Int(Rnd() * 10000000)
-			echo " 跳转到:<input type=""text"" id="""&PageID&""" name=""PageID"" onkeydown=""if(event.keyCode==13) document.getElementById('btn_"&PageID&"').click();"" size=""3"" value="""&i_pNumber&""" onclick=""this.select()"" maxlength=8 class=""p_text""> "&vbCrlf & _
-			"<input type=""button"" value=""GO"" onclick=""location.href='?"&sQueryString&IIf(sQueryString="","","&")&"PageID='+document.getElementById('"&PageID&"').value+'"&str&"'"" id=""btn_"&PageID&""" class=""p_btn"">"
+			Dim sPageID : sPageID = "PageID" & Int(Rnd() * 10000000)
+			echo " 跳转到:<input type=""text"" id="""&sPageID&""" name=""PageID"" onkeydown=""if(event.keyCode==13) document.getElementById('btn_"&sPageID&"').click();"" size=""3"" value="""&PageID&""" onclick=""this.select()"" maxlength=8 class=""p_text""> "&vbCrlf & _
+			"<input type=""button"" value=""GO"" onclick=""location.href='?"&sQueryString&IIf(sQueryString="","","&")&"PageID='+document.getElementById('"&sPageID&"').value+'"&str&"'"" id=""btn_"&sPageID&""" class=""p_btn"">"
 		End Select
 	End Sub
 
