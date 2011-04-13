@@ -45,7 +45,7 @@ Class Class_Wrap
 		Set Debug			= New Class_Debug			'Debug工具类
 		Set Cookie			= New Class_Cookie			'Cookies操作类
 		Set Session			= New Class_Session			'Session操作类
-		Set [Date]			= New Class_String			'Date操作类
+		Set [Date]			= New Class_Date			'Date操作类
 
 		Set SHA1			= Class_SHA1()				'SHA1编码
 		Set Md5				= New Class_Md5				'Md5加密
